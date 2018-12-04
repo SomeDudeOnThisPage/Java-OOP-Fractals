@@ -1,14 +1,12 @@
-package fractals;
+package fractals.curves;
 
 
 import java.awt.Graphics;
 import java.util.*;
 
-public class DragonCurve {
+public class DragonCurve extends DrawableCurve {
 
-    public Graphics generate(Graphics g) {
-
-        int iterations = 15;
+    public Graphics generate(Graphics g, float scaleFactor, int startX, int startY, int iterations) {
 
         //generate the turn sequence
         List<Integer>turns = getSequence(iterations);
@@ -17,7 +15,7 @@ public class DragonCurve {
        double startingAngle = -iterations * (Math.PI / 4);
 
        //calculate the side length
-       double side = 600 / Math.pow(2, iterations / 2.);
+       double side = (500 / Math.pow(2, iterations / 2.)) * scaleFactor;
 
 
        //now to the drawing
@@ -25,7 +23,7 @@ public class DragonCurve {
         double currentAngle = startingAngle;
 
         //the starting coordinates
-        int x1 = 200, y1 = 550;
+        int x1 = startX, y1 = startY;
 
         //do some trigonometry magic to find the next point
         int x2 = x1 + (int) (Math.cos(currentAngle) * side);

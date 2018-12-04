@@ -1,22 +1,32 @@
 package fractals;
 
+import fractals.curves.*;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class FractalContainer extends JPanel implements Runnable {
 
-  private Fractal fractal;
+  //have a dynamic list of fractal curves to generate from
+  private List<DrawableCurve> curves;
 
   // TODO: Create a Fractal object in this class, and call its' "paint" or "generate" (Name TBD) method
   //       Pass a Graphics-Object to this method to alter
   //       Redraw this panel afterwards (use Swingworker to not explode everything??) with the returned Graphics-object
+  //        Create UI Elements for scale, x/y position, iteration count
 
   // Implementation needs overhaul.
+  // ur mom needs overhaul lol
   @Override
   public void paint(Graphics g) {
     super.paint(g); // Make sure to draw super
-    // Multiple fractals per container maybe?
-    this.fractal.generate(g);
+
+    //iterate over the curve list, generate every one for now
+    for (DrawableCurve c : curves) {
+      c.generate(g, 0.5f, 50, 350, 5);
+    }
   }
 
   /*
@@ -40,7 +50,13 @@ public class FractalContainer extends JPanel implements Runnable {
   protected FractalContainer(Dimension size) {
     initGUIProperties(size);
 
-    this.fractal = new Fractal();
+    //initialize the fractal list
+    curves = new ArrayList<>();
+
+    //add a dragon curve for example
+    //this.curves.add(new DragonCurve());
+    this.curves.add(new DragonCurve());
+
     this.repaint();
 
     Thread t = new Thread(this);
