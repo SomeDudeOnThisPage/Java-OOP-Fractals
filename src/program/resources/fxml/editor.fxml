@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="editorLayoutPane" minWidth="-Infinity" prefHeight="-1.0" prefWidth="250.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="program.ui.EditorController">
+  <center>
+    <SplitPane fx:id="editorSplitPane" dividerPositions="0.5" focusTraversable="true" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+      <items>
+        <fx:include fx:id="editorLayerTab" source="editor_layer_tab.fxml" />
+        <AnchorPane fx:id="editorBottomPane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+      </items>
+    </SplitPane>
+  </center>
+</BorderPane>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="-1.0" prefWidth="250.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="program.ui.EditorLayerTabController">
+  <bottom>
+    <VBox>
+      <children>
+        <BorderPane>
+          <center>
+            <ChoiceBox prefWidth="10000.0">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+              <BorderPane.margin>
+                <Insets bottom="6.0" right="6.0" top="6.0" />
+              </BorderPane.margin>
+            </ChoiceBox>
+          </center>
+          <left>
+            <Label text="Algorithm:" BorderPane.alignment="CENTER_LEFT">
+              <BorderPane.margin>
+                <Insets left="6.0" right="6.0" />
+              </BorderPane.margin>
+            </Label>
+          </left>
+        </BorderPane>
+        <HBox>
+          <children>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button ellipsisString="F" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="F">
+              <HBox.margin>
+                <Insets bottom="6.0" left="3.0" right="3.0" fx:id="x1" />
+              </HBox.margin>
+            </Button>
+            <Button ellipsisString="+" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="+" HBox.margin="$x1">
+              <font>
+                <Font size="11.0" />
+              </font>
+            </Button>
+            <Button ellipsisString="-" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="-">
+              <HBox.margin>
+                <Insets bottom="6.0" left="3.0" right="6.0" />
+              </HBox.margin>
+            </Button>
+          </children>
+        </HBox>
+      </children>
+    </VBox>
+  </bottom>
+  <center>
+    <ListView fx:id="layerList" prefHeight="200.0" prefWidth="200.0" />
+  </center>
+  <top>
+    <BorderPane>
+      <center>
+        <ChoiceBox prefWidth="10000.0">
+          <items>
+            <FXCollections fx:factory="observableArrayList">
+              <String fx:value="Item 1" />
+              <String fx:value="Item 2" />
+              <String fx:value="Item 3" />
+            </FXCollections>
+          </items>
+          <BorderPane.margin>
+            <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+          </BorderPane.margin>
+        </ChoiceBox>
+      </center>
+      <left>
+        <Label text="Blending Mode:" BorderPane.alignment="CENTER_LEFT">
+          <BorderPane.margin>
+            <Insets left="6.0" />
+          </BorderPane.margin>
+        </Label>
+      </left>
+    </BorderPane>
+  </top>
+</BorderPane>

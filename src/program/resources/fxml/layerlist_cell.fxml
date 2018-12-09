@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="root" minWidth="-1.0" prefHeight="30.0" prefWidth="250.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <center>
+    <TextField id="layerName" fx:id="layerNameTextField" blendMode="SRC_OVER" depthTest="INHERIT" editable="false" prefWidth="200.0" promptText="Layer Name" text="Layer">
+      <BorderPane.margin>
+        <Insets left="6.0" right="6.0" />
+      </BorderPane.margin>
+    </TextField>
+  </center>
+  <left>
+    <CheckBox fx:id="visibleCheckBox" alignment="CENTER_LEFT" disable="false" mnemonicParsing="false" onAction="#onVisibleCheckBox" text="" BorderPane.alignment="CENTER">
+      <BorderPane.margin>
+        <Insets left="6.0" />
+      </BorderPane.margin>
+    </CheckBox>
+  </left>
+  <right>
+    <Button fx:id="deleteButton" ellipsisString="X" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="22.0" prefWidth="28.0" text="Button" textAlignment="LEFT" textOverrun="CENTER_ELLIPSIS">
+      <BorderPane.margin>
+        <Insets right="6.0" top="4.0" />
+      </BorderPane.margin>
+    </Button>
+  </right>
+</BorderPane>
