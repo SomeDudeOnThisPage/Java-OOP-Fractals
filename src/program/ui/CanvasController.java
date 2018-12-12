@@ -20,18 +20,20 @@ public class CanvasController implements Initializable {
   private BorderPane pane;
 
   public void update() {
+    long time = System.currentTimeMillis();
+
+
     pane.getChildren().clear(); // Make it so we dont remove all
     ObservableList<ImageLayer> layers = Program.mainController.getLayers();
-
     // Traverse the list from the bottom up, so the upmost layer is also the upmost layer in the layerList
     for (int i = layers.size() - 1; i >= 0; i--) {
       ImageLayer l = layers.get(i);
       if (l.visible) {
         l.redraw();
-        pane.getChildren().add(layers.get(i));
+        pane.getChildren().add(l);
       }
     }
-
+    System.out.println(System.currentTimeMillis() - time);
 
   }
 

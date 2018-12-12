@@ -58,7 +58,5 @@ public class Program extends Application {
   public void start(Stage stage) throws Exception {
     frame = stage;
     initFrame();
-    mainController.addLayer(new ImageLayer("Hello", 500,500));
-    mainController.addLayer(new ImageLayer("World", 500,500));
   }
 }

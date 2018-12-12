@@ -44,7 +44,7 @@
                 <Insets bottom="6.0" left="3.0" right="3.0" fx:id="x1" />
               </HBox.margin>
             </Button>
-            <Button ellipsisString="+" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="+" HBox.margin="$x1">
+            <Button fx:id="addLayerButton" ellipsisString="+" mnemonicParsing="false" onAction="#onAddLayerButton" prefHeight="24.0" prefWidth="24.0" text="+" HBox.margin="$x1">
               <font>
                 <Font size="11.0" />
               </font>

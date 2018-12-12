@@ -29,6 +29,10 @@ public class LayerListCell extends ListCell<ImageLayer> {
       setGraphic(null);
 
     } else {
+      // Persistent name
+      layerNameTextField.setText(layer.name);
+      // Persistent visibility check-box
+      visibleCheckBox.setSelected(layer.visible);
       setGraphic(root);
     }
   }
@@ -38,10 +42,8 @@ public class LayerListCell extends ListCell<ImageLayer> {
     // Testing
     if (visibleCheckBox.isSelected()) {
       l.visible = true;
-      layerNameTextField.setText("Visible");
     } else {
       l.visible = false;
-      layerNameTextField.setText("Invisible");
     }
     Program.mainController.updateCanvas();
   }

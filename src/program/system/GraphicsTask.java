@@ -5,6 +5,8 @@ import program.algorithm.TestAlg;
 import javafx.concurrent.Task;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.awt.*;
+
 /**
  * Creates a Task object that runs an Algorithm with a GraphicsContext parameter
  * Returns the (modified by the Algorithm) GraphicsContext
@@ -12,7 +14,7 @@ import javafx.scene.canvas.GraphicsContext;
  *   This task selects the wanted algorithm from a list of all in
  *   @see Program defined implemented algorithm constants based on
  *   the set algorithm name the constructor recieves as a parameter.
- *   It will then call the generate() method of the chosen algorithm
+ *   It will then call the render() method of the chosen algorithm
  *   and return its' modified GraphicsContext once finished.
  * </p>
  * @author Robin Buhlmann
@@ -22,16 +24,15 @@ import javafx.scene.canvas.GraphicsContext;
  * @see javafx.scene.canvas.Canvas
  * @see GraphicsContext
  */
-public class GraphicsTask extends Task<GraphicsContext> {
+public class GraphicsTask extends Task<Graphics2D> {
   /**
    * The GraphicsContext to be altered by the algorithm
    */
-  private GraphicsContext graphics;
+  private Graphics2D graphics;
 
   @Override
-  protected GraphicsContext call() throws Exception {
+  protected Graphics2D call() throws Exception {
     // Just use static algorithm for now
-    graphics = TestAlg.generate(graphics, 100,100);
     return graphics;
   }
 
@@ -39,7 +40,7 @@ public class GraphicsTask extends Task<GraphicsContext> {
    * Sets the GraphicsContext to be used in the task
    * @param g
    */
-  public GraphicsTask(GraphicsContext g) {
+  public GraphicsTask(Graphics2D g) {
     graphics = g;
   }
 }
