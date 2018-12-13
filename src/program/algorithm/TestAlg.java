@@ -56,7 +56,8 @@ public class TestAlg extends Curve
         g.draw(new Line2D.Double(oldX, oldY, x, y));
       }
 
-      public Algorithm(Graphics2D g) {
+      public Algorithm(Graphics2D g)
+      {
         // Define start
         // Testing
         final int ITER_DEPTH = 6;
