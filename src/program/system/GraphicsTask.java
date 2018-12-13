@@ -1,21 +1,16 @@
 package program.system;
 
-import program.Program;
-import program.algorithm.TestAlg;
 import javafx.concurrent.Task;
 import javafx.scene.canvas.GraphicsContext;
+import program.algorithm.*;
 
-import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * Creates a Task object that runs an Algorithm with a GraphicsContext parameter
  * Returns the (modified by the Algorithm) GraphicsContext
  * <p>
- *   This task selects the wanted algorithm from a list of all in
- *   @see Program defined implemented algorithm constants based on
- *   the set algorithm name the constructor recieves as a parameter.
- *   It will then call the render() method of the chosen algorithm
- *   and return its' modified GraphicsContext once finished.
+ * tododescgraphicstask
  * </p>
  * @author Robin Buhlmann
  * @version 0.1
@@ -24,23 +19,34 @@ import java.awt.*;
  * @see javafx.scene.canvas.Canvas
  * @see GraphicsContext
  */
-public class GraphicsTask extends Task<Graphics2D> {
+public class GraphicsTask extends Task<BufferedImage>
+{
   /**
-   * The GraphicsContext to be altered by the algorithm
+   * The algorithm object ID whose render method is to be used
    */
-  private Graphics2D graphics;
+  private int curveID;
 
   @Override
-  protected Graphics2D call() throws Exception {
-    // Just use static algorithm for now
-    return graphics;
+  protected BufferedImage call() throws Exception
+  {
+    // Create the image during the runtime of the task to avoid it being mutable outside the task to ensure thread safety
+    BufferedImage image = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_ARGB);
+
+    // Select the desired curve algorithm
+    switch(curveID)
+    {
+      case 0: TestAlg.render(image);
+    }
+
+    return image;
   }
 
   /**
    * Sets the GraphicsContext to be used in the task
-   * @param g
+   * @param curveID the ID of the curve to be drawn
    */
-  public GraphicsTask(Graphics2D g) {
-    graphics = g;
+  public GraphicsTask(int curveID)
+  {
+    this.curveID = curveID;
   }
 }

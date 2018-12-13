@@ -22,11 +22,4 @@
       </BorderPane.margin>
     </CheckBox>
   </left>
-  <right>
-    <Button fx:id="deleteButton" ellipsisString="X" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="22.0" prefWidth="28.0" text="Button" textAlignment="LEFT" textOverrun="CENTER_ELLIPSIS">
-      <BorderPane.margin>
-        <Insets right="6.0" top="4.0" />
-      </BorderPane.margin>
-    </Button>
-  </right>
 </BorderPane>

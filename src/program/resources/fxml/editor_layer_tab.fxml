@@ -49,7 +49,7 @@
                 <Font size="11.0" />
               </font>
             </Button>
-            <Button ellipsisString="-" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="-">
+            <Button ellipsisString="-" mnemonicParsing="false" onAction="#onRemLayerButton" prefHeight="24.0" prefWidth="24.0" text="-">
               <HBox.margin>
                 <Insets bottom="6.0" left="3.0" right="6.0" />
               </HBox.margin>

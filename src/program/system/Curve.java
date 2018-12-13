@@ -10,7 +10,10 @@ import java.awt.image.BufferedImage;
  * @author Robin Buhlmann
  * @version 0.1
  */
-public abstract class Curve {
+public abstract class Curve
+{
+  public static final int TESTALG = 0;
+
   /**
    * The size of the canvas that holds this curve.
    * The canvas is squared so no x/y are needed.
@@ -23,17 +26,12 @@ public abstract class Curve {
   private int scale;
 
   /**
-   *
-   * @return BufferedImage
-   */
-  public abstract BufferedImage render();
-
-  /**
    * Constructor for the curve class
    * @param csize The size of the canvas
    * @param scale The scale of the curve
    */
-  public Curve(int csize, int scale) {
+  public Curve(int csize, int scale)
+  {
     this.csize = csize;
     this.scale = scale;
   }

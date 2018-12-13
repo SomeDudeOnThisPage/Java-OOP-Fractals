@@ -10,7 +10,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
-public class LayerListCell extends ListCell<ImageLayer> {
+public class LayerListCell extends ListCell<ImageLayer>
+{
 
   @FXML private BorderPane root;
 
@@ -21,42 +22,41 @@ public class LayerListCell extends ListCell<ImageLayer> {
   private FXMLLoader fxmlloader;
 
   @Override
-  public void updateItem(ImageLayer layer, boolean empty) {
+  public void updateItem(ImageLayer layer, boolean empty)
+  {
     super.updateItem(layer, empty);
-    if (empty) {
 
+    if (empty)
+    {
       setText(null);
       setGraphic(null);
-
-    } else {
-      // Persistent name
+    }
+    else
+    {
       layerNameTextField.setText(layer.name);
-      // Persistent visibility check-box
       visibleCheckBox.setSelected(layer.visible);
       setGraphic(root);
     }
   }
-  // Method is not recognized by IDE, but still works
-  public void onVisibleCheckBox() {
+
+  public void onVisibleCheckBox()
+  {
     ImageLayer l = Program.mainController.getLayers().get(this.getIndex());
-    // Testing
-    if (visibleCheckBox.isSelected()) {
-      l.visible = true;
-    } else {
-      l.visible = false;
-    }
+    l.visible = visibleCheckBox.isSelected();
     Program.mainController.updateCanvas();
   }
 
-  public LayerListCell() {
-    try {
+  public LayerListCell()
+  {
+    try
+    {
       fxmlloader = new FXMLLoader(getClass().getResource(Program.RESOURCE_PATH + "fxml/layerlist_cell.fxml"));
       fxmlloader.setController(this);
       root = fxmlloader.load();
-    } catch(Exception e) {
-      // TODO: Exit out, show fatal error dialog
+    }
+    catch(Exception e)
+    {
       System.out.println(e);
     }
   }
-
 }

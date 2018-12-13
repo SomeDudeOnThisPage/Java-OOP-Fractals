@@ -6,4 +6,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="pane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="program.ui.CanvasController" />
+<HBox fx:id="canvasBackground" alignment="CENTER" onScroll="#onScroll" prefHeight="-1.0" prefWidth="-1.0" style="" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="program.ui.CanvasController">
+  <children>
+    <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" focusTraversable="true" hbarPolicy="AS_NEEDED" pannable="true" style="" vbarPolicy="AS_NEEDED" HBox.hgrow="SOMETIMES">
+      <content>
+        <StackPane fx:id="stackPane" style="-fx-background-color: grey;">
+          <children>
+            <Group fx:id="contentGroup">
+              <children>
+                <AnchorPane fx:id="canvasAnchor" cache="true" prefHeight="-1.0" prefWidth="-1.0" style="-fx-background-color: white;" />
+              </children>
+            </Group>
+          </children>
+        </StackPane>
+      </content>
+    </ScrollPane>
+  </children>
+</HBox>

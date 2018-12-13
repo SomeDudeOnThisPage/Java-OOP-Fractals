@@ -11,38 +11,51 @@ import javafx.scene.*;
 import javafx.stage.*;
 
 /**
- * Java OOP Project - Space Filling Curves
- * Starts the program and sets up the relevant scenes through FXML
- *
+ * Java OOP Project - Space Filling Curves<br>
+ * <p>
+ *  Frankfurt University of Applied Sciences<br>
+ *  Faculty 2 - Informatics and Engineering<br>
+ *  Module: Advanced Object Oriented Programming in Java<br>
+ *  Semester 3<br>
+ * </p>
+ * <p>
+ *  The main goal of this project is the concurrent visualization of space filling curves
+ * </p>
  * @author Robin Buhlmann
+ * @author Leonard Pudwitz
  * @version 0.1
  */
-public class Program extends Application {
-
+public class Program extends Application
+{
   public static boolean DEBUG = false;
 
+  static int WIDTH = 800;
+  private static int HEIGHT = 600;
+  private static String TITLE = "SpaceCurve8000";
+
   public static String RESOURCE_PATH = "/program/resources/";
-  public static String TITLE = "SpaceCurve8000";
 
   public static MainController mainController;
+  private static Stage frame;
 
-  private Stage frame;
-
-  public static void main(String[] args) {
-    if (args[0].equals("-debug")) {
-      DEBUG = true;
-    }
-    launch(args);
+  /**
+   * Used to show debug messages in the console when the debug flag is set
+   * @param msg The message
+   */
+  public static void debug(String msg)
+  {
+    if (DEBUG)
+      System.out.println("[DEBUG] " + System.nanoTime() + " " + msg);
   }
 
-  public static void debug(String msg) {
-    System.out.println("[DEBUG] " + System.nanoTime() + " " + msg);
-  }
-
-  private void initFrame() throws Exception {
-    frame.setMinHeight(600);
-    frame.setMinWidth(850);
-
+  /**
+   * Sets up the frame and embeds the main scene
+   * @throws Exception
+   */
+  private void initFrame() throws Exception
+  {
+    frame.setMinWidth(WIDTH);
+    frame.setMinHeight(HEIGHT);
     frame.setTitle(TITLE);
 
     FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(RESOURCE_PATH + "fxml/main.fxml"));
@@ -50,13 +63,36 @@ public class Program extends Application {
     fxmlloader.setController(mainController);
 
     frame.setScene(new Scene(fxmlloader.load(), 300, 275));
-
     frame.show();
   }
 
   @Override
-  public void start(Stage stage) throws Exception {
+  public void start(Stage stage) throws Exception
+  {
     frame = stage;
     initFrame();
+  }
+
+  @Override
+  public void stop()
+  {
+
+  }
+
+  public static void main(String[] args)
+  {
+    try
+    {
+      if (args[0].equals("-debug"))
+      {
+        DEBUG = true;
+      }
+    }
+    catch (Exception ignored)
+    {
+
+    }
+
+    launch(args);
   }
 }

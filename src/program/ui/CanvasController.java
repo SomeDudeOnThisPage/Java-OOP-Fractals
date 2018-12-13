@@ -1,48 +1,115 @@
 package program.ui;
 
+import javafx.event.Event;
+import javafx.geometry.Bounds;
+import javafx.scene.Group;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.input.ZoomEvent;
+import javafx.scene.layout.*;
+import javafx.scene.transform.Scale;
 import program.Program;
-import program.algorithm.TestAlg;
 import program.system.ImageLayer;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
+import javafx.fxml.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class CanvasController implements Initializable {
+public class CanvasController implements Initializable
+{
+
+  /**
+   * The pane that the AnchorPane, which serves as the anchor for the ImageLayers, lies on
+   * HBox is used so we have simple access to a center method
+   */
+  @FXML
+  private HBox canvasBackground;
 
   @FXML
-  private BorderPane pane;
+  private ScrollPane scrollPane;
 
-  public void update() {
-    long time = System.currentTimeMillis();
+  @FXML
+  private StackPane stackPane;
 
+  @FXML
+  private Group contentGroup;
 
-    pane.getChildren().clear(); // Make it so we dont remove all
+  /**
+   * The pane that the ImageLayers are children of
+   */
+  @FXML
+  private AnchorPane canvasAnchor;
+
+  private int size = 800;
+  private int minsize = 250;
+
+  private double zoomFactor = 1;
+  /**
+   * Re-adds all layers to the canvasAnchor, setting visibility accordingly
+   */
+  public void update()
+  {
+    // Remove all children from the canvasAnchor
+    canvasAnchor.getChildren().clear();
+
+    // Retrieve the (updated) layerList from the mainController
     ObservableList<ImageLayer> layers = Program.mainController.getLayers();
-    // Traverse the list from the bottom up, so the upmost layer is also the upmost layer in the layerList
-    for (int i = layers.size() - 1; i >= 0; i--) {
-      ImageLayer l = layers.get(i);
-      if (l.visible) {
-        l.redraw();
-        pane.getChildren().add(l);
-      }
-    }
-    System.out.println(System.currentTimeMillis() - time);
 
+    // Iterate over the layers, add them and set visible/invisible
+    for (int i = layers.size() - 1; i >= 0; i--)
+    {
+      ImageLayer l = layers.get(i);
+
+      canvasAnchor.getChildren().add(l);
+
+      if (l.visible)
+        l.setVisible(true);
+      else
+        l.setVisible(false);
+    }
+  }
+
+  public void setAnchorSize(int size)
+  {
+    // PrefSize == Size of the layers' parent AnchorPane
+    canvasAnchor.setPrefSize(size, size);
+    this.size = size;
+  }
+
+  public int getAnchorSize()
+  {
+    return size;
+  }
+
+  final double SCALE_DELTA = 1.1;
+
+  /**
+   * zoomtomousedesc
+   * @param event
+   */
+  public void onScroll(ScrollEvent event)
+  {
+    // scaleFactor = SCALE_DELTA -> if deltaY retrieved from event > 0 scale up, if < 0 scale down
+    double scaleFactor = (event.getDeltaY() > 0) ? SCALE_DELTA : 1/SCALE_DELTA;
+
+    // Only scale if the transformation would not make the canvasAnchor smaller as the minimum size defined in this class
+    if (!(scaleFactor < 1 && canvasAnchor.getBoundsInParent().getHeight() * scaleFactor < minsize))
+      canvasAnchor.getTransforms().add(new Scale(scaleFactor, scaleFactor, 0, 0));
   }
 
   @Override
-  public void initialize(URL url, ResourceBundle resourceBundle) {
+  public void initialize(URL url, ResourceBundle resourceBundle)
+  {
+    // Redirect the scroll panes' scroll events to our onScroll so we do not get the default scroll behaviour of ScrollPane
+    scrollPane.addEventFilter(ScrollEvent.ANY, this::onScroll);
+
+    // Update to initially add any already existing ImageLayers in the mainControllers' layer list
     update();
   }
 
-  public CanvasController() {
+  public CanvasController()
+  {
 
   }
 }
