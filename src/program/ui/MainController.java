@@ -26,23 +26,20 @@ public class MainController implements Initializable {
   /**
    * The Editor that is a child of this instance
    */
-  @FXML
-  private BorderPane editor;
+  @FXML private BorderPane editor;
 
   /**
    * The EditorController that is a child of this instance
    */
-  @FXML
-  private EditorController editorController;
+  @FXML private EditorController editorController;
 
   /**
    * The CanvasController that is a child of this instance
    */
-  @FXML
-  private CanvasController canvasController;
+  @FXML private CanvasController canvasController;
 
   private ObservableList<ImageLayer> layers;
-  private ImageLayer selectedLayer;
+  private ImageLayer selected;
 
   /**
    * Redraws a layer by creating a new GraphicsTask with the GraphicsContext of an ImageLayer
@@ -53,17 +50,13 @@ public class MainController implements Initializable {
   }
 
   /**
-   * Adds a layer to the list and updates the canvasController and editorController
+   * Adds a layer to the list
    */
-  public void addLayer(ImageLayer l)
+  public void addLayer(ImageLayer layer)
   {
-    layers.add(l);
     // Initially draw the curve
-    l.redraw();
-    // Update the editor layerList
-    editorController.editorLayerTabController.update();
-    // Update the canvas to actually show the layers' contents there
-    canvasController.update();
+    layer.redraw();
+    layers.add(layer);
   }
 
   /**
@@ -75,7 +68,6 @@ public class MainController implements Initializable {
   public void removeLayer(int index)
   {
     layers.remove(index);
-    canvasController.update();
   }
 
   /**
@@ -86,8 +78,22 @@ public class MainController implements Initializable {
    */
   public void setSelectedLayer(ImageLayer layer)
   {
-    selectedLayer = layer;
-    Program.debug("Selected ImageLayer: Name='" + layer.name + "' " + layer);
+    selected = layer;
+
+    // Try/Catch in case the list is empty
+    try
+    {
+      Program.debug("Selected ImageLayer: Name='" + layer.name + "' " + layer);
+    }
+    catch (Exception e)
+    {
+      Program.debug("Could not find selected image layer, perhaps the list is empty?");
+    }
+  }
+
+  public ImageLayer getSelectedLayer()
+  {
+    return selected;
   }
 
   /**
@@ -118,10 +124,14 @@ public class MainController implements Initializable {
    */
   public MainController()
   {
+    // Create the man list of ImageLayers
     layers = FXCollections.observableArrayList();
-    // Add a change listener to automatically detect changes to the layer list
-    //layers.addListener((ListChangeListener.Change<? extends ImageLayer> c) -> {
 
-    //});
+    // Add a change listener to automatically detect changes to the layer list
+    // Update the sub-controllers accordingly
+    layers.addListener((ListChangeListener.Change<? extends ImageLayer> layer) -> {
+      editorController.update();
+      canvasController.update();
+    });
   }
 }

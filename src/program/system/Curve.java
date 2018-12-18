@@ -1,7 +1,5 @@
 package program.system;
 
-import java.awt.image.BufferedImage;
-
 /**
  * Abstract class serving as a template for various algorithms
  * <p>
@@ -27,12 +25,8 @@ public abstract class Curve
 
   /**
    * Constructor for the curve class
-   * @param csize The size of the canvas
-   * @param scale The scale of the curve
    */
-  public Curve(int csize, int scale)
+  public Curve()
   {
-    this.csize = csize;
-    this.scale = scale;
   }
 }

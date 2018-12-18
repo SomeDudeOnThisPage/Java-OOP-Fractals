@@ -10,6 +10,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
+// Custom list CellFactory
 public class LayerListCell extends ListCell<ImageLayer>
 {
 
@@ -41,9 +42,9 @@ public class LayerListCell extends ListCell<ImageLayer>
 
   public void onVisibleCheckBox()
   {
-    ImageLayer l = Program.mainController.getLayers().get(this.getIndex());
+    ImageLayer l = Program.MAIN_CONTROLLER.getLayers().get(this.getIndex());
     l.visible = visibleCheckBox.isSelected();
-    Program.mainController.updateCanvas();
+    Program.MAIN_CONTROLLER.updateCanvas();
   }
 
   public LayerListCell()

@@ -1,8 +1,5 @@
 package program;
 
-import program.system.ImageLayer;
-import program.ui.EditorController;
-import program.ui.EditorLayerTabController;
 import program.ui.MainController;
 import javafx.application.Application;
 
@@ -35,7 +32,7 @@ public class Program extends Application
 
   public static String RESOURCE_PATH = "/program/resources/";
 
-  public static MainController mainController;
+  public static MainController MAIN_CONTROLLER;
   private static Stage frame;
 
   /**
@@ -59,8 +56,8 @@ public class Program extends Application
     frame.setTitle(TITLE);
 
     FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(RESOURCE_PATH + "fxml/main.fxml"));
-    mainController = new MainController();
-    fxmlloader.setController(mainController);
+    MAIN_CONTROLLER = new MainController();
+    fxmlloader.setController(MAIN_CONTROLLER);
 
     frame.setScene(new Scene(fxmlloader.load(), 300, 275));
     frame.show();

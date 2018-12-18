@@ -1,11 +1,8 @@
 package program.ui;
 
-import javafx.event.Event;
-import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.input.ZoomEvent;
 import javafx.scene.layout.*;
 import javafx.scene.transform.Scale;
 import program.Program;
@@ -42,7 +39,7 @@ public class CanvasController implements Initializable
   private AnchorPane canvasAnchor;
 
   private int size = 800;
-  private int minsize = 250;
+  private int minsize = 500;
 
   private double zoomFactor = 1;
   /**
@@ -53,8 +50,8 @@ public class CanvasController implements Initializable
     // Remove all children from the canvasAnchor
     canvasAnchor.getChildren().clear();
 
-    // Retrieve the (updated) layerList from the mainController
-    ObservableList<ImageLayer> layers = Program.mainController.getLayers();
+    // Retrieve the (updated) layerList from the MAIN_CONTROLLER
+    ObservableList<ImageLayer> layers = Program.MAIN_CONTROLLER.getLayers();
 
     // Iterate over the layers, add them and set visible/invisible
     for (int i = layers.size() - 1; i >= 0; i--)
@@ -82,7 +79,7 @@ public class CanvasController implements Initializable
     return size;
   }
 
-  final double SCALE_DELTA = 1.1;
+  final double SCALE_DELTA = 1.01;
 
   /**
    * zoomtomousedesc
@@ -94,6 +91,7 @@ public class CanvasController implements Initializable
     double scaleFactor = (event.getDeltaY() > 0) ? SCALE_DELTA : 1/SCALE_DELTA;
 
     // Only scale if the transformation would not make the canvasAnchor smaller as the minimum size defined in this class
+    // Same applies for maximum size
     if (!(scaleFactor < 1 && canvasAnchor.getBoundsInParent().getHeight() * scaleFactor < minsize))
       canvasAnchor.getTransforms().add(new Scale(scaleFactor, scaleFactor, 0, 0));
   }

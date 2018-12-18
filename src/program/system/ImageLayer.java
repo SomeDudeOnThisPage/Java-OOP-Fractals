@@ -7,9 +7,10 @@ import javafx.event.EventHandler;
 import javafx.scene.image.WritableImage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import program.Program;
+import program.algorithm.TestAlg;
 
 import java.awt.image.BufferedImage;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * The layer for the curve
@@ -24,7 +25,6 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class ImageLayer extends Canvas
 {
-
   /**
    * The name of the layer displayed in the editor list
    */
@@ -40,8 +40,13 @@ public class ImageLayer extends Canvas
    */
   public boolean visible;
 
+  public Curve getCurve()
+  {
+    return curve;
+  }
+
   /**
-   * Clears the canvas, re-renders the curve and displays it
+   * Clears the canvas, re-renders the curve in a separate thread and displays it
    * WARNING: Do not call unnecessarily, depending on the algorithm used this can take quite some time
    */
   public void redraw()
@@ -53,7 +58,7 @@ public class ImageLayer extends Canvas
     g.clearRect(0, 0, this.getWidth(), this.getHeight());
 
     // Create the task, right now only for TESTALG
-    Task renderTask = new GraphicsTask(Curve.TESTALG);
+    Task renderTask = new GraphicsTask(GraphicsTask.Algorithm.TESTALG);
 
     // Add an event handler to the task that gets the tasks' value when succeeded and draws it on the canvas
     // Doing this BEFORE starting the thread to avoid having the task finish before the event handler is instanced
@@ -66,7 +71,7 @@ public class ImageLayer extends Canvas
         // Cast the return value to a WritableImage so it can be drawn onto the canvas
         WritableImage image = SwingFXUtils.toFXImage(bi, null);
         g.drawImage(image, 0, 0);
-      });
+    });
 
     // Start the thread
     Thread thread = new Thread(renderTask);
@@ -74,17 +79,12 @@ public class ImageLayer extends Canvas
     thread.start();
   }
 
-  /**
-   * Sets the curve algorithm
-   */
-  public void setCurve(Curve curve)
-  {
-    this.curve = curve;
-  }
-
   public ImageLayer(String name, int x, int y)
   {
     super(x,y);
+    // Generate Algorithm object
+    this.curve = new TestAlg();
+    // Generate initial settings for this layer
     this.name = name;
     this.visible = true;
   }

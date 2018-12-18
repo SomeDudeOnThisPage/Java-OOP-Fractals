@@ -2,20 +2,96 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="editorLayoutPane" minWidth="-Infinity" prefHeight="-1.0" prefWidth="250.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="program.ui.EditorController">
+<BorderPane minWidth="-Infinity" prefHeight="723.0" prefWidth="250.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="program.ui.EditorController">
   <center>
-    <SplitPane fx:id="editorSplitPane" dividerPositions="0.5" focusTraversable="true" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+    <SplitPane dividerPositions="0.49930651872399445" focusTraversable="true" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
       <items>
-        <fx:include fx:id="editorLayerTab" source="editor_layer_tab.fxml" />
+        <BorderPane prefWidth="250.0">
+          <bottom>
+            <VBox>
+              <children>
+                <BorderPane>
+                  <center>
+                    <ChoiceBox prefWidth="10000.0">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="Item 1" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                      <BorderPane.margin>
+                        <Insets bottom="6.0" right="6.0" top="6.0" />
+                      </BorderPane.margin>
+                    </ChoiceBox>
+                  </center>
+                  <left>
+                    <Label text="Algorithm:" BorderPane.alignment="CENTER_LEFT">
+                      <BorderPane.margin>
+                        <Insets left="6.0" right="6.0" />
+                      </BorderPane.margin>
+                    </Label>
+                  </left>
+                </BorderPane>
+                <HBox>
+                  <children>
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button ellipsisString="F" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="F">
+                      <HBox.margin>
+                        <Insets bottom="6.0" left="3.0" right="3.0" fx:id="x1" />
+                      </HBox.margin>
+                    </Button>
+                    <Button fx:id="addLayerButton" ellipsisString="+" mnemonicParsing="false" onAction="#onAddLayerButton" prefHeight="24.0" prefWidth="24.0" text="+" HBox.margin="$x1">
+                      <font>
+                        <Font size="11.0" />
+                      </font>
+                    </Button>
+                    <Button ellipsisString="-" mnemonicParsing="false" onAction="#onRemLayerButton" prefHeight="24.0" prefWidth="24.0" text="-">
+                      <HBox.margin>
+                        <Insets bottom="6.0" left="3.0" right="6.0" />
+                      </HBox.margin>
+                    </Button>
+                  </children>
+                </HBox>
+              </children>
+            </VBox>
+          </bottom>
+          <center>
+            <ListView fx:id="layerList" prefHeight="200.0" prefWidth="200.0" />
+          </center>
+          <top>
+            <BorderPane />
+          </top>
+        </BorderPane>
         <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
           <tabs>
             <Tab text="Layer">
               <content>
-                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                    <BorderPane prefHeight="400.0" prefWidth="250.0" AnchorPane.bottomAnchor="-73.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
+                      <center>
+                        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="-1.0" prefViewportHeight="0.0" prefViewportWidth="0.0" prefWidth="-1.0" BorderPane.alignment="CENTER">
+                          <content>
+                            <VBox prefHeight="200.0" prefWidth="100.0" />
+                          </content>
+                        </ScrollPane>
+                      </center>
+                      <padding>
+                        <Insets />
+                      </padding>
+                    </BorderPane>
+                  </children>
+                </AnchorPane>
               </content>
             </Tab>
             <Tab text="Color">

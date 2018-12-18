@@ -21,10 +21,14 @@ import java.awt.image.BufferedImage;
  */
 public class GraphicsTask extends Task<BufferedImage>
 {
+  public enum Algorithm {
+    TESTALG
+  }
+
   /**
    * The algorithm object ID whose render method is to be used
    */
-  private int curveID;
+  private Algorithm curve;
 
   @Override
   protected BufferedImage call() throws Exception
@@ -32,21 +36,17 @@ public class GraphicsTask extends Task<BufferedImage>
     // Create the image during the runtime of the task to avoid it being mutable outside the task to ensure thread safety
     BufferedImage image = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_ARGB);
 
-    // Select the desired curve algorithm
-    switch(curveID)
-    {
-      case 0: TestAlg.render(image);
-    }
+    TestAlg.render(image);
 
     return image;
   }
 
   /**
    * Sets the GraphicsContext to be used in the task
-   * @param curveID the ID of the curve to be drawn
+   * @param alg the Algorithm to be drawn
    */
-  public GraphicsTask(int curveID)
+  public GraphicsTask(Algorithm alg)
   {
-    this.curveID = curveID;
+    this.curve = alg;
   }
 }
