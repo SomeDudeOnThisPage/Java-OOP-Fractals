@@ -87,7 +87,7 @@ public class MainController implements Initializable {
     }
     catch (Exception e)
     {
-      Program.debug("Could not find selected image layer, perhaps the list is empty?");
+      Program.debug("Find selected image layer, I could not. perhaps the list empty is, hmm?");
     }
   }
 
