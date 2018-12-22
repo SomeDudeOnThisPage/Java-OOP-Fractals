@@ -21,12 +21,9 @@
               <children>
                 <BorderPane>
                   <center>
-                    <ChoiceBox prefWidth="10000.0">
+                    <ChoiceBox fx:id="choiceBox" prefWidth="10000.0">
                       <items>
                         <FXCollections fx:factory="observableArrayList">
-                          <String fx:value="Item 1" />
-                          <String fx:value="Item 2" />
-                          <String fx:value="Item 3" />
                         </FXCollections>
                       </items>
                       <BorderPane.margin>

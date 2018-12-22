@@ -7,9 +7,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="root" minWidth="-1.0" prefHeight="30.0" prefWidth="250.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<BorderPane fx:id="root" blendMode="SRC_OVER" focusTraversable="false" minWidth="-1.0" pickOnBounds="false" prefHeight="30.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <center>
-    <TextField id="layerName" fx:id="layerNameTextField" blendMode="SRC_OVER" depthTest="INHERIT" editable="false" prefWidth="200.0" promptText="Layer Name" text="Layer">
+    <TextField fx:id="textField" blendMode="SRC_OVER" depthTest="INHERIT" editable="true" onAction="#onTextFieldAction" onMouseClicked="#onTextFieldClick" prefWidth="-1.0" promptText="Layer Name" style="" text="Layer">
       <BorderPane.margin>
         <Insets left="6.0" right="6.0" />
       </BorderPane.margin>

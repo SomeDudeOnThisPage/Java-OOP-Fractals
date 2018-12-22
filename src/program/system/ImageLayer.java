@@ -2,13 +2,19 @@ package program.system;
 
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
+
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
+
 import javafx.scene.image.WritableImage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+
 import program.Program;
-import program.algorithm.TestAlg;
+import program.algorithm.BlueBox;
+
+import program.algorithm.Algorithm;
+import program.algorithm.RedBox;
 
 import java.awt.image.BufferedImage;
 
@@ -35,15 +41,12 @@ public class ImageLayer extends Canvas
    */
   private Curve curve;
 
+  private Algorithm algorithm;
+
   /**
    * Determines whether the layer is visible or not
    */
   public boolean visible;
-
-  public Curve getCurve()
-  {
-    return curve;
-  }
 
   /**
    * Clears the canvas, re-renders the curve in a separate thread and displays it
@@ -56,9 +59,8 @@ public class ImageLayer extends Canvas
 
     // Clear the canvas
     g.clearRect(0, 0, this.getWidth(), this.getHeight());
-
     // Create the task, right now only for TESTALG
-    Task renderTask = new GraphicsTask(GraphicsTask.Algorithm.TESTALG);
+    Task renderTask = new GraphicsTask(this.algorithm, this.curve.getSettings());
 
     // Add an event handler to the task that gets the tasks' value when succeeded and draws it on the canvas
     // Doing this BEFORE starting the thread to avoid having the task finish before the event handler is instanced
@@ -79,11 +81,14 @@ public class ImageLayer extends Canvas
     thread.start();
   }
 
-  public ImageLayer(String name, int x, int y)
+  public ImageLayer(String name, int x, int y, Algorithm algorithm)
   {
     super(x,y);
+
     // Generate Algorithm object
-    this.curve = new TestAlg();
+    this.algorithm = algorithm;
+    this.curve = algorithm.newCurve();
+
     // Generate initial settings for this layer
     this.name = name;
     this.visible = true;

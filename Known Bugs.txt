@@ -1,0 +1,1 @@
+1. Pressing the '-' button (remLayerButton) when no layer is selected or instanced gives a NullPointerException

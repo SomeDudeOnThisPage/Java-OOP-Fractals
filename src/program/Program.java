@@ -7,6 +7,11 @@ import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.stage.*;
 
+/*
+    TODO: Some way to store program settings / options
+    -> ini4j
+ */
+
 /**
  * Java OOP Project - Space Filling Curves<br>
  * <p>
@@ -26,11 +31,11 @@ public class Program extends Application
 {
   public static boolean DEBUG = false;
 
-  static int WIDTH = 800;
-  private static int HEIGHT = 600;
-  private static String TITLE = "SpaceCurve8000";
+  private static final int WIDTH = 800;
+  private static final int HEIGHT = 600;
+  private static final String TITLE = "SpaceCurve8000";
 
-  public static String RESOURCE_PATH = "/program/resources/";
+  public static final String RESOURCE_PATH = "/program/resources/";
 
   public static MainController MAIN_CONTROLLER;
   private static Stage frame;
@@ -39,18 +44,17 @@ public class Program extends Application
    * Used to show debug messages in the console when the debug flag is set
    * @param msg The message
    */
-  public static void debug(String msg)
+  public static void debug(Object msg)
   {
     if (DEBUG)
-      System.out.println("[DEBUG] " + System.nanoTime() + " " + msg);
+      System.out.println("[DEBUG] " + System.nanoTime() + " " + String.valueOf(msg));
   }
 
-  /**
-   * Sets up the frame and embeds the main scene
-   * @throws Exception
-   */
-  private void initFrame() throws Exception
+  @Override
+  public void start(Stage stage) throws Exception
   {
+    frame = stage;
+
     frame.setMinWidth(WIDTH);
     frame.setMinHeight(HEIGHT);
     frame.setTitle(TITLE);
@@ -61,13 +65,6 @@ public class Program extends Application
 
     frame.setScene(new Scene(fxmlloader.load(), 300, 275));
     frame.show();
-  }
-
-  @Override
-  public void start(Stage stage) throws Exception
-  {
-    frame = stage;
-    initFrame();
   }
 
   @Override

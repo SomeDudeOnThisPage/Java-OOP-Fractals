@@ -1,14 +1,13 @@
 package program.ui.elements;
 
+import javafx.scene.control.*;
 import program.Program;
 import program.system.ImageLayer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+
+import java.util.List;
 
 // Custom list CellFactory
 public class LayerListCell extends ListCell<ImageLayer>
@@ -17,8 +16,7 @@ public class LayerListCell extends ListCell<ImageLayer>
   @FXML private BorderPane root;
 
   @FXML private CheckBox visibleCheckBox;
-  @FXML private TextField layerNameTextField;
-  @FXML private Button deleteButton;
+  @FXML private TextField textField;
 
   private FXMLLoader fxmlloader;
 
@@ -34,7 +32,7 @@ public class LayerListCell extends ListCell<ImageLayer>
     }
     else
     {
-      layerNameTextField.setText(layer.name);
+      textField.setText(layer.name);
       visibleCheckBox.setSelected(layer.visible);
       setGraphic(root);
     }
@@ -42,9 +40,21 @@ public class LayerListCell extends ListCell<ImageLayer>
 
   public void onVisibleCheckBox()
   {
+    getListView().getSelectionModel().select(this.getIndex());
+
     ImageLayer l = Program.MAIN_CONTROLLER.getLayers().get(this.getIndex());
     l.visible = visibleCheckBox.isSelected();
     Program.MAIN_CONTROLLER.updateCanvas();
+  }
+
+  public void onTextFieldAction()
+  {
+    getListView().getSelectionModel().select(this.getIndex());
+  }
+
+  public void onTextFieldClick()
+  {
+    getListView().getSelectionModel().select(this.getIndex());
   }
 
   public LayerListCell()

@@ -1,5 +1,9 @@
 package program.system;
 
+import program.Program;
+
+import java.util.HashMap;
+
 /**
  * Abstract class serving as a template for various algorithms
  * <p>
@@ -10,23 +14,21 @@ package program.system;
  */
 public abstract class Curve
 {
-  public static final int TESTALG = 0;
-
   /**
-   * The size of the canvas that holds this curve.
-   * The canvas is squared so no x/y are needed.
+   * The settings for an algorithm are stored in this HashMap
    */
-  private int csize;
+  protected HashMap<String, AlgorithmSetting> settings;
 
-  /**
-   * The scale for the algorithm.
-   */
-  private int scale;
+  public HashMap<String, AlgorithmSetting> getSettings()
+  {
+    return settings;
+  }
 
   /**
    * Constructor for the curve class
    */
   public Curve()
   {
+    settings = new HashMap<>();
   }
 }

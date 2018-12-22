@@ -2,9 +2,11 @@ package program.system;
 
 import javafx.concurrent.Task;
 import javafx.scene.canvas.GraphicsContext;
-import program.algorithm.*;
+import program.Program;
+import program.algorithm.Algorithm;
 
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 /**
  * Creates a Task object that runs an Algorithm with a GraphicsContext parameter
@@ -21,14 +23,12 @@ import java.awt.image.BufferedImage;
  */
 public class GraphicsTask extends Task<BufferedImage>
 {
-  public enum Algorithm {
-    TESTALG
-  }
-
   /**
    * The algorithm object ID whose render method is to be used
    */
-  private Algorithm curve;
+  private Algorithm algorithm;
+
+  private HashMap<String, AlgorithmSetting> settings;
 
   @Override
   protected BufferedImage call() throws Exception
@@ -36,7 +36,8 @@ public class GraphicsTask extends Task<BufferedImage>
     // Create the image during the runtime of the task to avoid it being mutable outside the task to ensure thread safety
     BufferedImage image = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_ARGB);
 
-    TestAlg.render(image);
+    // Call the render method specified in the Algorithm enum
+    algorithm.render(image, settings);
 
     return image;
   }
@@ -45,8 +46,9 @@ public class GraphicsTask extends Task<BufferedImage>
    * Sets the GraphicsContext to be used in the task
    * @param alg the Algorithm to be drawn
    */
-  public GraphicsTask(Algorithm alg)
+  public GraphicsTask(Algorithm algorithm, HashMap<String, AlgorithmSetting> settings)
   {
-    this.curve = alg;
+    this.algorithm = algorithm;
+    this.settings = settings;
   }
 }

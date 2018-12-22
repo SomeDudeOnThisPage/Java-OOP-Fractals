@@ -1,6 +1,7 @@
 package program.ui;
 
 import program.Program;
+import program.algorithm.Algorithm;
 import program.system.*;
 import javafx.collections.*;
 import javafx.fxml.*;
@@ -39,6 +40,8 @@ public class MainController implements Initializable {
   @FXML private CanvasController canvasController;
 
   private ObservableList<ImageLayer> layers;
+  private ObservableList<Algorithm> algorithms;
+
   private ImageLayer selected;
 
   /**
@@ -96,6 +99,11 @@ public class MainController implements Initializable {
     return selected;
   }
 
+  public ObservableList<Algorithm> getAlgorithms()
+  {
+    return algorithms;
+  }
+
   /**
    * Returns the current layer list
    * @return layers The layer list
@@ -124,8 +132,13 @@ public class MainController implements Initializable {
    */
   public MainController()
   {
-    // Create the man list of ImageLayers
+    // Create the main list of ImageLayers
     layers = FXCollections.observableArrayList();
+
+    // Create the main list of Algorithms
+    algorithms = FXCollections.observableArrayList();
+    algorithms.addAll(Algorithm.values());
+
 
     // Add a change listener to automatically detect changes to the layer list
     // Update the sub-controllers accordingly
