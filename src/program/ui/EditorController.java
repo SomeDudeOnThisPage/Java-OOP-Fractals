@@ -5,19 +5,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Separator;
+import javafx.scene.layout.VBox;
 import program.Program;
 import program.algorithm.Algorithm;
-import program.system.ImageLayer;
+import program.ui.elements.AlgorithmSetting;
+import program.ui.elements.ImageLayer;
 import program.ui.elements.LayerListCell;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class EditorController implements Initializable
 {
   @FXML private ListView<ImageLayer> layerList;
   @FXML private ChoiceBox<Algorithm> choiceBox;
-
+  @FXML private VBox vBox;
 
   private static int a = 0;
 
@@ -26,9 +30,8 @@ public class EditorController implements Initializable
    */
   public void onAddLayerButton()
   {
-    // Create a new Image layer and assign it the RedBox curve for now
+    // Create a new Image layer
     ImageLayer l = new ImageLayer("Layer #" + a, 1000, 1000, choiceBox.getValue());
-    Program.MAIN_CONTROLLER.setSelectedLayer(l);
     // Add the layer to the main controllers' list of layers
     Program.MAIN_CONTROLLER.addLayer(l);
     // Increment a to so the next ImageLayer has the name 'Layer #(a+1)'
@@ -40,7 +43,15 @@ public class EditorController implements Initializable
    */
   public void onRemLayerButton()
   {
-    Program.MAIN_CONTROLLER.removeLayer(layerList.getSelectionModel().getSelectedIndex());
+    // Make sure we have a layer selected when trying to remove the currently selected layer
+    try
+    {
+      Program.MAIN_CONTROLLER.removeLayer(layerList.getSelectionModel().getSelectedIndex());
+    }
+    catch (Exception e)
+    {
+      Program.debug("Removing layer failed - No selected layer found.");
+    }
   }
 
   /**
@@ -50,6 +61,16 @@ public class EditorController implements Initializable
   {
     // Reset all items to the ones found in the mainControllers' layerList
     layerList.setItems(Program.MAIN_CONTROLLER.getLayers());
+
+    // (Re)Set the options panel
+    vBox.getChildren().clear();
+    // Get the current layers' settings
+    HashMap<String, AlgorithmSetting> settings = Program.MAIN_CONTROLLER.getSelectedLayer().getSettings();
+    // Add the settings panes to the vBox
+    settings.forEach((String key, AlgorithmSetting value) -> {
+      vBox.getChildren().add(value);
+      vBox.getChildren().add(new Separator());
+    });
   }
 
   @Override
@@ -58,9 +79,18 @@ public class EditorController implements Initializable
     // Set the list to use the custom LayerListCell (see program.ui.elements.LayerListCell)
     layerList.setCellFactory(layerListView -> new LayerListCell());
 
-    // Set the currently selected model in the main controller
+    // Set the currently selected model in the main controller and update the editor on selection of a cell
     layerList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-      Program.MAIN_CONTROLLER.setSelectedLayer(newValue);
+      try
+      {
+        Program.MAIN_CONTROLLER.setSelectedLayer(newValue);
+        update();
+      }
+      catch (Exception ignored)
+      {
+        // This exception is handled in the MainControllers' handler for the list of ImageLayers
+      }
+
     });
 
     // Populate the choiceBox

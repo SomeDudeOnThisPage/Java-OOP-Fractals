@@ -1,4 +1,4 @@
-package program.system;
+package program.ui.elements;
 
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -10,19 +10,18 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
-import program.Program;
-import program.algorithm.BlueBox;
-
 import program.algorithm.Algorithm;
-import program.algorithm.RedBox;
+import program.system.Fractal;
+import program.system.GraphicsTask;
 
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 /**
- * The layer for the curve
+ * The layer for the fractal
  * <p>
- *   An extended canvas object to manage the curve. These are layered
- *   over each other in the canvas-scene.
+ *   An extended canvas object to manage the fractal. These are layered
+ *   on top of each other in the canvas-scene.
  * </p>
  * @author Robin Buhlmann
  * @version 0.1
@@ -37,9 +36,9 @@ public class ImageLayer extends Canvas
   public String name;
 
   /**
-   * The current curve object the ImageLayer instance is managing
+   * The current fractal object the ImageLayer instance is managing
    */
-  private Curve curve;
+  private Fractal fractal;
 
   private Algorithm algorithm;
 
@@ -48,8 +47,18 @@ public class ImageLayer extends Canvas
    */
   public boolean visible;
 
+  public HashMap<String, AlgorithmSetting> getSettings()
+  {
+    return fractal.getSettings();
+  }
+
+  public void setName(String name)
+  {
+    this.name = name;
+  }
+
   /**
-   * Clears the canvas, re-renders the curve in a separate thread and displays it
+   * Clears the canvas, re-renders the fractal in a separate thread and displays it
    * WARNING: Do not call unnecessarily, depending on the algorithm used this can take quite some time
    */
   public void redraw()
@@ -60,7 +69,7 @@ public class ImageLayer extends Canvas
     // Clear the canvas
     g.clearRect(0, 0, this.getWidth(), this.getHeight());
     // Create the task, right now only for TESTALG
-    Task renderTask = new GraphicsTask(this.algorithm, this.curve.getSettings());
+    Task renderTask = new GraphicsTask(this.algorithm, this.fractal.getSettings());
 
     // Add an event handler to the task that gets the tasks' value when succeeded and draws it on the canvas
     // Doing this BEFORE starting the thread to avoid having the task finish before the event handler is instanced
@@ -87,7 +96,7 @@ public class ImageLayer extends Canvas
 
     // Generate Algorithm object
     this.algorithm = algorithm;
-    this.curve = algorithm.newCurve();
+    this.fractal = algorithm.newFractal();
 
     // Generate initial settings for this layer
     this.name = name;

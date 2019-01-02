@@ -1,3 +1,16 @@
-#canvasBackground {
-    -fx-background-color: grey;
+.root
+{
+/*    -fx-focus-color: LightSlateGray;
+    -fx-faint-focus-color: transparent;
+    -fx-accent: LightSlateGray; */
+}
+.cell:selected
+{
+    -fx-background-color: LightSlateGray;
+}
+#canvasBackground
+{
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-background-color: LightSlateGray;
 }
