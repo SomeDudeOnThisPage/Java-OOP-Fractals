@@ -22,7 +22,21 @@ public enum Algorithm
       public boolean debug = true;
       public void render(BufferedImage i, HashMap<String, AlgorithmSetting> s) { RedBox.render(i, s); }
       public String toString() { return "Red Box"; }
-    };
+    },
+    DRAGONCURVE
+    {
+        public Curve newCurve() { return new DragonCurve(); }
+        public boolean debug = false;
+        public void render(BufferedImage i, HashMap<String, AlgorithmSetting> s) { DragonCurve.render(i, s); }
+        public String toString() { return "Dragon Curve"; }
+    },
+    HILBERTCURVE
+            {
+                public Curve newCurve() { return new HilbertCurve(); }
+                public boolean debug = false;
+                public void render(BufferedImage i, HashMap<String, AlgorithmSetting> s) { HilbertCurve.render(i, s); }
+                public String toString() { return "Hilbert Curve"; }
+            };
 
   /**
    * Determines whether the algorithm is available only in debug mode
