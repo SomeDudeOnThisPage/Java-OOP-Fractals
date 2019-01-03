@@ -2,12 +2,9 @@ package program.ui.elements;
 
 import javafx.scene.control.*;
 import program.Program;
-import program.system.ImageLayer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
-
-import java.util.List;
 
 // Custom list CellFactory
 public class LayerListCell extends ListCell<ImageLayer>
@@ -19,11 +16,14 @@ public class LayerListCell extends ListCell<ImageLayer>
   @FXML private TextField textField;
 
   private FXMLLoader fxmlloader;
+  private ImageLayer layer;
+
 
   @Override
   public void updateItem(ImageLayer layer, boolean empty)
   {
     super.updateItem(layer, empty);
+    this.layer = layer;
 
     if (empty)
     {
@@ -40,10 +40,13 @@ public class LayerListCell extends ListCell<ImageLayer>
 
   public void onVisibleCheckBox()
   {
+    // Select the layer
     getListView().getSelectionModel().select(this.getIndex());
 
-    ImageLayer l = Program.MAIN_CONTROLLER.getLayers().get(this.getIndex());
-    l.visible = visibleCheckBox.isSelected();
+    // Set the 'visible' field of the ImageLayer to the CheckBox value
+    layer.visible = visibleCheckBox.isSelected();
+
+    // Update the canvas to actually show the changes
     Program.MAIN_CONTROLLER.updateCanvas();
   }
 
@@ -67,7 +70,10 @@ public class LayerListCell extends ListCell<ImageLayer>
     }
     catch(Exception e)
     {
-      System.out.println(e);
+      System.out.println("Could not load FXML for LayerListCell:" + e);
     }
+
+    // Add listener to the TextField
+    textField.textProperty().addListener((observable, oldValue, newValue) -> layer.setName(newValue));
   }
 }

@@ -6,7 +6,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.scene.transform.Scale;
 import program.Program;
-import program.system.ImageLayer;
+import program.ui.elements.ImageLayer;
 import javafx.collections.ObservableList;
 import javafx.fxml.*;
 

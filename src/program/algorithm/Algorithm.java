@@ -1,7 +1,7 @@
 package program.algorithm;
 
-import program.system.AlgorithmSetting;
-import program.system.Curve;
+import program.system.Fractal;
+import program.ui.elements.AlgorithmSetting;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
@@ -11,32 +11,25 @@ public enum Algorithm
   // Add custom algorithms here following the given format
   BLUEBOX
     {
-      public Curve newCurve() { return new BlueBox(); }
+      public Fractal newFractal() { return new BlueBox(); }
       public boolean debug = true;
-      public void render(BufferedImage i, HashMap<String, AlgorithmSetting> s) { BlueBox.render(i, s); }
+      public void render(BufferedImage i, HashMap s) { BlueBox.render(i, s); }
       public String toString() { return "Blue Box"; }
     },
   REDBOX
     {
-      public Curve newCurve() { return new RedBox(); }
+      public Fractal newFractal() { return new RedBox(); }
       public boolean debug = true;
-      public void render(BufferedImage i, HashMap<String, AlgorithmSetting> s) { RedBox.render(i, s); }
+      public void render(BufferedImage i, HashMap s) { RedBox.render(i, s); }
       public String toString() { return "Red Box"; }
     },
-    DRAGONCURVE
-    {
-        public Curve newCurve() { return new DragonCurve(); }
-        public boolean debug = false;
-        public void render(BufferedImage i, HashMap<String, AlgorithmSetting> s) { DragonCurve.render(i, s); }
-        public String toString() { return "Dragon Curve"; }
-    },
-    HILBERTCURVE
-            {
-                public Curve newCurve() { return new HilbertCurve(); }
-                public boolean debug = false;
-                public void render(BufferedImage i, HashMap<String, AlgorithmSetting> s) { HilbertCurve.render(i, s); }
-                public String toString() { return "Hilbert Curve"; }
-            };
+  TIMEWASTER
+  {
+    public Fractal newFractal() { return new TimeWaster(); }
+    public boolean debug = true;
+    public void render(BufferedImage i, HashMap s) { TimeWaster.render(i, s); }
+    public String toString() { return "Time Waster"; }
+  };
 
   /**
    * Determines whether the algorithm is available only in debug mode
@@ -44,10 +37,10 @@ public enum Algorithm
   public boolean debug;
 
   /**
-   * This method should return a new Curve object for each algorithm
-   * @return curve The Curve object to be returned
+   * This method should return a new Fractal object for each algorithm
+   * @return curve The Fractal object to be returned
    */
-  public abstract Curve newCurve();
+  public abstract Fractal newFractal();
 
   /**
    * The method executing the render() method of the corresponding algorithm

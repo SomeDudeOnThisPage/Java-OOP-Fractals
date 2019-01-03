@@ -2,10 +2,10 @@ package program.ui;
 
 import program.Program;
 import program.algorithm.Algorithm;
-import program.system.*;
 import javafx.collections.*;
 import javafx.fxml.*;
 import javafx.scene.layout.BorderPane;
+import program.ui.elements.ImageLayer;
 
 import java.net.*;
 import java.util.*;
@@ -59,7 +59,9 @@ public class MainController implements Initializable {
   {
     // Initially draw the curve
     layer.redraw();
+    selected = layer;
     layers.add(layer);
+    //canvasController.update();
   }
 
   /**
@@ -124,7 +126,7 @@ public class MainController implements Initializable {
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle)
   {
-
+    // Placeholder, we'll surely have to use this soon
   }
 
   /**
@@ -135,7 +137,7 @@ public class MainController implements Initializable {
     // Create the main list of ImageLayers
     layers = FXCollections.observableArrayList();
 
-    // Create the main list of Algorithms
+    // Create the main list of Algorithms and populate it
     algorithms = FXCollections.observableArrayList();
     algorithms.addAll(Algorithm.values());
 

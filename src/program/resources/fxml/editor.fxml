@@ -23,8 +23,7 @@
                   <center>
                     <ChoiceBox fx:id="choiceBox" prefWidth="10000.0">
                       <items>
-                        <FXCollections fx:factory="observableArrayList">
-                        </FXCollections>
+                        <FXCollections fx:factory="observableArrayList" />
                       </items>
                       <BorderPane.margin>
                         <Insets bottom="6.0" right="6.0" top="6.0" />
@@ -63,7 +62,7 @@
             </VBox>
           </bottom>
           <center>
-            <ListView fx:id="layerList" prefHeight="200.0" prefWidth="200.0" />
+            <ListView id="layer-list" fx:id="layerList" prefHeight="200.0" prefWidth="200.0" />
           </center>
           <top>
             <BorderPane />
@@ -79,7 +78,7 @@
                       <center>
                         <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="-1.0" prefViewportHeight="0.0" prefViewportWidth="0.0" prefWidth="-1.0" BorderPane.alignment="CENTER">
                           <content>
-                            <VBox prefHeight="200.0" prefWidth="100.0" />
+                            <VBox fx:id="vBox" prefHeight="200.0" prefWidth="100.0" />
                           </content>
                         </ScrollPane>
                       </center>

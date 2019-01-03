@@ -33,12 +33,11 @@ public class Program extends Application
 
   private static final int WIDTH = 800;
   private static final int HEIGHT = 600;
-  private static final String TITLE = "SpaceCurve8000";
+  private static final String TITLE = "Lemme sniff ur b00t€-hole";
 
   public static final String RESOURCE_PATH = "/program/resources/";
 
   public static MainController MAIN_CONTROLLER;
-  private static Stage frame;
 
   /**
    * Used to show debug messages in the console when the debug flag is set
@@ -47,14 +46,14 @@ public class Program extends Application
   public static void debug(Object msg)
   {
     if (DEBUG)
-      System.out.println("[DEBUG] " + System.nanoTime() + " " + String.valueOf(msg));
+    {
+      System.out.println("[DEBUG] " + System.nanoTime() + " " + msg);
+    }
   }
 
   @Override
-  public void start(Stage stage) throws Exception
+  public void start(Stage frame) throws Exception
   {
-    frame = stage;
-
     frame.setMinWidth(WIDTH);
     frame.setMinHeight(HEIGHT);
     frame.setTitle(TITLE);
@@ -63,14 +62,17 @@ public class Program extends Application
     MAIN_CONTROLLER = new MainController();
     fxmlloader.setController(MAIN_CONTROLLER);
 
-    frame.setScene(new Scene(fxmlloader.load(), 300, 275));
+    Scene scene = new Scene(fxmlloader.load());
+    scene.getStylesheets().add(getClass().getResource(RESOURCE_PATH + "stylesheet.css").toString());
+
+    frame.setScene(scene);
     frame.show();
   }
 
   @Override
   public void stop()
   {
-
+    // Close any unclosed file handles, save current layers and settings
   }
 
   public static void main(String[] args)
@@ -82,10 +84,7 @@ public class Program extends Application
         DEBUG = true;
       }
     }
-    catch (Exception ignored)
-    {
-
-    }
+    catch (Exception ignored) {}
 
     launch(args);
   }

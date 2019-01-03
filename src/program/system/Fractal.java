@@ -1,6 +1,6 @@
 package program.system;
 
-import program.Program;
+import program.ui.elements.AlgorithmSetting;
 
 import java.util.HashMap;
 
@@ -12,7 +12,7 @@ import java.util.HashMap;
  * @author Robin Buhlmann
  * @version 0.1
  */
-public abstract class Curve
+public abstract class Fractal
 {
   /**
    * The settings for an algorithm are stored in this HashMap
@@ -27,7 +27,7 @@ public abstract class Curve
   /**
    * Constructor for the curve class
    */
-  public Curve()
+  public Fractal()
   {
     settings = new HashMap<>();
   }
