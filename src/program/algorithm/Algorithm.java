@@ -10,26 +10,40 @@ public enum Algorithm
 {
   // Add custom algorithms here following the given format
   BLUEBOX
-    {
-      public Fractal newFractal() { return new BlueBox(); }
-      public boolean debug = true;
-      public void render(BufferedImage i, HashMap s) { BlueBox.render(i, s); }
-      public String toString() { return "Blue Box"; }
-    },
-  REDBOX
-    {
-      public Fractal newFractal() { return new RedBox(); }
-      public boolean debug = true;
-      public void render(BufferedImage i, HashMap s) { RedBox.render(i, s); }
-      public String toString() { return "Red Box"; }
-    },
-  TIMEWASTER
-  {
-    public Fractal newFractal() { return new TimeWaster(); }
-    public boolean debug = true;
-    public void render(BufferedImage i, HashMap s) { TimeWaster.render(i, s); }
-    public String toString() { return "Time Waster"; }
-  };
+          {
+              public Fractal newFractal() { return new BlueBox(); }
+              public boolean debug = true;
+              public void render(BufferedImage i, HashMap s) { BlueBox.render(i, s); }
+              public String toString() { return "Blue Box"; }
+          },
+    REDBOX
+            {
+                public Fractal newFractal() { return new RedBox(); }
+                public boolean debug = true;
+                public void render(BufferedImage i, HashMap s) { RedBox.render(i, s); }
+                public String toString() { return "Red Box"; }
+            },
+    DRAGON
+            {
+                public Fractal newFractal() { return new DragonCurve(); }
+                public boolean debug = false;
+                public void render(BufferedImage i, HashMap s) { DragonCurve.render(i, s); }
+                public String toString() { return "Dragon Curve"; }
+            },
+    HILBERT
+            {
+                public Fractal newFractal() { return new HilbertCurve(); }
+                public boolean debug = false;
+                public void render(BufferedImage i, HashMap s) { HilbertCurve.render(i, s); }
+                public String toString() { return "Hilbert Curve"; }
+            },
+    TIMEWASTER
+            {
+                public Fractal newFractal() { return new TimeWaster(); }
+                public boolean debug = true;
+                public void render(BufferedImage i, HashMap s) { TimeWaster.render(i, s); }
+                public String toString() { return "Time Waster"; }
+            };
 
   /**
    * Determines whether the algorithm is available only in debug mode

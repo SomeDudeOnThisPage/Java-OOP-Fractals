@@ -1,15 +1,16 @@
 //taken from https://www.cs.cmu.edu/~adamchik/15-121/lectures/Recursions/demo/Hilbert.java
 package program.algorithm;
 
-import program.system.AlgorithmSetting;
-import program.system.Curve;
+
+import program.system.Fractal;
+import program.ui.elements.AlgorithmSetting;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
-public class HilbertCurve extends Curve {
+public class HilbertCurve extends Fractal {
         private static double orientation;
         private static double x = 0.0, y = 0.0;
         private static float scaleFactor = 1f;
@@ -35,10 +36,10 @@ public class HilbertCurve extends Curve {
         public HilbertCurve() {
             super();
 
-            settings.put("startX", new AlgorithmSetting<Integer>(200, 1000, 0));
-            settings.put("startY", new AlgorithmSetting<Integer>(200, 1000, 0));
-            settings.put("scaleFactor", new AlgorithmSetting<Float>(50f, 100f, 0.1f));
-            settings.put("iterations", new AlgorithmSetting<Integer>(10, 50, 1));
+            settings.put("startX", new AlgorithmSetting<Integer>("X Start Coordinate",200, 1000, 0, AlgorithmSetting.Type.SPINNER));
+            settings.put("startY", new AlgorithmSetting<Integer>("Y Start Coordinate", 200, 1000, 0, AlgorithmSetting.Type.SPINNER));
+            settings.put("scaleFactor", new AlgorithmSetting<Float>("Scale Factor", 50f, 100f, 0.1f, AlgorithmSetting.Type.SLIDER));
+            settings.put("iterations", new AlgorithmSetting<Integer>("Number of Iterations", 10, 50, 1, AlgorithmSetting.Type.SLIDER));
         }
 
 

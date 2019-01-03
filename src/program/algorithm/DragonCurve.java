@@ -1,8 +1,7 @@
 package program.algorithm;
 
-
-import program.system.AlgorithmSetting;
-import program.system.Curve;
+import program.system.Fractal;
+import program.ui.elements.AlgorithmSetting;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
@@ -10,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 
-public class DragonCurve extends Curve {
+public class DragonCurve extends Fractal {
 
     public static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings) {
 
@@ -109,9 +108,9 @@ public class DragonCurve extends Curve {
         super();
 
         //initialize settings
-        settings.put("scaleFactor", new AlgorithmSetting<Float>(1f, 100f, 0.1f));
-        settings.put("iterations", new AlgorithmSetting<Integer>(10, 50, 1));
-        settings.put("startX", new AlgorithmSetting<Integer>(150, 1000, 0));
-        settings.put("startY", new AlgorithmSetting<Integer>(400, 1000, 0));
+        settings.put("scaleFactor", new AlgorithmSetting<Float>("Scale Factor", 1f, 100f, 0.1f, AlgorithmSetting.Type.SLIDER));
+        settings.put("iterations", new AlgorithmSetting<Integer>("Number of Iterations" ,10, 50, 1, AlgorithmSetting.Type.SLIDER));
+        settings.put("startX", new AlgorithmSetting<Integer>("X Start Coordinate", 150, 1000, 0, AlgorithmSetting.Type.SPINNER));
+        settings.put("startY", new AlgorithmSetting<Integer>("Y Start Coordinate", 400, 1000, 0, AlgorithmSetting.Type.SPINNER));
     }
 }
