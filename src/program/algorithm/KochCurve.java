@@ -1,15 +1,28 @@
 package program.algorithm;
 
 import program.system.Fractal;
+import program.system.Turtle;
 import program.ui.elements.AlgorithmSetting;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
-public class KochCurve extends Fractal {
+/**
+ * Algorithm for drawing a Koch Snowflake<br>
+ * <p>
+ *  A static class for drawing the Koch Snowflake with the given parameters from the GUI
+ * </p>
+ * @author Leonard Pudwitz
+ * @version 1.0
+ * <br>
+ * @see program.system.Fractal
+ *
+ * @see program.system.Turtle
+ */
+class KochCurve extends Fractal {
 
-    public static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings) {
+    static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings) {
 
         //initialize all values from the settings menu
         double scaleFactor = (double) settings.get("scaleFactor").getValue();
@@ -42,17 +55,17 @@ public class KochCurve extends Fractal {
         return image;
     }
 
-    public KochCurve(){
+    KochCurve(){
         super();
 
-        settings.put("startX", new AlgorithmSetting<Integer>("X Start Coordinate",200, 1000, 0, AlgorithmSetting.Type.SPINNER));
-        settings.put("startY", new AlgorithmSetting<Integer>("Y Start Coordinate", 250, 1000, 0, AlgorithmSetting.Type.SPINNER));
-        settings.put("scaleFactor", new AlgorithmSetting<Double>("Scale Factor", 250d, 500d, 0.1d, AlgorithmSetting.Type.SLIDER));
-        settings.put("iterations", new AlgorithmSetting<Integer>("Number of Iterations", 10, 50, 1, AlgorithmSetting.Type.SLIDER));
+        settings.put("startX", new AlgorithmSetting<>("X Start Coordinate",200, 1000, 0, AlgorithmSetting.Type.SPINNER));
+        settings.put("startY", new AlgorithmSetting<>("Y Start Coordinate", 250, 1000, 0, AlgorithmSetting.Type.SPINNER));
+        settings.put("scaleFactor", new AlgorithmSetting<>("Scale Factor", 250d, 500d, 0.1d, AlgorithmSetting.Type.SLIDER));
+        settings.put("iterations", new AlgorithmSetting<>("Number of Iterations", 10, 50, 1, AlgorithmSetting.Type.SLIDER));
     }
 
     //draw a koch CURVE
-    public static void koch(int n, double step, Turtle t) {
+    private static void koch(int n, double step, Turtle t) {
 
 
         if (n == 0) {

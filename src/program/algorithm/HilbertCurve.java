@@ -3,15 +3,27 @@ package program.algorithm;
 
 
 import program.system.Fractal;
+import program.system.Turtle;
 import program.ui.elements.AlgorithmSetting;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+/**
+ * Algorithm for drawing a Hilbert Curve<br>
+ * <p>
+ *  A static class for drawing the Hilbert Curve with the given parameters from the GUI
+ * </p>
+ * @author Leonard Pudwitz
+ * @version 1.0
+ * <br>
+ * @see program.system.Fractal
+ *
+ * @see program.system.Turtle
+ */
+class HilbertCurve extends Fractal {
 
-public class HilbertCurve extends Fractal {
-
-    public static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings) {
+    static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings) {
 
         //initialize all values from the settings menu
         double scaleFactor = (double) settings.get("scaleFactor").getValue();
@@ -37,14 +49,14 @@ public class HilbertCurve extends Fractal {
         return image;
     }
 
-    public HilbertCurve() {
+    HilbertCurve() {
         super();
 
         //set bounds and default values for the menu options
-        settings.put("startX", new AlgorithmSetting<Integer>("X Start Coordinate",200, 1000, 0, AlgorithmSetting.Type.SPINNER));
-        settings.put("startY", new AlgorithmSetting<Integer>("Y Start Coordinate", 200, 1000, 0, AlgorithmSetting.Type.SPINNER));
-        settings.put("scaleFactor", new AlgorithmSetting<Double>("Scale Factor", 50d, 100d, 0.1d, AlgorithmSetting.Type.SLIDER));
-        settings.put("iterations", new AlgorithmSetting<Integer>("Number of Iterations", 10, 50, 1, AlgorithmSetting.Type.SLIDER));
+        settings.put("startX", new AlgorithmSetting<>("X Start Coordinate",200, 1000, 0, AlgorithmSetting.Type.SPINNER));
+        settings.put("startY", new AlgorithmSetting<>("Y Start Coordinate", 200, 1000, 0, AlgorithmSetting.Type.SPINNER));
+        settings.put("scaleFactor", new AlgorithmSetting<>("Scale Factor", 50d, 100d, 0.1d, AlgorithmSetting.Type.SLIDER));
+        settings.put("iterations", new AlgorithmSetting<>("Number of Iterations", 10, 50, 1, AlgorithmSetting.Type.SLIDER));
     }
 
     // Hilbert curve

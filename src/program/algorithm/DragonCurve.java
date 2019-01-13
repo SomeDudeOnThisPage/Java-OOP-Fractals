@@ -6,15 +6,27 @@ import program.ui.elements.AlgorithmSetting;
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Algorithm for drawing a Dragon Curve<br>
+ * <p>
+ *  A static class for drawing the Dragon Curve with the given parameters from the GUI
+ * </p>
+ * @author Leonard Pudwitz
+ * @version 1.0
+ * <br>
+ * @see program.system.Fractal
+ */
 public class DragonCurve extends Fractal {
 
     public static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings) {
 
         //retrieve settings
-        float scaleFactor = (float) settings.get("scaleFactor").getValue();
+        double scaleFactor = (double) settings.get("scaleFactor").getValue();
         int iterations = (int) settings.get("iterations").getValue();
         int startX = (int) settings.get("startX").getValue();
         int startY = (int) settings.get("startY").getValue();
@@ -29,7 +41,7 @@ public class DragonCurve extends Fractal {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 
         //generate the turn sequence
-        List<Integer>turns = getSequence(iterations);
+        List<Integer> turns = getSequence(iterations);
 
         //calculate the starting angle so that the thing will be horizontal
         double startingAngle = -iterations * (Math.PI / 4);
@@ -108,9 +120,9 @@ public class DragonCurve extends Fractal {
         super();
 
         //initialize settings
-        settings.put("scaleFactor", new AlgorithmSetting<Float>("Scale Factor", 1f, 100f, 0.1f, AlgorithmSetting.Type.SLIDER));
-        settings.put("iterations", new AlgorithmSetting<Integer>("Number of Iterations" ,10, 50, 1, AlgorithmSetting.Type.SLIDER));
-        settings.put("startX", new AlgorithmSetting<Integer>("X Start Coordinate", 150, 1000, 0, AlgorithmSetting.Type.SPINNER));
-        settings.put("startY", new AlgorithmSetting<Integer>("Y Start Coordinate", 400, 1000, 0, AlgorithmSetting.Type.SPINNER));
+        settings.put("scaleFactor", new AlgorithmSetting<>("Scale Factor", 1d, 100d, 0.1d, AlgorithmSetting.Type.SLIDER));
+        settings.put("iterations", new AlgorithmSetting<>("Number of Iterations" ,10, 50, 1, AlgorithmSetting.Type.SLIDER));
+        settings.put("startX", new AlgorithmSetting<>("X Start Coordinate", 150, 1000, 0, AlgorithmSetting.Type.SPINNER));
+        settings.put("startY", new AlgorithmSetting<>("Y Start Coordinate", 400, 1000, 0, AlgorithmSetting.Type.SPINNER));
     }
 }

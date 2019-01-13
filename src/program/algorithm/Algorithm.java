@@ -44,6 +44,13 @@ public enum Algorithm
                 public void render(BufferedImage i, HashMap s) { KochCurve.render(i, s); }
                 public String toString() { return "Koch Curve"; }
             },
+    GOSPER
+            {
+                public Fractal newFractal() { return new GosperCurve(); }
+                public boolean debug = false;
+                public void render(BufferedImage i, HashMap s) { GosperCurve.render(i, s); }
+                public String toString() { return "Gosper Curve"; }
+            },
     TIMEWASTER
             {
                 public Fractal newFractal() { return new TimeWaster(); }
