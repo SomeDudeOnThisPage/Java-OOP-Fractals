@@ -37,6 +37,13 @@ public enum Algorithm
                 public void render(BufferedImage i, HashMap s) { HilbertCurve.render(i, s); }
                 public String toString() { return "Hilbert Curve"; }
             },
+    KOCH
+            {
+                public Fractal newFractal() { return new KochCurve(); }
+                public boolean debug = false;
+                public void render(BufferedImage i, HashMap s) { KochCurve.render(i, s); }
+                public String toString() { return "Koch Curve"; }
+            },
     TIMEWASTER
             {
                 public Fractal newFractal() { return new TimeWaster(); }

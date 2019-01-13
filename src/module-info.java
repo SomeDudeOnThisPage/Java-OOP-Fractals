@@ -3,6 +3,7 @@ module Java.OOP.Space.Filling.Curves {
   requires javafx.controls;
   requires javafx.swing;
   requires java.desktop;
+  requires javafx.base;
 
   opens program.ui;
   opens program.ui.elements;
