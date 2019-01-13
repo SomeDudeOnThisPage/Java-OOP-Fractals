@@ -33,7 +33,7 @@ public class EditorController implements Initializable
     // Create a new Image layer
     ImageLayer l = new ImageLayer("Layer #" + a, 1000, 1000, choiceBox.getValue());
     // Add the layer to the main controllers' list of layers
-    Program.MAIN_CONTROLLER.addLayer(l);
+    Program.ui.addLayer(l);
     // Increment a to so the next ImageLayer has the name 'Layer #(a+1)'
     a++;
   }
@@ -46,7 +46,7 @@ public class EditorController implements Initializable
     // Make sure we have a layer selected when trying to remove the currently selected layer
     try
     {
-      Program.MAIN_CONTROLLER.removeLayer(layerList.getSelectionModel().getSelectedIndex());
+      Program.ui.removeLayer(layerList.getSelectionModel().getSelectedIndex());
     }
     catch (Exception e)
     {
@@ -60,12 +60,12 @@ public class EditorController implements Initializable
   public void update()
   {
     // Reset all items to the ones found in the mainControllers' layerList
-    layerList.setItems(Program.MAIN_CONTROLLER.getLayers());
+    layerList.setItems(Program.ui.getLayers());
 
     // (Re)Set the options panel
     vBox.getChildren().clear();
     // Get the current layers' settings
-    HashMap<String, AlgorithmSetting> settings = Program.MAIN_CONTROLLER.getSelectedLayer().getSettings();
+    HashMap<String, AlgorithmSetting> settings = Program.ui.getSelectedLayer().getSettings();
     // Add the settings panes to the vBox
     settings.forEach((String key, AlgorithmSetting value) -> {
       vBox.getChildren().add(value);
@@ -83,7 +83,7 @@ public class EditorController implements Initializable
     layerList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
       try
       {
-        Program.MAIN_CONTROLLER.setSelectedLayer(newValue);
+        Program.ui.setSelectedLayer(newValue);
         update();
       }
       catch (Exception ignored)
@@ -94,7 +94,7 @@ public class EditorController implements Initializable
     });
 
     // Populate the choiceBox
-    ObservableList<Algorithm> algs = Program.MAIN_CONTROLLER.getAlgorithms();
+    ObservableList<Algorithm> algs = Program.ui.getAlgorithms();
     Algorithm alg;
 
     for (int i = 0; i < algs.size(); i++)

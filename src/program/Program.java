@@ -7,9 +7,15 @@ import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.stage.*;
 
+import java.util.HashMap;
+
 /*
     TODO: Some way to store program settings / options
     -> ini4j
+    TODO: File loading / saving (saving either a single algorithm-setup or an entire list of algorithms and their setups)
+    -> json
+    TODO: Color modes
+    -> Leo denk dir ma was aus wie man das nice machen könnte j00nge
  */
 
 /**
@@ -37,7 +43,9 @@ public class Program extends Application
 
   public static final String RESOURCE_PATH = "/program/resources/";
 
-  public static MainController MAIN_CONTROLLER;
+  public static MainController ui;
+
+  public static HashMap<String, Boolean> settings;
 
   /**
    * Used to show debug messages in the console when the debug flag is set
@@ -59,8 +67,8 @@ public class Program extends Application
     frame.setTitle(TITLE);
 
     FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(RESOURCE_PATH + "fxml/main.fxml"));
-    MAIN_CONTROLLER = new MainController();
-    fxmlloader.setController(MAIN_CONTROLLER);
+    ui = new MainController();
+    fxmlloader.setController(ui);
 
     Scene scene = new Scene(fxmlloader.load());
     scene.getStylesheets().add(getClass().getResource(RESOURCE_PATH + "stylesheet.css").toString());
@@ -72,16 +80,18 @@ public class Program extends Application
   @Override
   public void stop()
   {
-    // Close any unclosed file handles, save current layers and settings
+    // Close any unclosed file handles, save current layers as last.json, and save any unsaved settings
+    // Attempt to stop any currently running tasks
   }
 
   public static void main(String[] args)
   {
     try
     {
-      if (args[0].equals("-debug"))
+      for(String str : args)
       {
-        DEBUG = true;
+        if (str.equals("-debug"))
+          DEBUG = true;
       }
     }
     catch (Exception ignored) {}

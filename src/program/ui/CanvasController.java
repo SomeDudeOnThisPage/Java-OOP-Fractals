@@ -50,8 +50,8 @@ public class CanvasController implements Initializable
     // Remove all children from the canvasAnchor
     canvasAnchor.getChildren().clear();
 
-    // Retrieve the (probably updated) layerList from the MAIN_CONTROLLER
-    ObservableList<ImageLayer> layers = Program.MAIN_CONTROLLER.getLayers();
+    // Retrieve the (probably updated) layerList from the ui
+    ObservableList<ImageLayer> layers = Program.ui.getLayers();
 
     // Iterate over the layers, add them and set visible/invisible
     for (int i = layers.size() - 1; i >= 0; i--)

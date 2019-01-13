@@ -47,7 +47,7 @@ public class LayerListCell extends ListCell<ImageLayer>
     layer.visible = visibleCheckBox.isSelected();
 
     // Update the canvas to actually show the changes
-    Program.MAIN_CONTROLLER.updateCanvas();
+    Program.ui.updateCanvas();
   }
 
   public void onTextFieldAction()
