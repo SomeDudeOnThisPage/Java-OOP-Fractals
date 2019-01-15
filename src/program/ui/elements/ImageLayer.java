@@ -66,8 +66,6 @@ public class ImageLayer extends Canvas
     // Get the GraphicsContext
     GraphicsContext g = getGraphicsContext2D();
 
-    // Clear the canvas
-    g.clearRect(0, 0, this.getWidth(), this.getHeight());
     // Create the task, right now only for TESTALG
     Task renderTask = new GraphicsTask(this.algorithm, this.fractal.getSettings());
 
@@ -81,6 +79,8 @@ public class ImageLayer extends Canvas
 
         // Cast the return value to a WritableImage so it can be drawn onto the canvas
         WritableImage image = SwingFXUtils.toFXImage(bi, null);
+        
+        g.clearRect(0, 0, this.getWidth(), this.getHeight());
         g.drawImage(image, 0, 0);
     });
 
