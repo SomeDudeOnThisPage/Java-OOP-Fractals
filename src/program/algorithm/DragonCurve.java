@@ -30,6 +30,7 @@ public class DragonCurve extends Fractal {
         int iterations = (int) settings.get("iterations").getValue();
         int startX = (int) settings.get("startX").getValue();
         int startY = (int) settings.get("startY").getValue();
+        double rotation = (double) settings.get("rotation").getValue();
 
         //generate a Graphics2D object from the given BufferedImage
         Graphics2D g = image.createGraphics();
@@ -45,6 +46,9 @@ public class DragonCurve extends Fractal {
 
         //calculate the starting angle so that the thing will be horizontal
         double startingAngle = -iterations * (Math.PI / 4);
+
+        //add the user's wanted additional rotation
+        startingAngle += rotation;
 
         //calculate the side length
         double side = (500 / Math.pow(2, iterations / 2.)) * scaleFactor;
@@ -124,5 +128,6 @@ public class DragonCurve extends Fractal {
         settings.put("iterations", new AlgorithmSetting<>("Number of Iterations" ,10, 50, 1, AlgorithmSetting.Type.SLIDER));
         settings.put("startX", new AlgorithmSetting<>("X Start Coordinate", 150, 1000, 0, AlgorithmSetting.Type.SPINNER));
         settings.put("startY", new AlgorithmSetting<>("Y Start Coordinate", 400, 1000, 0, AlgorithmSetting.Type.SPINNER));
+        settings.put("rotation", new AlgorithmSetting<>("Rotation", 0d, 360d, 0d, AlgorithmSetting.Type.SPINNER));
     }
 }

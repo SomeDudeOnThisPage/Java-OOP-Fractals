@@ -30,6 +30,7 @@ class HilbertCurve extends Fractal {
         double x = (int) settings.get("startX").getValue();
         double y = (int) settings.get("startY").getValue();
         int iterations = (int) settings.get("iterations").getValue();
+        double rotation = (double) settings.get("rotation").getValue();
 
         //create the graphics2d object from the buffered image
         Graphics2D g = image.createGraphics();
@@ -39,6 +40,9 @@ class HilbertCurve extends Fractal {
 
         //initialize a turtle for drawing the curve
         Turtle t = new Turtle(x, y, scaleFactor, g);
+
+        //turn the turtle by the rotation amount specified by the user
+        t.rotate(rotation);
 
         //start the recursive function
         hilbert0(iterations, t);
@@ -57,6 +61,7 @@ class HilbertCurve extends Fractal {
         settings.put("startY", new AlgorithmSetting<>("Y Start Coordinate", 200, 1000, 0, AlgorithmSetting.Type.SPINNER));
         settings.put("scaleFactor", new AlgorithmSetting<>("Scale Factor", 50d, 100d, 0.1d, AlgorithmSetting.Type.SLIDER));
         settings.put("iterations", new AlgorithmSetting<>("Number of Iterations", 10, 50, 1, AlgorithmSetting.Type.SLIDER));
+        settings.put("rotation", new AlgorithmSetting<>("Rotation", 0d, 360d, 0d, AlgorithmSetting.Type.SPINNER));
     }
 
     // Hilbert curve

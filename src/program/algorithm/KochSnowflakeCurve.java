@@ -20,7 +20,7 @@ import java.util.HashMap;
  *
  * @see program.system.Turtle
  */
-class KochCurve extends Fractal {
+class KochSnowflakeCurve extends Fractal {
 
     static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings) {
 
@@ -29,6 +29,7 @@ class KochCurve extends Fractal {
         double x = (int) settings.get("startX").getValue();
         double y = (int) settings.get("startY").getValue();
         int iterations = (int) settings.get("iterations").getValue();
+        double rotation = (double) settings.get("rotation").getValue();
 
         //create the graphics2d object from the buffered image
         Graphics2D g = image.createGraphics();
@@ -38,6 +39,7 @@ class KochCurve extends Fractal {
 
         //initialize a turtle for drawing the curve
         Turtle t = new Turtle(x, y, scaleFactor, g);
+        t.rotate(rotation);
 
         //draw first part of snowflake
         koch(iterations, (1.0 / Math.pow(3.0, iterations)), t);
@@ -55,13 +57,14 @@ class KochCurve extends Fractal {
         return image;
     }
 
-    KochCurve(){
+    KochSnowflakeCurve(){
         super();
 
         settings.put("startX", new AlgorithmSetting<>("X Start Coordinate",200, 1000, 0, AlgorithmSetting.Type.SPINNER));
         settings.put("startY", new AlgorithmSetting<>("Y Start Coordinate", 250, 1000, 0, AlgorithmSetting.Type.SPINNER));
         settings.put("scaleFactor", new AlgorithmSetting<>("Scale Factor", 250d, 500d, 0.1d, AlgorithmSetting.Type.SLIDER));
         settings.put("iterations", new AlgorithmSetting<>("Number of Iterations", 10, 50, 1, AlgorithmSetting.Type.SLIDER));
+        settings.put("rotation", new AlgorithmSetting<>("Rotation", 0d, 360d, 0d, AlgorithmSetting.Type.SPINNER));
     }
 
     //draw a koch CURVE

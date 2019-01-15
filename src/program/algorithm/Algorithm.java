@@ -37,12 +37,12 @@ public enum Algorithm
                 public void render(BufferedImage i, HashMap s) { HilbertCurve.render(i, s); }
                 public String toString() { return "Hilbert Curve"; }
             },
-    KOCH
+    KOCHSNOWFLAKE
             {
-                public Fractal newFractal() { return new KochCurve(); }
+                public Fractal newFractal() { return new KochSnowflakeCurve(); }
                 public boolean debug = false;
-                public void render(BufferedImage i, HashMap s) { KochCurve.render(i, s); }
-                public String toString() { return "Koch Curve"; }
+                public void render(BufferedImage i, HashMap s) { KochSnowflakeCurve.render(i, s); }
+                public String toString() { return "Koch Snowflake"; }
             },
     GOSPER
             {
@@ -50,6 +50,27 @@ public enum Algorithm
                 public boolean debug = false;
                 public void render(BufferedImage i, HashMap s) { GosperCurve.render(i, s); }
                 public String toString() { return "Gosper Curve"; }
+            },
+    PEANO
+            {
+                public Fractal newFractal() {return new PeanoCurve(); }
+                public boolean debug = false;
+                public void render(BufferedImage i, HashMap s) {PeanoCurve.render(i, s); }
+                public String toString() {return "Peano Curve"; }
+            },
+    KOCHISLAND
+            {
+                public Fractal newFractal() {return new KochIslandCurve(); }
+                public boolean debug = false;
+                public void render(BufferedImage i, HashMap s) {KochIslandCurve.render(i, s); }
+                public String toString() {return "Koch Island"; }
+            },
+    SIERPINSKISQUARE
+            {
+                public Fractal newFractal() {return new SierpinskiSquareCurve(); }
+                public boolean debug = false;
+                public void render(BufferedImage i, HashMap s) {SierpinskiSquareCurve.render(i, s); }
+                public String toString() {return "Sierpinksi Square"; }
             },
     TIMEWASTER
             {

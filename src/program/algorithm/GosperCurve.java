@@ -7,6 +7,7 @@ import program.ui.elements.AlgorithmSetting;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 /**
@@ -30,6 +31,7 @@ public class GosperCurve extends Fractal {
         double x = (int) settings.get("startX").getValue();
         double y = (int) settings.get("startY").getValue();
         int iterations = (int) settings.get("iterations").getValue();
+        double rotation = (double) settings.get("rotation").getValue();
 
         //create the graphics2d object from the buffered image
         Graphics2D g = image.createGraphics();
@@ -39,6 +41,9 @@ public class GosperCurve extends Fractal {
 
         //initialize a turtle for drawing the curve
         Turtle t = new Turtle(x, y, scaleFactor, g);
+
+        //turn the turtle by the rotation amount specified by the user
+        t.rotate(rotation);
 
         List<GosperDirections> turns = getSequence(iterations);
 
@@ -68,8 +73,10 @@ public class GosperCurve extends Fractal {
         settings.put("startY", new AlgorithmSetting<>("Y Start Coordinate", 450, 1000, 0, AlgorithmSetting.Type.SPINNER));
         settings.put("scaleFactor", new AlgorithmSetting<>("Scale Factor", 2d, 100d, 0.1d, AlgorithmSetting.Type.SLIDER));
         settings.put("iterations", new AlgorithmSetting<>("Number of Iterations", 4, 50, 1, AlgorithmSetting.Type.SLIDER));
+        settings.put("rotation", new AlgorithmSetting<>("Rotation", 0d, 360d, 0d, AlgorithmSetting.Type.SPINNER));
     }
 
+    //the four different action cases
     private enum GosperDirections {
         A,
         B,
@@ -79,56 +86,64 @@ public class GosperCurve extends Fractal {
 
     private static List<GosperDirections> getSequence(int iterations) {
         //initialize two preset lists
-        List<GosperDirections> caseA = new ArrayList<>(), caseB = new ArrayList<>();
+        List<GosperDirections> caseA = new ArrayList<>(Arrays.asList(
+                GosperDirections.L,
+                GosperDirections.B,
+                GosperDirections.L,
+                GosperDirections.L,
+                GosperDirections.B,
+                GosperDirections.R,
+                GosperDirections.A,
+                GosperDirections.R,
+                GosperDirections.R,
+                GosperDirections.A,
+                GosperDirections.A,
+                GosperDirections.R,
+                GosperDirections.B,
+                GosperDirections.L));
 
-        //add values to caseA
-        caseA.add(GosperDirections.A);
-        caseA.add(GosperDirections.L);
-        caseA.add(GosperDirections.B);
-        caseA.add(GosperDirections.L);
-        caseA.add(GosperDirections.L);
-        caseA.add(GosperDirections.B);
-        caseA.add(GosperDirections.R);
-        caseA.add(GosperDirections.A);
-        caseA.add(GosperDirections.R);
-        caseA.add(GosperDirections.R);
-        caseA.add(GosperDirections.A);
-        caseA.add(GosperDirections.A);
-        caseA.add(GosperDirections.R);
-        caseA.add(GosperDirections.B);
-        caseA.add(GosperDirections.L);
+        List<GosperDirections> caseB = new ArrayList<>(Arrays.asList(
+               GosperDirections.R,
+               GosperDirections.A,
+               GosperDirections.L,
+               GosperDirections.B,
+               GosperDirections.B,
+               GosperDirections.L,
+               GosperDirections.L,
+               GosperDirections.B,
+               GosperDirections.L,
+               GosperDirections.A,
+               GosperDirections.R,
+               GosperDirections.R,
+               GosperDirections.A,
+               GosperDirections.R,
+               GosperDirections.B
+        ));
 
-        //add values to caseB
-        caseB.add(GosperDirections.R);
-        caseB.add(GosperDirections.A);
-        caseB.add(GosperDirections.L);
-        caseB.add(GosperDirections.B);
-        caseB.add(GosperDirections.B);
-        caseB.add(GosperDirections.L);
-        caseB.add(GosperDirections.L);
-        caseB.add(GosperDirections.B);
-        caseB.add(GosperDirections.L);
-        caseB.add(GosperDirections.A);
-        caseB.add(GosperDirections.R);
-        caseB.add(GosperDirections.R);
-        caseB.add(GosperDirections.A);
-        caseB.add(GosperDirections.R);
-        caseB.add(GosperDirections.B);
 
+        //begin the turn sequence
         List<GosperDirections> turnSequence = new ArrayList<>();
+        //add an initial value
         turnSequence.add(GosperDirections.A);
 
         for (int i = 0; i < iterations; i++) {
+            //copy the list so we don't modify the same object we're iterating over
             List<GosperDirections> copy = new ArrayList<>(turnSequence);
 
+            //initialize the new list
             turnSequence = new ArrayList<>();
+
+            //append new values depending on the cases
             for (GosperDirections d : copy) {
-                if (d == GosperDirections.A) {
-                    turnSequence.addAll(caseA);
-                } else if (d == GosperDirections.B) {
-                    turnSequence.addAll(caseB);
-                } else {
-                    turnSequence.add(d);
+                switch(d) {
+                    case A:
+                        turnSequence.addAll(caseA);
+                        break;
+                    case B:
+                        turnSequence.addAll(caseB);
+                        break;
+                    default:
+                        turnSequence.add(d);
                 }
             }
         }
