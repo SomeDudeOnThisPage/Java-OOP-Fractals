@@ -45,7 +45,7 @@ public class MainController implements Initializable {
   private ImageLayer selected;
 
   /**
-   * Redraws a layer by creating a new GraphicsTask with the GraphicsContext of an ImageLayer
+   * Redraws a layer by creating a new GraphicsService with the GraphicsContext of an ImageLayer
    * Sets the GraphicsContext of the ImageLayer after task completion
    */
   public void updateLayer() {
