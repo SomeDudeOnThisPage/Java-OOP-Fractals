@@ -42,6 +42,8 @@ public class ImageLayer extends Canvas
 
   private Algorithm algorithm;
 
+  private GraphicsService renderService;
+
   /**
    * Determines whether the layer is visible or not
    */
@@ -63,31 +65,32 @@ public class ImageLayer extends Canvas
    */
   public void redraw()
   {
+    // Cancel any ongoing renderService
+    renderService.cancel();
+
     // Get the GraphicsContext
     GraphicsContext g = getGraphicsContext2D();
 
-    // Create the task, right now only for TESTALG
-    Task renderTask = new GraphicsService(this.algorithm, this.fractal.getSettings());
+    // Set the settings for the render service
+    renderService.setSettings(this.fractal.getSettings());
 
     // Add an event handler to the task that gets the tasks' value when succeeded and draws it on the canvas
     // Doing this BEFORE starting the thread to avoid having the task finish before the event handler is instanced
-    renderTask.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED,
+    renderService.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED,
       (EventHandler<WorkerStateEvent>) (e) -> {
 
         // Get the return value from the task
-        BufferedImage bi = (BufferedImage) renderTask.getValue();
+        BufferedImage bi = (BufferedImage) renderService.getValue();
 
         // Cast the return value to a WritableImage so it can be drawn onto the canvas
         WritableImage image = SwingFXUtils.toFXImage(bi, null);
 
         g.clearRect(0, 0, this.getWidth(), this.getHeight());
         g.drawImage(image, 0, 0);
-    });
+      });
 
     // Start the thread
-    Thread thread = new Thread(renderTask);
-    thread.setDaemon(true);
-    thread.start();
+    renderService.restart();
   }
 
   public ImageLayer(String name, int x, int y, Algorithm algorithm)
@@ -101,5 +104,8 @@ public class ImageLayer extends Canvas
     // Generate initial settings for this layer
     this.name = name;
     this.visible = true;
+
+    // Create the rendering service
+    this.renderService = new GraphicsService(this.algorithm, this.fractal.getSettings());
   }
 }
