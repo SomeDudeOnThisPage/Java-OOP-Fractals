@@ -1,7 +1,9 @@
 package program.algorithm;
 
+import program.Program;
 import program.ui.elements.AlgorithmSetting;
 import program.system.Fractal;
+import program.ui.elements.ColorSetting;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -9,10 +11,10 @@ import java.util.HashMap;
 
 public class BlueBox extends Fractal
 {
-  public static void render(BufferedImage image, HashMap<String, AlgorithmSetting> settings)
+  public static void render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, ColorSetting.Type mode, Color[] colors)
   {
     Graphics2D g = (Graphics2D) image.getGraphics();
-    g.setColor(Color.BLUE);
+    g.setColor(colors[0]);
 
     g.drawRect(100, 100, 50, 50);
 

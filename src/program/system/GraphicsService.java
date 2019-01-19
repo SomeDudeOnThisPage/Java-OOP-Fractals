@@ -3,8 +3,11 @@ package program.system;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import program.Program;
 import program.algorithm.Algorithm;
 import program.ui.elements.AlgorithmSetting;
+import program.ui.elements.ColorSetting;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
@@ -31,6 +34,8 @@ public class GraphicsService extends Service<BufferedImage>
 
   private HashMap<String, AlgorithmSetting> settings;
 
+  private ColorSetting colors;
+
   private BufferedImage image;
 
   public void setSettings(HashMap<String, AlgorithmSetting> settings)
@@ -47,10 +52,10 @@ public class GraphicsService extends Service<BufferedImage>
   @Override
   protected Task<BufferedImage> createTask()
   {
-    return new Task<BufferedImage>()
+    return new Task<>()
     {
       @Override
-      protected BufferedImage call() throws Exception
+      protected BufferedImage call()
       {
         // Create the image during the runtime of the task to avoid it being mutable outside the task to ensure thread safety
         image = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_ARGB);
@@ -61,8 +66,23 @@ public class GraphicsService extends Service<BufferedImage>
         HashMap<String, AlgorithmSetting> copy = new HashMap<>();
         settings.forEach(copy::put);
 
+        // Preserve the mode of the colorSettings to pass them on to the render method later
+        ColorSetting.Type mode = colors.getMode();
+
+        // We need java.awt.Color instead of javafx colors to draw on a BufferedImage!
+        java.awt.Color[] c = new java.awt.Color[2];
+
+        // Cast the colors to java.awt.Color so we can use them on a BufferedImage
+        // Has the added side-effect that we casually deep-copy the colors
+        Color cur = colors.getColors()[0];
+
+        c[0] = new java.awt.Color((float) cur.getRed(), (float) cur.getBlue(), (float) cur.getGreen(), (float) cur.getOpacity());
+
+        cur = colors.getColors()[1];
+        c[1] = new java.awt.Color((float) cur.getRed(), (float) cur.getBlue(), (float) cur.getGreen(), (float) cur.getOpacity());
+
         // Call the render() method in the Algorithm enum
-        algorithm.render(image, copy);
+        algorithm.render(image, copy, mode, c);
 
         return image;
       }
@@ -73,9 +93,10 @@ public class GraphicsService extends Service<BufferedImage>
    * Sets the GraphicsContext to be used in the task
    * @param algorithm the Algorithm to be drawn
    */
-  public GraphicsService(Algorithm algorithm, HashMap<String, AlgorithmSetting> settings)
+  public GraphicsService(Algorithm algorithm, HashMap<String, AlgorithmSetting> settings, ColorSetting colors)
   {
     this.algorithm = algorithm;
     this.settings = settings;
+    this.colors = colors;
   }
 }

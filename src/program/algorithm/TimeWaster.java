@@ -2,6 +2,7 @@ package program.algorithm;
 
 import program.system.Fractal;
 import program.ui.elements.AlgorithmSetting;
+import program.ui.elements.ColorSetting;
 
 import java.util.HashMap;
 
@@ -13,7 +14,7 @@ import java.awt.image.BufferedImage;
  */
 public class TimeWaster extends Fractal
 {
-  public static void render(BufferedImage image, HashMap<String, AlgorithmSetting> settings)
+  public static void render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, ColorSetting.Type mode, Color[] colors)
   {
     int wastedTime = (int) settings.get("wastedTime").getValue();
     int posX = (int) settings.get("posX").getValue();

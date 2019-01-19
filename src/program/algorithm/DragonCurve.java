@@ -2,6 +2,7 @@ package program.algorithm;
 
 import program.system.Fractal;
 import program.ui.elements.AlgorithmSetting;
+import program.ui.elements.ColorSetting;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
@@ -23,7 +24,7 @@ import java.util.List;
  */
 public class DragonCurve extends Fractal {
 
-    public static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings) {
+    public static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, ColorSetting.Type mode, Color[] colors) {
 
         //retrieve settings
         double scaleFactor = (double) settings.get("scaleFactor").getValue();

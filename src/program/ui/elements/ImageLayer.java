@@ -1,21 +1,15 @@
 package program.ui.elements;
 
-import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
-
+import java.awt.image.BufferedImage;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.EventHandler;
-
 import javafx.scene.image.WritableImage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-
 import javafx.scene.layout.BorderPane;
 import program.algorithm.Algorithm;
 import program.system.Fractal;
 import program.system.GraphicsService;
-
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 /**
@@ -109,11 +103,9 @@ public class ImageLayer extends Canvas
 
     // Add an event handler to the task that gets the tasks' value when succeeded and draws it on the canvas
     // Doing this BEFORE starting the thread to avoid having the task finish before the event handler is instanced
-    renderService.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED,
-      (EventHandler<WorkerStateEvent>) (e) -> {
-
+    renderService.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, e -> {
         // Get the return value from the task
-        BufferedImage bi = (BufferedImage) renderService.getValue();
+        BufferedImage bi = renderService.getValue();
 
         // Cast the return value to a WritableImage so it can be drawn onto the canvas
         WritableImage image = SwingFXUtils.toFXImage(bi, null);
@@ -142,6 +134,6 @@ public class ImageLayer extends Canvas
     this.visible = true;
 
     // Create the rendering service
-    this.renderService = new GraphicsService(this.algorithm, this.fractal.getSettings());
+    this.renderService = new GraphicsService(this.algorithm, this.fractal.getSettings(), this.colorSettings);
   }
 }

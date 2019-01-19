@@ -3,6 +3,7 @@ package program.algorithm;
 import program.system.Fractal;
 import program.system.Turtle;
 import program.ui.elements.AlgorithmSetting;
+import program.ui.elements.ColorSetting;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -26,7 +27,7 @@ import java.util.List;
 
 public class SierpinskiSquareCurve extends Fractal {
 
-    static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings) {
+    static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, ColorSetting.Type mode, Color[] colors) {
 
         //initialize all values from the settings menu
         double scaleFactor = (double) settings.get("scaleFactor").getValue();

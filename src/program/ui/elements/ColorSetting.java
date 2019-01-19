@@ -139,6 +139,10 @@ public class ColorSetting extends BorderPane {
     this.setTop(choiceBox);
     this.setCenter(vBox);
 
+    // Populate the color array with initial values
+    colors[0] = Color.BLACK;
+    colors[1] = Color.BLACK;
+
     setColorSettingMode(choiceBox.getValue());
   }
 }
