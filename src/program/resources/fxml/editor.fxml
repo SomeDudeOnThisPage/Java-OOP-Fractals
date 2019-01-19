@@ -92,7 +92,18 @@
             </Tab>
             <Tab text="Color">
               <content>
-                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                    <BorderPane prefHeight="400.0" prefWidth="250.0" AnchorPane.bottomAnchor="-73.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
+                      <center>
+                        <ScrollPane fx:id="colorSettingsPane" content="$null" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="-1.0" prefViewportHeight="0.0" prefViewportWidth="0.0" prefWidth="-1.0" BorderPane.alignment="CENTER" />
+                      </center>
+                      <padding>
+                        <Insets />
+                      </padding>
+                    </BorderPane>
+                  </children>
+                </AnchorPane>
               </content>
             </Tab>
             <Tab text="Canvas">

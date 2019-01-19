@@ -10,6 +10,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
+import javafx.scene.layout.BorderPane;
 import program.algorithm.Algorithm;
 import program.system.Fractal;
 import program.system.GraphicsService;
@@ -21,12 +22,16 @@ import java.util.HashMap;
  * The layer for the fractal
  * <p>
  *   An extended canvas object to manage the fractal. These are layered
- *   on top of each other in the canvas-scene.
+ *   on top of each other in the canvas-scene. Each ImageLayer holds a Fractal
+ *   object (and thus its settings) and its color settings. It also handles
+ *   starting / stopping the rendering service executing the current Fractals render method.
  * </p>
  * @author Robin Buhlmann
  * @version 0.1
  * <br>
  * @see Canvas
+ * @see Fractal
+ * @see ColorSetting
  */
 public class ImageLayer extends Canvas
 {
@@ -40,20 +45,48 @@ public class ImageLayer extends Canvas
    */
   private Fractal fractal;
 
+  /**
+   * The Algorithm-Enum the ImageLayer refers to
+   */
   private Algorithm algorithm;
 
+  /**
+   * The GraphicsService object of the layer
+   */
   private GraphicsService renderService;
 
   /**
-   * Determines whether the layer is visible or not
+   * The ColorSetting of this layer being displayed in the Editors 'Color'-Tab when the layer is selected
+   */
+  private ColorSetting colorSettings;
+
+  /**
+   * Determines whether the layer is visible on the canvas or not
    */
   public boolean visible;
 
+  /**
+   * Returns the current settings of the fractal object as a HashMap
+   * @return settings The settings of the current fractal held by the layer
+   */
   public HashMap<String, AlgorithmSetting> getSettings()
   {
     return fractal.getSettings();
   }
 
+  /**
+   * Returns the current color settings of the layer as a BorderPane node
+   * @return colorSettings The settings of the current fractal held by the layer as an UI object
+   */
+  public BorderPane getColorSettings()
+  {
+    return colorSettings;
+  }
+
+  /**
+   * Sets the name
+   * @param name
+   */
   public void setName(String name)
   {
     this.name = name;
@@ -100,6 +133,9 @@ public class ImageLayer extends Canvas
     // Generate Algorithm object
     this.algorithm = algorithm;
     this.fractal = algorithm.newFractal();
+
+    // Add a default ColorSetting object
+    this.colorSettings = new ColorSetting(ColorSetting.Type.SOLID);
 
     // Generate initial settings for this layer
     this.name = name;
