@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import program.Program;
 
 public class ColorSetting extends BorderPane {
   public enum Type
@@ -67,6 +68,7 @@ public class ColorSetting extends BorderPane {
 
     cp1.setOnAction(event -> {
       colors[0] = cp1.getValue();
+      Program.ui.getSelectedLayer().redraw();
     });
 
     bp1.setLeft(l1);
@@ -88,6 +90,7 @@ public class ColorSetting extends BorderPane {
 
       cp1.setOnAction(event -> {
         colors[1] = cp2.getValue();
+        Program.ui.getSelectedLayer().redraw();
       });
 
       bp2.setLeft(l2);
@@ -129,7 +132,10 @@ public class ColorSetting extends BorderPane {
     choiceBox.getSelectionModel().select(0);
 
     // Add a listener to the choiceBox
-    choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> setColorSettingMode(newValue));
+    choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+      setColorSettingMode(newValue);
+      Program.ui.getSelectedLayer().redraw();
+    });
 
     // Setup the VBox which will hold the color pickers
     vBox = new VBox();
