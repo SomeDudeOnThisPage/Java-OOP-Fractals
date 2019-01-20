@@ -18,7 +18,6 @@ import program.Program;
  * @author Robin Buhlmann
  * @author Leonard Pudwitz
  * @version 0.1
- * @param <T> A numeric data type (integer or double only)
  */
 public class AlgorithmSetting<T extends Number> extends BorderPane
 {
@@ -37,7 +36,7 @@ public class AlgorithmSetting<T extends Number> extends BorderPane
 
   /**
    * Returns the current value of the setting. Needs to be cast to the corresponding data-type upon retrieval.
-   * @return
+   * @return The value of the setting
    */
   public T getValue()
   {

@@ -45,7 +45,7 @@ public class GraphicsService extends Service<BufferedImage>
   @Override
   protected void succeeded()
   {
-
+    // Placeholder
   }
 
   @Override

@@ -88,7 +88,7 @@ public class ColorSetting extends BorderPane {
       ColorPicker cp2 = new ColorPicker();
       cp2.setValue(Color.BLACK);
 
-      cp1.setOnAction(event -> {
+      cp2.setOnAction(event -> {
         colors[1] = cp2.getValue();
         Program.ui.getSelectedLayer().redraw();
       });
