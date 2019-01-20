@@ -4,7 +4,6 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import program.Program;
 import program.algorithm.Algorithm;
 import program.ui.elements.AlgorithmSetting;
 import program.ui.elements.ColorSetting;
@@ -74,12 +73,15 @@ public class GraphicsService extends Service<BufferedImage>
 
         // Cast the colors to java.awt.Color so we can use them on a BufferedImage
         // Has the added side-effect that we casually deep-copy the colors
+        // We do not care about the array contents at this point, the Fractal object has to make sure that it uses the right color-mode and color by itself
         Color cur = colors.getColors()[0];
 
-        c[0] = new java.awt.Color((float) cur.getRed(), (float) cur.getBlue(), (float) cur.getGreen(), (float) cur.getOpacity());
+        // Copy first color
+        c[0] = new java.awt.Color((float) cur.getRed(), (float) cur.getGreen(), (float) cur.getBlue(), (float) cur.getOpacity());
 
+        // Copy second color
         cur = colors.getColors()[1];
-        c[1] = new java.awt.Color((float) cur.getRed(), (float) cur.getBlue(), (float) cur.getGreen(), (float) cur.getOpacity());
+        c[1] = new java.awt.Color((float) cur.getRed(), (float) cur.getGreen(), (float) cur.getBlue(), (float) cur.getOpacity());
 
         // Call the render() method in the Algorithm enum
         algorithm.render(image, copy, mode, c);
