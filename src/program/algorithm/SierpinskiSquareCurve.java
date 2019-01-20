@@ -35,12 +35,14 @@ public class SierpinskiSquareCurve extends Fractal {
         double y = (int) settings.get("startY").getValue();
         int iterations = (int) settings.get("iterations").getValue();
         double rotation = (double) settings.get("rotation").getValue();
+        //declare a turning angle for the turtle
+        final int ANGLE = 45;
 
         //create the graphics2d object from the buffered image
         Graphics2D g = image.createGraphics();
 
-        //set a fixed color for now
-        g.setColor(Color.black);
+        //no matter what coloring mode we use, we always start with the first color
+        g.setColor(colors[0]);
 
         //initialize a turtle for drawing the curve
         Turtle t = new Turtle(x, y, scaleFactor, g);
@@ -50,21 +52,95 @@ public class SierpinskiSquareCurve extends Fractal {
 
         List<SierpinskiDirections> turns = getSequence(iterations);
 
-        for (SierpinskiDirections d : turns) {
-            switch (d) {
-                case F:
-                    t.forward(1 );
-                    break;
-                case R:
-                    t.rotate(45);
-                    break;
-                case L:
-                    t.rotate(-45);
-                    break;
-                default:
-                    break;
-            }
+        //the drawing part, split into three different parts depending on the coloring mode
+        switch (mode) {
+
+            //solid color mode
+            case SOLID:
+                for (SierpinskiDirections d : turns) {
+                    switch (d) {
+                        case F:
+                            t.forward(1 );
+                            break;
+                        case R:
+                            t.rotate(ANGLE);
+                            break;
+                        case L:
+                            t.rotate(-ANGLE);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
+
+            //gradient mode
+            case GRADIENT_LINEAR:
+
+                //calculate how many interpolations we have to do
+                int steps = 0;
+                for (SierpinskiDirections d: turns) {
+                    if (d == SierpinskiDirections.F)
+                        steps++;
+                }
+
+                int counter = 1;
+                //iterate over the direction list to draw
+                for (SierpinskiDirections d : turns) {
+                    switch (d) {
+                        case F:
+
+                            //do a linear interpolation between the two colors
+                            float red, green, blue, alpha;
+                            red = colors[0].getRed() * ((float) counter / steps) + colors[1].getRed() * (1 - ((float) counter / steps));
+                            green = colors[0].getGreen() * ((float) counter / steps) + colors[1].getGreen() * (1 - ((float) counter / steps));
+                            blue = colors[0].getBlue() * ((float) counter / steps) + colors[1].getBlue() * (1 - ((float) counter / steps));
+                            alpha = colors[0].getAlpha() * ((float) counter / steps) + colors[1].getAlpha() * (1 - ((float) counter / steps));
+
+                            //debug times
+                            //System.out.println(red + " " + green + " " + blue);
+
+                            g.setColor(new Color(red / 255, green / 255, blue / 255, alpha / 255));
+                            t.forward(1 );
+                            counter++;
+                            break;
+                        case R:
+                            t.rotate(ANGLE);
+                            break;
+                        case L:
+                            t.rotate(-ANGLE);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
+
+            //alternating mode
+            case ALTERNATING:
+                boolean flag = false;
+                for (SierpinskiDirections d : turns) {
+                    switch (d) {
+                        case F:
+                            g.setColor(flag ? colors[0] : colors[1]);
+                            flag = !flag;
+                            t.forward(1 );
+                            break;
+                        case R:
+                            t.rotate(ANGLE);
+                            break;
+                        case L:
+                            t.rotate(-ANGLE);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
         }
+
+        g.dispose();
+
         return image;
     }
 
@@ -87,31 +163,31 @@ public class SierpinskiSquareCurve extends Fractal {
         R
     }
 
-    private static List<SierpinskiDirections> getSequence(int iterations) {
-        //initialize the preset list according to the L system grammar representation
+    //define the generation rules
+    private static final List<SierpinskiDirections> caseA = new ArrayList<>(Arrays.asList(
+            SierpinskiDirections.A,
+            SierpinskiDirections.F,
+            SierpinskiDirections.L,
+            SierpinskiDirections.F,
+            SierpinskiDirections.F,
+            SierpinskiDirections.L,
+            SierpinskiDirections.A,
+            SierpinskiDirections.F,
+            SierpinskiDirections.R,
+            SierpinskiDirections.R,
+            SierpinskiDirections.F,
+            SierpinskiDirections.R,
+            SierpinskiDirections.R,
+            SierpinskiDirections.A,
+            SierpinskiDirections.F,
+            SierpinskiDirections.L,
+            SierpinskiDirections.F,
+            SierpinskiDirections.F,
+            SierpinskiDirections.L,
+            SierpinskiDirections.A
+    ));
 
-        List<SierpinskiDirections> caseA = new ArrayList<>(Arrays.asList(
-                SierpinskiDirections.A,
-                SierpinskiDirections.F,
-                SierpinskiDirections.L,
-                SierpinskiDirections.F,
-                SierpinskiDirections.F,
-                SierpinskiDirections.L,
-                SierpinskiDirections.A,
-                SierpinskiDirections.F,
-                SierpinskiDirections.R,
-                SierpinskiDirections.R,
-                SierpinskiDirections.F,
-                SierpinskiDirections.R,
-                SierpinskiDirections.R,
-                SierpinskiDirections.A,
-                SierpinskiDirections.F,
-                SierpinskiDirections.L,
-                SierpinskiDirections.F,
-                SierpinskiDirections.F,
-                SierpinskiDirections.L,
-                SierpinskiDirections.A
-        ));
+    private static List<SierpinskiDirections> getSequence(int iterations) {
 
         //begin the turn sequence with some initial values
         List<SierpinskiDirections> turnSequence = new ArrayList<>(Arrays.asList(

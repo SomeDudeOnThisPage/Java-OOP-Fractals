@@ -33,12 +33,14 @@ public class GosperCurve extends Fractal {
         double y = (int) settings.get("startY").getValue();
         int iterations = (int) settings.get("iterations").getValue();
         double rotation = (double) settings.get("rotation").getValue();
+        //declare a turning angle for the turtle
+        final int ANGLE = 60;
 
         //create the graphics2d object from the buffered image
         Graphics2D g = image.createGraphics();
 
-        //set a fixed color for now
-        g.setColor(Color.ORANGE);
+        //no matter what coloring mode we use, we always start with the first color
+        g.setColor(colors[0]);
 
         //initialize a turtle for drawing the curve
         Turtle t = new Turtle(x, y, scaleFactor, g);
@@ -48,20 +50,93 @@ public class GosperCurve extends Fractal {
 
         List<GosperDirections> turns = getSequence(iterations);
 
-        for (GosperDirections d : turns) {
-            switch (d) {
-                case A:
-                case B:
-                    t.forward(1 );
-                    break;
-                case R:
-                    t.rotate(60);
-                    break;
-                case L:
-                    t.rotate(-60);
-                    break;
-            }
+        //the drawing part, split into three different parts depending on the coloring mode
+        switch (mode) {
+
+            //solid color mode
+            case SOLID:
+                for (GosperDirections d : turns) {
+                    switch (d) {
+                        case F:
+                            t.forward(1 );
+                            break;
+                        case R:
+                            t.rotate(ANGLE);
+                            break;
+                        case L:
+                            t.rotate(-ANGLE);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
+
+            //gradient mode
+            case GRADIENT_LINEAR:
+
+                //calculate how many interpolations we have to do
+                int steps = 0;
+                for (GosperDirections d: turns) {
+                    if (d == GosperDirections.F)
+                        steps++;
+                }
+
+                int counter = 1;
+                //iterate over the direction list to draw
+                for (GosperDirections d : turns) {
+                    switch (d) {
+                        case F:
+                            //do a linear interpolation between the two colors
+                            float red, green, blue, alpha;
+                            red = colors[0].getRed() * ((float) counter / steps) + colors[1].getRed() * (1 - ((float) counter / steps));
+                            green = colors[0].getGreen() * ((float) counter / steps) + colors[1].getGreen() * (1 - ((float) counter / steps));
+                            blue = colors[0].getBlue() * ((float) counter / steps) + colors[1].getBlue() * (1 - ((float) counter / steps));
+                            alpha = colors[0].getAlpha() * ((float) counter / steps) + colors[1].getAlpha() * (1 - ((float) counter / steps));
+
+                            //debug times
+                            //System.out.println(red + " " + green + " " + blue);
+
+                            g.setColor(new Color(red / 255, green / 255, blue / 255, alpha / 255));
+                            t.forward(1 );
+                            counter++;
+                            break;
+                        case R:
+                            t.rotate(ANGLE);
+                            break;
+                        case L:
+                            t.rotate(-ANGLE);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
+
+            //alternating mode
+            case ALTERNATING:
+                boolean flag = false;
+                for (GosperDirections d : turns) {
+                    switch (d) {
+                        case F:
+                            g.setColor(flag ? colors[0] : colors[1]);
+                            flag = !flag;
+                            t.forward(1 );
+                            break;
+                        case R:
+                            t.rotate(ANGLE);
+                            break;
+                        case L:
+                            t.rotate(-ANGLE);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
         }
+
+        g.dispose();
 
         return image;
     }
@@ -72,59 +147,74 @@ public class GosperCurve extends Fractal {
         //set bounds and default values for the menu options
         settings.put("startX", new AlgorithmSetting<>("X Start Coordinate",350, 1000, 0, AlgorithmSetting.Type.SPINNER));
         settings.put("startY", new AlgorithmSetting<>("Y Start Coordinate", 450, 1000, 0, AlgorithmSetting.Type.SPINNER));
-        settings.put("scaleFactor", new AlgorithmSetting<>("Scale Factor", 2d, 100d, 0.1d, AlgorithmSetting.Type.SLIDER));
+        settings.put("scaleFactor", new AlgorithmSetting<>("Scale Factor", 8d, 100d, 0.1d, AlgorithmSetting.Type.SLIDER));
         settings.put("iterations", new AlgorithmSetting<>("Number of Iterations", 4, 50, 1, AlgorithmSetting.Type.SLIDER));
         settings.put("rotation", new AlgorithmSetting<>("Rotation", 0d, 360d, 0d, AlgorithmSetting.Type.SPINNER));
     }
 
     //the four different action cases
     private enum GosperDirections {
+        F,
         A,
         B,
         L,
         R
     }
 
+    //define the generation rules
+    private static final List<GosperDirections> caseA = new ArrayList<>(Arrays.asList(
+            GosperDirections.A,
+            GosperDirections.R,
+            GosperDirections.B,
+            GosperDirections.F,
+            GosperDirections.R,
+            GosperDirections.R,
+            GosperDirections.B,
+            GosperDirections.F,
+            GosperDirections.L,
+            GosperDirections.F,
+            GosperDirections.A,
+            GosperDirections.L,
+            GosperDirections.L,
+            GosperDirections.F,
+            GosperDirections.A,
+            GosperDirections.F,
+            GosperDirections.A,
+            GosperDirections.L,
+            GosperDirections.B,
+            GosperDirections.F,
+            GosperDirections.R
+    ));
+
+    private static final List<GosperDirections> caseB = new ArrayList<>(Arrays.asList(
+            GosperDirections.L,
+            GosperDirections.F,
+            GosperDirections.A,
+            GosperDirections.R,
+            GosperDirections.B,
+            GosperDirections.F,
+            GosperDirections.B,
+            GosperDirections.F,
+            GosperDirections.R,
+            GosperDirections.R,
+            GosperDirections.B,
+            GosperDirections.F,
+            GosperDirections.R,
+            GosperDirections.F,
+            GosperDirections.A,
+            GosperDirections.L,
+            GosperDirections.L,
+            GosperDirections.F,
+            GosperDirections.A,
+            GosperDirections.L,
+            GosperDirections.B
+    ));
+
     private static List<GosperDirections> getSequence(int iterations) {
-        //initialize two preset lists
-        List<GosperDirections> caseA = new ArrayList<>(Arrays.asList(
-                GosperDirections.L,
-                GosperDirections.B,
-                GosperDirections.L,
-                GosperDirections.L,
-                GosperDirections.B,
-                GosperDirections.R,
-                GosperDirections.A,
-                GosperDirections.R,
-                GosperDirections.R,
-                GosperDirections.A,
-                GosperDirections.A,
-                GosperDirections.R,
-                GosperDirections.B,
-                GosperDirections.L));
-
-        List<GosperDirections> caseB = new ArrayList<>(Arrays.asList(
-               GosperDirections.R,
-               GosperDirections.A,
-               GosperDirections.L,
-               GosperDirections.B,
-               GosperDirections.B,
-               GosperDirections.L,
-               GosperDirections.L,
-               GosperDirections.B,
-               GosperDirections.L,
-               GosperDirections.A,
-               GosperDirections.R,
-               GosperDirections.R,
-               GosperDirections.A,
-               GosperDirections.R,
-               GosperDirections.B
-        ));
-
-
         //begin the turn sequence
         List<GosperDirections> turnSequence = new ArrayList<>();
         //add an initial value
+        turnSequence.add(GosperDirections.F);
         turnSequence.add(GosperDirections.A);
 
         for (int i = 0; i < iterations; i++) {

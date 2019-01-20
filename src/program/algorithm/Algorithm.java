@@ -1,6 +1,5 @@
 package program.algorithm;
 
-import program.Program;
 import program.system.Fractal;
 import program.ui.elements.AlgorithmSetting;
 import program.ui.elements.ColorSetting;
@@ -54,12 +53,13 @@ public enum Algorithm
                 public void render(BufferedImage i, HashMap s, ColorSetting.Type m, Color[] c) {PeanoCurve.render(i, s, m, c); }
                 public String toString() {return "Peano Curve"; }
             },
-    KOCHISLAND
+    KOCH
             {
-                public Fractal newFractal() {return new KochIslandCurve(); }
+                public Fractal newFractal() {return new KochCurve(); }
                 public boolean debug = false;
-                public void render(BufferedImage i, HashMap s, ColorSetting.Type m, Color[] c) {KochIslandCurve.render(i, s, m, c); }
-                public String toString() {return "Koch Island"; }
+                public void render(BufferedImage i, HashMap s, ColorSetting.Type m, Color[] c) {
+                    KochCurve.render(i, s, m, c); }
+                public String toString() {return "Koch Curve"; }
             },
     SIERPINSKISQUARE
             {
