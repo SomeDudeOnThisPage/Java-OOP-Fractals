@@ -90,18 +90,15 @@
                 </AnchorPane>
               </content>
             </Tab>
-            <Tab text="Color">
+            <Tab text="Graphics">
               <content>
                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                   <children>
-                    <BorderPane prefHeight="400.0" prefWidth="250.0" AnchorPane.bottomAnchor="-73.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
-                      <center>
-                        <ScrollPane fx:id="colorSettingsPane" content="$null" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="-1.0" prefViewportHeight="0.0" prefViewportWidth="0.0" prefWidth="-1.0" BorderPane.alignment="CENTER" />
-                      </center>
-                      <padding>
-                        <Insets />
-                      </padding>
-                    </BorderPane>
+                    <ScrollPane id="colorSettingsPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="327.0" prefViewportHeight="0.0" prefViewportWidth="0.0" prefWidth="248.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                      <content>
+                        <BorderPane fx:id="colorSettingsPane" prefHeight="200.0" prefWidth="200.0" />
+                      </content>
+                    </ScrollPane>
                   </children>
                 </AnchorPane>
               </content>

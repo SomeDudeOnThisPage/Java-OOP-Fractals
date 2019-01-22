@@ -5,8 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import program.Program;
 import program.algorithm.Algorithm;
@@ -23,7 +23,7 @@ public class EditorController implements Initializable
   @FXML private ListView<ImageLayer> layerList;
   @FXML private ChoiceBox<Algorithm> choiceBox;
   @FXML private VBox vBox;
-  @FXML private ScrollPane colorSettingsPane;
+  @FXML private BorderPane colorSettingsPane;
 
   private static int a = 0;
 
@@ -75,7 +75,7 @@ public class EditorController implements Initializable
     });
 
     // (Re)Set the color options panel
-    colorSettingsPane.setContent(Program.ui.getSelectedLayer().getColorSettings());
+    colorSettingsPane.setCenter(Program.ui.getSelectedLayer().getGraphicsSettings());
   }
 
   @Override

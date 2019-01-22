@@ -6,7 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import program.algorithm.Algorithm;
 import program.ui.elements.AlgorithmSetting;
-import program.ui.elements.ColorSetting;
+import program.ui.elements.GraphicsSetting;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
@@ -34,7 +34,7 @@ public class GraphicsService extends Service<BufferedImage>
 
   private HashMap<String, AlgorithmSetting> settings;
 
-  private ColorSetting colors;
+  private GraphicsSetting graphics;
 
   private BufferedImage image;
 
@@ -67,7 +67,7 @@ public class GraphicsService extends Service<BufferedImage>
         settings.forEach(copy::put);
 
         // Preserve the mode of the colorSettings to pass them on to the render method later
-        ColorSetting.Type mode = colors.getMode();
+        GraphicsSetting.Type mode = graphics.getMode();
 
         // We need java.awt.Color instead of javafx colors to draw on a BufferedImage!
         java.awt.Color[] c = new java.awt.Color[2];
@@ -75,13 +75,13 @@ public class GraphicsService extends Service<BufferedImage>
         // Cast the colors to java.awt.Color so we can use them on a BufferedImage
         // Has the added side-effect that we casually deep-copy the colors
         // We do not care about the array contents at this point, the Fractal object has to make sure that it uses the right color-mode and color by itself
-        Color cur = colors.getColors()[0];
+        Color cur = graphics.getColors()[0];
 
         // Copy first color
         c[0] = new java.awt.Color((float) cur.getRed(), (float) cur.getGreen(), (float) cur.getBlue(), (float) cur.getOpacity());
 
         // Copy second color
-        cur = colors.getColors()[1];
+        cur = graphics.getColors()[1];
         c[1] = new java.awt.Color((float) cur.getRed(), (float) cur.getGreen(), (float) cur.getBlue(), (float) cur.getOpacity());
 
         // Call the render() method in the Algorithm enum
@@ -96,11 +96,11 @@ public class GraphicsService extends Service<BufferedImage>
    * Sets the GraphicsContext to be used in the task
    * @param algorithm the Algorithm to be drawn
    */
-  public GraphicsService(Algorithm algorithm, HashMap<String, AlgorithmSetting> settings, ColorSetting colors)
+  public GraphicsService(Algorithm algorithm, HashMap<String, AlgorithmSetting> settings, GraphicsSetting graphics)
   {
     this.algorithm = algorithm;
     this.settings = settings;
-    this.colors = colors;
+    this.graphics = graphics;
 
     // Possible fix for the 'Hurr durr I'm a Service, I create 500 tasks'-Issue
     this.setExecutor(Executors.newFixedThreadPool(1, runnable -> {

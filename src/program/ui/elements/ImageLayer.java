@@ -25,7 +25,7 @@ import java.util.HashMap;
  * <br>
  * @see Canvas
  * @see Fractal
- * @see ColorSetting
+ * @see GraphicsSetting
  */
 public class ImageLayer extends Canvas
 {
@@ -52,7 +52,7 @@ public class ImageLayer extends Canvas
   /**
    * The ColorSetting of this layer being displayed in the Editors 'Color'-Tab when the layer is selected
    */
-  private ColorSetting colorSettings;
+  private GraphicsSetting graphicsSettings;
 
   /**
    * Determines whether the layer is visible on the canvas or not
@@ -70,11 +70,11 @@ public class ImageLayer extends Canvas
 
   /**
    * Returns the current color settings of the layer as a BorderPane node
-   * @return colorSettings The settings of the current fractal held by the layer as an UI object
+   * @return graphicsSettings The settings of the current fractal held by the layer as an UI object
    */
-  public BorderPane getColorSettings()
+  public BorderPane getGraphicsSettings()
   {
-    return colorSettings;
+    return graphicsSettings;
   }
 
   /**
@@ -127,13 +127,13 @@ public class ImageLayer extends Canvas
     this.fractal = algorithm.newFractal();
 
     // Add a default ColorSetting object
-    this.colorSettings = new ColorSetting(ColorSetting.Type.SOLID);
+    this.graphicsSettings = new GraphicsSetting(GraphicsSetting.Type.SOLID);
 
     // Generate initial settings for this layer
     this.name = name;
     this.visible = true;
 
     // Create the rendering service
-    this.renderService = new GraphicsService(this.algorithm, this.fractal.getSettings(), this.colorSettings);
+    this.renderService = new GraphicsService(this.algorithm, this.fractal.getSettings(), this.graphicsSettings);
   }
 }

@@ -3,7 +3,7 @@ package program.algorithm;
 import program.system.Fractal;
 import program.system.Turtle;
 import program.ui.elements.AlgorithmSetting;
-import program.ui.elements.ColorSetting;
+import program.ui.elements.GraphicsSetting;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -27,7 +27,7 @@ import java.util.List;
 
 public class PeanoCurve extends Fractal {
 
-    static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, ColorSetting.Type mode, Color[] colors) {
+    static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors) {
 
         //initialize all values from the settings menu
         double scaleFactor = (double) settings.get("scaleFactor").getValue();

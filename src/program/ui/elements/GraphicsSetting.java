@@ -2,9 +2,6 @@ package program.ui.elements;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -12,7 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import program.Program;
 
-public class ColorSetting extends BorderPane {
+public class GraphicsSetting extends BorderPane {
   public enum Type
   {
     SOLID
@@ -38,6 +35,11 @@ public class ColorSetting extends BorderPane {
   private Type current;
 
   private Color[] colors;
+  private double strokeWidth;
+
+  private BorderPane strokeSetting;
+  private Slider strokeSlider;
+  private TextField strokeTextField;
 
   private ChoiceBox<Type> choiceBox;
   private VBox vBox;
@@ -52,11 +54,22 @@ public class ColorSetting extends BorderPane {
     return colors;
   }
 
+  private void reset()
+  {
+    colors[0] = Color.BLACK;
+    colors[1] = Color.BLACK;
+  }
+
   private void setColorSettingMode(Type type)
   {
+    reset();
+
     current = type;
 
     vBox.getChildren().clear();
+
+    vBox.getChildren().add(new Label("Color Mode:"));
+    vBox.getChildren().add(choiceBox);
 
     BorderPane bp1 = new BorderPane();
 
@@ -111,13 +124,29 @@ public class ColorSetting extends BorderPane {
     }
   }
 
-  public ColorSetting(Type type)
+  public GraphicsSetting(Type type)
   {
     // Setup color array, we have at max. 2 colors
     colors = new Color[2];
 
     // Setup the basics of BorderPane
     this.setPadding(new Insets(5,5,5,5));
+
+    // Setup the stroke setting
+    strokeSetting = new BorderPane();
+    strokeSlider = new Slider(0,100,0);
+    strokeTextField = new TextField();
+
+    strokeSetting.setPadding(new Insets(0,0,5,0));
+    BorderPane.setMargin(strokeTextField, new Insets(0,0,5,0));
+    BorderPane.setMargin(strokeSlider, new Insets(0,0,5,0));
+
+    strokeTextField.setMaxSize(40,25);
+
+    strokeSetting.setTop(new Label("Stroke Width:"));
+    strokeSetting.setCenter(strokeSlider);
+    strokeSetting.setRight(strokeTextField);
+    strokeSetting.setBottom(new Separator());
 
     // Setup the ChoiceBox for choosing the color mode
     choiceBox = new ChoiceBox<Type>();
@@ -139,10 +168,13 @@ public class ColorSetting extends BorderPane {
 
     // Setup the VBox which will hold the color pickers
     vBox = new VBox();
-    vBox.setPadding(new Insets(5,5,0,0));
+    vBox.setPadding(new Insets(0,5,0,0));
     vBox.setSpacing(5.0);
 
-    this.setTop(choiceBox);
+    vBox.getChildren().add(choiceBox);
+
+    // Add the elements to the pane
+    this.setTop(strokeSetting);
     this.setCenter(vBox);
 
     // Populate the color array with initial values
