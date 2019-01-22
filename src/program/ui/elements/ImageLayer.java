@@ -1,15 +1,15 @@
 package program.ui.elements;
 
 import javafx.concurrent.WorkerStateEvent;
-import java.awt.image.BufferedImage;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.WritableImage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.image.WritableImage;
 import program.algorithm.Algorithm;
 import program.system.Fractal;
 import program.system.GraphicsService;
+
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 /**
@@ -69,12 +69,20 @@ public class ImageLayer extends Canvas
   }
 
   /**
-   * Returns the current color settings of the layer as a BorderPane node
+   * Returns the current color settings of the layer
    * @return graphicsSettings The settings of the current fractal held by the layer as an UI object
    */
-  public BorderPane getGraphicsSettings()
+  public GraphicsSetting getGraphicsSettings()
   {
     return graphicsSettings;
+  }
+
+  /**
+   * Sets the current color settings of the layer
+   * @param g Another new GraphicsSetting object
+   */
+  public void setGraphicsSettings(GraphicsSetting g) {
+    this.graphicsSettings = g;
   }
 
   /**
@@ -84,6 +92,22 @@ public class ImageLayer extends Canvas
   public void setName(String name)
   {
     this.name = name;
+  }
+
+  /**
+   * Algorithm getter
+   * @return algorithm The currently selected algorithm
+   */
+  public Algorithm getAlgorithm() {
+    return algorithm;
+  }
+
+  /**
+   * Fractal getter
+   * @return fractal The currently instantiated Fractal class
+   */
+  public Fractal getFractal() {
+    return fractal;
   }
 
   /**

@@ -1,10 +1,8 @@
 package program.ui.elements;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
 import program.Program;
 
 /**
@@ -40,6 +38,10 @@ public class AlgorithmSetting<T extends Number> extends BorderPane
   public T getValue()
   {
     return value;
+  }
+
+  public void setValue(T val) {
+    value = val;
   }
 
   /**

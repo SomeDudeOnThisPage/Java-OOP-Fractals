@@ -54,6 +54,11 @@ public class GraphicsSetting extends BorderPane {
     return colors;
   }
 
+  public void setColors(Color c1, Color c2) {
+    colors[0] = c1;
+    colors[1] = c2;
+  }
+
   private void reset()
   {
     colors[0] = Color.BLACK;
