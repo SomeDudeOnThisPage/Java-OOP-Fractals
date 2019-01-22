@@ -10,6 +10,7 @@ import program.ui.elements.ColorSetting;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import java.util.concurrent.Executors;
 
 /**
  * Creates a Task object that runs an Algorithm with a GraphicsContext parameter
@@ -100,5 +101,12 @@ public class GraphicsService extends Service<BufferedImage>
     this.algorithm = algorithm;
     this.settings = settings;
     this.colors = colors;
+
+    // Possible fix for the 'Hurr durr I'm a Service, I create 500 tasks'-Issue
+    this.setExecutor(Executors.newFixedThreadPool(1, runnable -> {
+      Thread t = new Thread(runnable);
+      t.setDaemon(true);
+      return t;
+    }));
   }
 }

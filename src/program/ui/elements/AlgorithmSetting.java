@@ -67,6 +67,8 @@ public class AlgorithmSetting<T extends Number> extends BorderPane
         Spinner<Integer> s = new Spinner<>();
         SpinnerValueFactory<Integer> svf = new SpinnerValueFactory.IntegerSpinnerValueFactory((int) min, (int) max, (int) this.value);
         s.setValueFactory(svf);
+        s.setPrefWidth(Double.MAX_VALUE);
+        s.setEditable(true);
 
         // Add a value listener to the spinner
         svf.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -83,6 +85,8 @@ public class AlgorithmSetting<T extends Number> extends BorderPane
         Spinner<Double> s = new Spinner<>();
         SpinnerValueFactory<Double> svf = new SpinnerValueFactory.DoubleSpinnerValueFactory((double) min, (double) max, (double) this.value);
         s.setValueFactory(svf);
+        s.setPrefWidth(Double.MAX_VALUE);
+        s.setEditable(true);
 
         // Add a value listener to the spinner
         svf.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -112,6 +116,14 @@ public class AlgorithmSetting<T extends Number> extends BorderPane
         s.setMin((int) min);
         s.setMax((int) max);
         s.setValue((int) this.value);
+
+        s.setOnMouseReleased(event -> {
+          // Somewhat weird behavior as we have to cast primitive 'double' to primitive 'integer' to Class 'Integer' to be able to cast to 'T'
+          // We're hitting levels of variable casting that shouldn't even be possible
+          this.value = (T) (Integer) (int) s.getValue();
+          Program.debug(this.value);
+          Program.ui.getSelectedLayer().redraw();
+        });
       }
       else if (value instanceof Double)
       {
@@ -119,6 +131,13 @@ public class AlgorithmSetting<T extends Number> extends BorderPane
         s.setMin((double) min);
         s.setMax((double) max);
         s.setValue((double) this.value);
+
+        s.setOnMouseReleased(event -> {
+          // Somewhat weird behavior as we have to cast primitive 'double' to Class 'Double' to be able to cast to 'T'
+          this.value = (T) (Double) s.getValue();
+          Program.debug(this.value);
+          Program.ui.getSelectedLayer().redraw();
+        });
       }
 
       this.setCenter(s);
