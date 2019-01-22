@@ -1,10 +1,9 @@
 package program.ui.elements;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import program.Program;
 
@@ -110,6 +109,9 @@ public class AlgorithmSetting<T extends Number> extends BorderPane
       s.setShowTickLabels(true);
       s.setShowTickMarks(true);
 
+      TextField t = new TextField();
+      t.setText(String.valueOf(this.value));
+
       if (value instanceof Integer)
       {
         // Case value instanceof Integer - create an integer slider with integer values
@@ -117,11 +119,17 @@ public class AlgorithmSetting<T extends Number> extends BorderPane
         s.setMax((int) max);
         s.setValue((int) this.value);
 
+        t.setOnAction(event -> {
+          this.value = (T) Integer.valueOf(t.getText());
+          s.setValue((Integer) this.value);
+          Program.ui.getSelectedLayer().redraw();
+        });
+
         s.setOnMouseReleased(event -> {
           // Somewhat weird behavior as we have to cast primitive 'double' to primitive 'integer' to Class 'Integer' to be able to cast to 'T'
           // We're hitting levels of variable casting that shouldn't even be possible
           this.value = (T) (Integer) (int) s.getValue();
-          Program.debug(this.value);
+          t.setText(String.valueOf(this.value));
           Program.ui.getSelectedLayer().redraw();
         });
       }
@@ -132,15 +140,22 @@ public class AlgorithmSetting<T extends Number> extends BorderPane
         s.setMax((double) max);
         s.setValue((double) this.value);
 
+        t.setOnAction(event -> {
+          this.value = (T) Double.valueOf(t.getText());
+          s.setValue((Double) this.value);
+          Program.ui.getSelectedLayer().redraw();
+        });
+
         s.setOnMouseReleased(event -> {
           // Somewhat weird behavior as we have to cast primitive 'double' to Class 'Double' to be able to cast to 'T'
           this.value = (T) (Double) s.getValue();
-          Program.debug(this.value);
+          t.setText(String.valueOf(this.value));
           Program.ui.getSelectedLayer().redraw();
         });
       }
 
       this.setCenter(s);
+      this.setRight(t);
     }
 
   }
