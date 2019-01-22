@@ -85,7 +85,7 @@ public class GraphicsService extends Service<BufferedImage>
         c[1] = new java.awt.Color((float) cur.getRed(), (float) cur.getGreen(), (float) cur.getBlue(), (float) cur.getOpacity());
 
         // Call the render() method in the Algorithm enum
-        algorithm.render(image, copy, mode, c);
+        algorithm.render(image, copy, mode, c, graphics.getStrokeWidth());
 
         return image;
       }

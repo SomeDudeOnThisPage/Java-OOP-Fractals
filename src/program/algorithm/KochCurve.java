@@ -27,7 +27,7 @@ import java.util.List;
 
 public class KochCurve extends Fractal {
 
-    static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors) {
+    static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors, double strokeWidth) {
 
         //initialize all values from the settings menu
         double scaleFactor = (double) settings.get("scaleFactor").getValue();

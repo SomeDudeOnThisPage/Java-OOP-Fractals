@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class DragonCurve extends Fractal {
 
-    public static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors) {
+    public static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors, double strokeWidth) {
 
         //retrieve settings
         double scaleFactor = (double) settings.get("scaleFactor").getValue();

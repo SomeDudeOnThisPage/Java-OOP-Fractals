@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class BlueBox extends Fractal
 {
-  public static void render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors)
+  public static void render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors, double strokeWidth)
   {
     Graphics2D g = (Graphics2D) image.getGraphics();
     g.setColor(colors[0]);

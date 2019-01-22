@@ -60,6 +60,11 @@ public class GraphicsSetting extends BorderPane {
     colors[1] = Color.BLACK;
   }
 
+  public double getStrokeWidth()
+  {
+    return strokeWidth;
+  }
+
   private void setColorSettingMode(Type type)
   {
     reset();
@@ -134,19 +139,43 @@ public class GraphicsSetting extends BorderPane {
 
     // Setup the stroke setting
     strokeSetting = new BorderPane();
-    strokeSlider = new Slider(0,100,0);
+    strokeSlider = new Slider(1,10,1);
     strokeTextField = new TextField();
 
     strokeSetting.setPadding(new Insets(0,0,5,0));
-    BorderPane.setMargin(strokeTextField, new Insets(0,0,5,0));
+    BorderPane.setMargin(strokeTextField, new Insets(0,0,5,5));
     BorderPane.setMargin(strokeSlider, new Insets(0,0,5,0));
 
-    strokeTextField.setMaxSize(40,25);
+    strokeSlider.setMinorTickCount(10);
+    strokeSlider.setShowTickLabels(true);
+    strokeSlider.setShowTickMarks(true);
+
+    strokeTextField.setMaxSize(50,25);
+    strokeTextField.setText(String.valueOf(strokeSlider.getValue()));
 
     strokeSetting.setTop(new Label("Stroke Width:"));
     strokeSetting.setCenter(strokeSlider);
     strokeSetting.setRight(strokeTextField);
     strokeSetting.setBottom(new Separator());
+
+    // Add an event handler to the stroke slider
+    strokeSlider.setOnMouseReleased(event -> {
+      this.strokeWidth = strokeSlider.getValue();
+      strokeTextField.setText(String.valueOf(this.strokeWidth));
+      Program.ui.getSelectedLayer().redraw();
+    });
+
+    // Add an event handler to the stroke text field
+    strokeTextField.setOnAction(event -> {
+      double sw = Double.valueOf(strokeTextField.getText());
+      if (sw > 10) { sw = 10; }
+      else if (sw < 1) { sw = 1; }
+
+      this.strokeWidth = sw;
+
+      strokeSlider.setValue(this.strokeWidth);
+      Program.ui.getSelectedLayer().redraw();
+    });
 
     // Setup the ChoiceBox for choosing the color mode
     choiceBox = new ChoiceBox<Type>();
