@@ -38,6 +38,9 @@ public class DragonCurve extends Fractal {
         //create the graphics2d object from the buffered image
         Graphics2D g = image.createGraphics();
 
+        //set stroke width
+        g.setStroke(new BasicStroke((float) strokeWidth));
+
         //no matter what coloring mode we use, we always start with the first color
         g.setColor(colors[0]);
 

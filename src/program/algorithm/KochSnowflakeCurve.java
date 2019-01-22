@@ -40,6 +40,9 @@ class KochSnowflakeCurve extends Fractal {
         //create the graphics2d object from the buffered image
         Graphics2D g = image.createGraphics();
 
+        //set stroke width
+        g.setStroke(new BasicStroke((float) strokeWidth));
+
         //no matter what coloring mode we use, we always start with the first color
         g.setColor(colors[0]);
 
@@ -99,7 +102,7 @@ class KochSnowflakeCurve extends Fractal {
                                 blue = colors[0].getBlue() * ((float) counter / steps) + colors[1].getBlue() * (1 - ((float) counter / steps));
                                 alpha = colors[0].getAlpha() * ((float) counter / steps) + colors[1].getAlpha() * (1 - ((float) counter / steps));
 
-                                System.out.println(counter + "/" + steps + ": " + red + " " + green + " " + blue);
+                                //System.out.println(counter + "/" + steps + ": " + red + " " + green + " " + blue);
 
                                 g.setColor(new Color(red / 255, green / 255, blue / 255, alpha / 255));
                                 t.forward(1);
