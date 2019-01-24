@@ -33,7 +33,7 @@ public class EditorController implements Initializable
   public void onAddLayerButton()
   {
     // Create a new Image layer
-    ImageLayer l = new ImageLayer("Layer #" + a, 1000, 1000, choiceBox.getValue());
+    ImageLayer l = new ImageLayer("#" + a + " " + choiceBox.getValue().toString(), 1000, 1000, choiceBox.getValue());
     // Add the layer to the main controllers' list of layers
     Program.ui.addLayer(l);
     // Increment a to so the next ImageLayer has the name 'Layer #(a+1)'

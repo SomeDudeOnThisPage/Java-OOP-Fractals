@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 
+
 // Custom list CellFactory
 public class LayerListCell extends ListCell<ImageLayer>
 {
@@ -17,7 +18,6 @@ public class LayerListCell extends ListCell<ImageLayer>
 
   private FXMLLoader fxmlloader;
   private ImageLayer layer;
-
 
   @Override
   public void updateItem(ImageLayer layer, boolean empty)
@@ -75,5 +75,36 @@ public class LayerListCell extends ListCell<ImageLayer>
 
     // Add listener to the TextField
     textField.textProperty().addListener((observable, oldValue, newValue) -> layer.setName(newValue));
+
+    // Setup context menu for each cell
+    ContextMenu c = new ContextMenu();
+
+    // Context menu entry for saving a layer
+    MenuItem saveMI = new MenuItem("Save As...");
+    saveMI.setOnAction(event -> Program.debug("TODO: Enable layer saving in context menu"));
+
+    // Context menu entry for deleting a layer
+    MenuItem deleteMI = new MenuItem("Delete");
+    deleteMI.setOnAction(event -> Program.ui.removeLayer(this.getIndex()));
+
+    // Context menu entry to toggle visibility
+    MenuItem toggleVisibilityMI = new MenuItem("Toggle Visibility");
+    toggleVisibilityMI.setOnAction(event -> {
+      layer.visible = !layer.visible;
+      visibleCheckBox.setSelected(layer.visible);
+      Program.ui.updateCanvas();
+    });
+
+    // Context menu entry to redraw manually
+    MenuItem redrawMI = new MenuItem("Redraw Layer");
+    redrawMI.setOnAction(event -> layer.redraw());
+
+    c.getItems().addAll(saveMI, deleteMI, new SeparatorMenuItem(), toggleVisibilityMI, redrawMI);
+
+    // Enable context menu
+    this.setContextMenu(c);
+
+    // Forward context menu requests from the text field to our context menu
+    textField.setContextMenu(c);
   }
 }
