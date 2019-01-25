@@ -76,10 +76,13 @@ public class CanvasController implements Initializable
     return size;
   }
 
+  /**
+   * The amount the canvas is scaled by with one mouse scroll input
+   */
   final double SCALE_DELTA = 1.01;
 
   /**
-   * zoomtomousedesc
+   * todozoomdesc
    * @param event
    */
   public void onScroll(ScrollEvent event)

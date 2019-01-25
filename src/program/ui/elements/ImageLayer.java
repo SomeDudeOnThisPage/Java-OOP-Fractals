@@ -119,6 +119,8 @@ public class ImageLayer extends Canvas
     // Cancel any ongoing renderService
     renderService.cancel();
 
+    this.setOpacity(this.graphicsSettings.getColors()[0].getOpacity());
+
     // Get the GraphicsContext
     GraphicsContext g = getGraphicsContext2D();
 
