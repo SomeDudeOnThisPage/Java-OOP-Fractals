@@ -96,13 +96,19 @@ public class LayerListCell extends ListCell<ImageLayer>
     });
 
     // Context menu entry to redraw manually
-    MenuItem redrawMI = new MenuItem("Redraw Layer");
+    MenuItem redrawMI = new MenuItem("Redraw");
     redrawMI.setOnAction(event -> layer.redraw());
 
     c.getItems().addAll(saveMI, deleteMI, new SeparatorMenuItem(), toggleVisibilityMI, redrawMI);
 
-    // Enable context menu
-    this.setContextMenu(c);
+    // Enable context menu, but only on non-empty cells
+    this.emptyProperty().addListener((obs, wasEmpty, isEmpty) -> {
+      if (isEmpty) {
+        this.setContextMenu(null);
+      } else {
+        this.setContextMenu(c);
+      }
+    });
 
     // Forward context menu requests from the text field to our context menu
     textField.setContextMenu(c);

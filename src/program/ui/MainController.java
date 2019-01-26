@@ -7,9 +7,6 @@ import javafx.fxml.*;
 import javafx.scene.layout.BorderPane;
 import program.ui.elements.ImageLayer;
 
-import java.net.*;
-import java.util.*;
-
 /**
  * The controller for the main scene of the program
  * <p>
@@ -23,7 +20,7 @@ import java.util.*;
  * @see EditorController
  * @see CanvasController
  */
-public class MainController implements Initializable {
+public class MainController {
   /**
    * The Editor that is a child of this instance
    */
@@ -39,21 +36,23 @@ public class MainController implements Initializable {
    */
   @FXML private CanvasController canvasController;
 
+  /**
+   * The list holding the ImageLayer objects
+   */
   private ObservableList<ImageLayer> layers;
+
+  /**
+   * A list holding all algorithms (see algorithm enum)
+   */
   private ObservableList<Algorithm> algorithms;
 
+  /**
+   * The currently selected ImageLayer
+   */
   private ImageLayer selected;
 
   /**
-   * Redraws a layer by creating a new GraphicsService with the GraphicsContext of an ImageLayer
-   * Sets the GraphicsContext of the ImageLayer after task completion
-   */
-  public void updateLayer() {
-    // TODO
-  }
-
-  /**
-   * Adds a layer to the list
+   * Adds a layer to the list, draws it initially and sets the selected layer to the new one
    */
   public void addLayer(ImageLayer layer)
   {
@@ -61,7 +60,6 @@ public class MainController implements Initializable {
     layer.redraw();
     selected = layer;
     layers.add(layer);
-    //canvasController.update();
   }
 
   /**
@@ -84,7 +82,6 @@ public class MainController implements Initializable {
   public void setSelectedLayer(ImageLayer layer)
   {
     selected = layer;
-
     // Try/Catch in case the list is empty
     try
     {
@@ -96,11 +93,19 @@ public class MainController implements Initializable {
     }
   }
 
+  /**
+   * Returns the selected ImageLayer
+   * @return ImageLayer selected The selected layer
+   */
   public ImageLayer getSelectedLayer()
   {
     return selected;
   }
 
+  /**
+   * Returns all algorithms from the algorithm enum
+   * @return algorithms The Algorithms
+   */
   public ObservableList<Algorithm> getAlgorithms()
   {
     return algorithms;
@@ -123,11 +128,53 @@ public class MainController implements Initializable {
     canvasController.update();
   }
 
-  @Override
-  public void initialize(URL url, ResourceBundle resourceBundle)
+  //
+  // BEGIN menu handlers
+  //
+
+  /**
+   * Handles the 'Import'-MenuItem in the 'File'-Tab
+   */
+  public void menu_onImport()
   {
-    // Placeholder, we'll surely have to use this soon
+    Program.debug("TODO: Import dialog");
   }
+
+  /**
+   * Handles the 'Save As'-MenuItem in the 'File'-Tab
+   */
+  public void menu_onSaveAs()
+  {
+    Program.debug("TODO: Save As dialog");
+  }
+
+  /**
+   * Handles the 'Exit'-MenuItem in the 'File'-Tab
+   */
+  public void menu_onExit()
+  {
+    Program.debug("TODO: Exit code");
+  }
+
+  /**
+   * Handles the 'Help'-MenuItem in the 'Help'-Tab
+   */
+  public void menu_onHelp()
+  {
+    Program.debug("TODO: Help dialog");
+  }
+
+  /**
+   * Handles the 'About'-MenuItem in the 'Help'-Tab
+   */
+  public void menu_onAbout()
+  {
+    Program.debug("TODO: About Dialog");
+  }
+
+  //
+  // END menu handlers
+  //
 
   /**
    * Creates the ObservableArrayList instance holding the ImageLayers
@@ -140,7 +187,6 @@ public class MainController implements Initializable {
     // Create the main list of Algorithms and populate it
     algorithms = FXCollections.observableArrayList();
     algorithms.addAll(Algorithm.values());
-
 
     // Add a change listener to automatically detect changes to the layer list
     // Update the sub-controllers accordingly
