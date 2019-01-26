@@ -102,7 +102,7 @@ class HilbertCurve extends Fractal {
 
                             //System.out.println(counter + "/" + steps + ": " + red + " " + green + " " + blue);
 
-                            g.setColor(new Color(red / 255, green / 255, blue / 255, alpha / 255));
+                            g.setColor(new Color(red / 255, green / 255, blue / 255));
                             t.forward(1 );
                             counter++;
                             break;

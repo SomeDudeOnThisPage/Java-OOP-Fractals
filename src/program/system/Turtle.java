@@ -27,6 +27,7 @@ public class Turtle {
     public void rotate(double angle) {
         orientation += angle;
     }
+
     // move the turtle forward (includes drawing)
     public void forward(double d) {
         double x0 = x, y0 = y;
@@ -37,6 +38,7 @@ public class Turtle {
         g.draw(new Line2D.Double(x0,  y0,  x,  y));
     }
 
+    //the default constructor
     public Turtle(double startX, double startY, double scaleFactor, Graphics2D g) {
         this.x = startX;
         this.y = startY;

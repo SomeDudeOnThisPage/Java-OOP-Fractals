@@ -100,11 +100,8 @@ class KochSnowflakeCurve extends Fractal {
                                 red = colors[0].getRed() * ((float) counter / steps) + colors[1].getRed() * (1 - ((float) counter / steps));
                                 green = colors[0].getGreen() * ((float) counter / steps) + colors[1].getGreen() * (1 - ((float) counter / steps));
                                 blue = colors[0].getBlue() * ((float) counter / steps) + colors[1].getBlue() * (1 - ((float) counter / steps));
-                                alpha = colors[0].getAlpha() * ((float) counter / steps) + colors[1].getAlpha() * (1 - ((float) counter / steps));
 
-                                //System.out.println(counter + "/" + steps + ": " + red + " " + green + " " + blue);
-
-                                g.setColor(new Color(red / 255, green / 255, blue / 255, alpha / 255));
+                                g.setColor(new Color(red / 255, green / 255, blue / 255));
                                 t.forward(1);
                                 counter++;
                                 break;
