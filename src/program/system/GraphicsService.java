@@ -38,15 +38,11 @@ public class GraphicsService extends Service<BufferedImage>
 
   private BufferedImage image;
 
+  public long elapsed;
+
   public void setSettings(HashMap<String, AlgorithmSetting> settings)
   {
     this.settings = settings;
-  }
-
-  @Override
-  protected void succeeded()
-  {
-    // Placeholder
   }
 
   @Override

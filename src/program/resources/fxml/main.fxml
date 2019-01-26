@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -8,7 +9,11 @@
   <bottom>
     <HBox>
       <children>
-        <Label text="Label" />
+        <Label fx:id="statusLabel" text="">
+          <HBox.margin>
+            <Insets bottom="2.0" left="5.0" right="2.0" top="2.0" />
+          </HBox.margin>
+        </Label>
       </children>
     </HBox>
   </bottom>

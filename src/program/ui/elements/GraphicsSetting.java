@@ -142,15 +142,18 @@ public class GraphicsSetting extends BorderPane {
     JSONObject object = new JSONObject();
 
     // Add the mode
-    object.put("mode", settings.getMode().name());
+    object.put("mode", settings.current.name());
 
     // Add the colors to the array
     JSONArray colors = new JSONArray();
-    for (Color color : settings.getColors())
+    for (Color color : settings.colors)
     {
       colors.add(color.toString());
     }
     object.put("colors", colors);
+
+    // Do not forget the stroke width!
+    object.put("stroke", settings.strokeWidth);
 
     return object;
   }

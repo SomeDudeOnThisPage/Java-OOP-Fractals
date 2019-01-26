@@ -1,5 +1,9 @@
 package program;
 
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import program.ui.MainController;
 import javafx.application.Application;
 
@@ -7,10 +11,7 @@ import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.stage.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /*
     TODO: Some way to store program settings / options
@@ -52,9 +53,14 @@ public class Program extends Application
   public static boolean AUTO_REDRAW = true;
 
   /**
+   * Determines whether some warning dialogs should be suppressed
+   */
+  public static boolean SUPPRESS_WARNINGS = false;
+
+  /**
    * The directory the save folder is in. This will differ in between linux and windows. It is set on program start
    */
-  public static String SAVE_DIRECTORY = "saves/"; // hardcoded for now
+  public static final String SAVE_DIRECTORY = "saves/"; // hardcoded for now
 
   /**
    * If this is set to anything but an empty string before calling launch(), this files algorithms will be loaded on startup. Default: ''
@@ -99,6 +105,33 @@ public class Program extends Application
     }
   }
 
+  private static Program self;
+
+  public static void exit()
+  {
+    Program.debug("Running application closing procedure");
+
+    if (!SUPPRESS_WARNINGS)
+    {
+      // Show an alert dialog
+      Alert dialog = new Alert(Alert.AlertType.CONFIRMATION);
+      dialog.setTitle("Are you sure you want to exit?");
+      dialog.setHeaderText(null);
+      dialog.setContentText("Are you sure you want to exit?\nAny unsaved changes will be lost.");
+
+      // Add a custom icon.
+      Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+      stage.getIcons().add(new Image(Program.self.getClass().getResource(RESOURCE_PATH + "thinking_about_exiting.png").toString()));
+
+      Optional<ButtonType> result = dialog.showAndWait();
+      if (result.isPresent() && result.get() == ButtonType.OK) { Platform.exit(); }
+    }
+    else
+    {
+      Platform.exit();
+    }
+  }
+
   /**
    * The start method initializes the Stage and Scene object and loads the necessary fxml content
    * @param frame The stage that is to be used
@@ -107,9 +140,16 @@ public class Program extends Application
   @Override
   public void start(Stage frame) throws Exception
   {
+    self = this;
+
     frame.setMinWidth(WIDTH);
     frame.setMinHeight(HEIGHT);
     frame.setTitle(TITLE);
+
+    frame.setOnCloseRequest(e -> {
+      e.consume();
+      exit();
+    });
 
     FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(RESOURCE_PATH + "fxml/main.fxml"));
     ui = new MainController();
@@ -120,16 +160,6 @@ public class Program extends Application
 
     frame.setScene(scene);
     frame.show();
-  }
-
-  /**
-   * The stop method, used to close any unclosed file handlers and display the "Are you sure"-Dialog
-   */
-  @Override
-  public void stop()
-  {
-    // Close any unclosed file handles, save current layers as last.json, and save any unsaved settings
-    // Attempt to stop any currently running tasks
   }
 
   /**
@@ -154,9 +184,16 @@ public class Program extends Application
         Program.AUTO_REDRAW = Boolean.valueOf(arguments.get(arguments.indexOf("-auto_redraw") + 1));
       }
 
+      // Check if we load a json file at startup
       if (arguments.contains("-load"))
       {
         Program.STARTUP_LOAD_FILE = arguments.get(arguments.indexOf("-load") + 1);
+      }
+
+      // Check if certain warning dialogs should be suppressed
+      if (arguments.contains("-suppress_warnings"))
+      {
+        Program.SUPPRESS_WARNINGS = Boolean.valueOf(arguments.get(arguments.indexOf("-suppress_warnings") + 1));
       }
     }
     catch (Exception ignored) {}

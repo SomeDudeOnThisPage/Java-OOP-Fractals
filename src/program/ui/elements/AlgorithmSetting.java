@@ -110,9 +110,14 @@ public class AlgorithmSetting<T extends Number> extends BorderPane
       Slider s = new Slider();
       s.setShowTickLabels(true);
       s.setShowTickMarks(true);
+      s.setMinorTickCount(10);
 
       TextField t = new TextField();
       t.setText(String.valueOf(this.value));
+      t.setMaxSize(50,25);
+
+      BorderPane.setMargin(t, new Insets(0,0,5,5));
+      BorderPane.setMargin(s, new Insets(0,0,5,0));
 
       if (value instanceof Integer)
       {

@@ -6,6 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.WritableImage;
 import org.json.simple.JSONObject;
+import program.Program;
 import program.algorithm.Algorithm;
 import program.system.Fractal;
 import program.system.GraphicsService;
@@ -117,6 +118,9 @@ public class ImageLayer extends Canvas
    */
   public void redraw()
   {
+    long start = System.currentTimeMillis();
+    Program.debug(start);
+
     // Cancel any ongoing renderService
     renderService.cancel();
 
@@ -140,6 +144,8 @@ public class ImageLayer extends Canvas
 
         g.clearRect(0, 0, this.getWidth(), this.getHeight());
         g.drawImage(image, 0, 0);
+        
+        Program.ui.setStatus("Finished drawing image layer '" + name + "' in " + ((System.currentTimeMillis() - start) / 1000.0) + " seconds!");
       });
 
     // Start the thread
@@ -176,9 +182,12 @@ public class ImageLayer extends Canvas
     return object;
   }
 
-  public static void fromJSON()
+  /**
+   * Creates an ImageLayer from a JSON object
+   */
+  public static ImageLayer fromJSON()
   {
-
+    return null;
   }
 
   /**

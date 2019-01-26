@@ -128,9 +128,10 @@ public class FileTask {
         try (FileWriter file = new FileWriter(path)) {
             file.write(config.toJSONString());
             file.flush();
+            Program.ui.setStatus("Saved as saves/" + path + ".json!");
             return true;
         } catch (IOException e) {
-            Program.debug("Could not save file...");
+            Program.ui.setStatus("Could not save as saves/" + path + ".json!");
             return false;
         }
     }

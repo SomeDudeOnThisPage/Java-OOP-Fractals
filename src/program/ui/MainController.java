@@ -1,5 +1,10 @@
 package program.ui;
 
+import javafx.application.Platform;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import program.Program;
 import program.algorithm.Algorithm;
 import javafx.collections.*;
@@ -7,6 +12,8 @@ import javafx.fxml.*;
 import javafx.scene.layout.BorderPane;
 import program.system.FileTask;
 import program.ui.elements.ImageLayer;
+
+import java.util.Optional;
 
 /**
  * The controller for the main scene of the program
@@ -37,6 +44,8 @@ public class MainController {
    */
   @FXML private CanvasController canvasController;
 
+  @FXML private Label statusLabel;
+
   /**
    * The list holding the ImageLayer objects
    */
@@ -51,6 +60,14 @@ public class MainController {
    * The currently selected ImageLayer
    */
   private ImageLayer selected;
+
+  /**
+   * Updates the small label at the bottom left of the program
+   */
+  public void setStatus(String text)
+  {
+    statusLabel.setText(text);
+  }
 
   /**
    * Adds a layer to the list, draws it initially and sets the selected layer to the new one
@@ -146,10 +163,18 @@ public class MainController {
    */
   public void menu_onSaveAs()
   {
-    // Testing, save the currently selected layer
-    FileTask t = new FileTask(Program.SAVE_DIRECTORY + "test.json");
-    t.addConfig(ImageLayer.toJSON(selected));
-    t.writeToFile();
+    // Create a dialog asking for the name of the file to be saved
+    TextInputDialog dialog = new TextInputDialog();
+    dialog.setTitle("Save As");
+    dialog.setHeaderText(null);
+    dialog.setContentText("Choose a file name:");
+
+    Optional<String> result = dialog.showAndWait();
+    result.ifPresent(s -> {
+      FileTask t = new FileTask(Program.SAVE_DIRECTORY + result.get() + ".json");
+      t.addConfig(ImageLayer.toJSON(selected));
+      t.writeToFile();
+    });
   }
 
   /**
@@ -157,7 +182,8 @@ public class MainController {
    */
   public void menu_onExit()
   {
-    Program.debug("TODO: Exit code");
+    Program.debug("Attempted to exit program through menu bar exit button");
+    Program.exit();
   }
 
   /**
