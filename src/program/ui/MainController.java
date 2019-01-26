@@ -5,6 +5,7 @@ import program.algorithm.Algorithm;
 import javafx.collections.*;
 import javafx.fxml.*;
 import javafx.scene.layout.BorderPane;
+import program.system.FileTask;
 import program.ui.elements.ImageLayer;
 
 /**
@@ -145,7 +146,10 @@ public class MainController {
    */
   public void menu_onSaveAs()
   {
-    Program.debug("TODO: Save As dialog");
+    // Testing, save the currently selected layer
+    FileTask t = new FileTask(Program.SAVE_DIRECTORY + "test.json");
+    t.addConfig(ImageLayer.toJSON(selected));
+    t.writeToFile();
   }
 
   /**

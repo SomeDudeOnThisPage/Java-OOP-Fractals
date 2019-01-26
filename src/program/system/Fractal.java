@@ -1,5 +1,7 @@
 package program.system;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import program.ui.elements.AlgorithmSetting;
 
 import java.util.HashMap;
@@ -28,6 +30,14 @@ public abstract class Fractal
   {
     AlgorithmSetting currentSetting = settings.get(key);
     currentSetting.setValue(value);
+  }
+
+  public static JSONObject toJSON(Fractal fractal)
+  {
+    JSONObject object = new JSONObject();
+    fractal.getSettings().forEach((String key, AlgorithmSetting value) -> object.put(key, value.getValue()));
+
+    return object;
   }
 
   /**

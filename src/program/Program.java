@@ -52,6 +52,11 @@ public class Program extends Application
   public static boolean AUTO_REDRAW = true;
 
   /**
+   * The directory the save folder is in. This will differ in between linux and windows. It is set on program start
+   */
+  public static String SAVE_DIRECTORY = "saves/"; // hardcoded for now
+
+  /**
    * If this is set to anything but an empty string before calling launch(), this files algorithms will be loaded on startup. Default: ''
    * Path is canonical from the jars directory
    */

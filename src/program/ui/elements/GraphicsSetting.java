@@ -7,6 +7,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import program.Program;
 
 public class GraphicsSetting extends BorderPane {
@@ -133,6 +135,29 @@ public class GraphicsSetting extends BorderPane {
 
       vBox.getChildren().add(bp2);
     }
+  }
+
+  public static JSONObject toJSON(GraphicsSetting settings)
+  {
+    JSONObject object = new JSONObject();
+
+    // Add the mode
+    object.put("mode", settings.getMode().name());
+
+    // Add the colors to the array
+    JSONArray colors = new JSONArray();
+    for (Color color : settings.getColors())
+    {
+      colors.add(color.toString());
+    }
+    object.put("colors", colors);
+
+    return object;
+  }
+
+  public static void fromJSON()
+  {
+
   }
 
   public GraphicsSetting(Type type)

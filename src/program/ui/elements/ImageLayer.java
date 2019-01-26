@@ -5,6 +5,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.WritableImage;
+import org.json.simple.JSONObject;
 import program.algorithm.Algorithm;
 import program.system.Fractal;
 import program.system.GraphicsService;
@@ -157,6 +158,27 @@ public class ImageLayer extends Canvas
     this.graphicsSettings = new GraphicsSetting(GraphicsSetting.Type.SOLID);
 
     this.renderService = new GraphicsService(this.algorithm, this.fractal.getSettings(), this.graphicsSettings);
+  }
+
+  /**
+   * Returns a JSON object for the layer
+   */
+  public static JSONObject toJSON(ImageLayer layer)
+  {
+    JSONObject object = new JSONObject();
+
+    // Create the values of the object
+    object.put("name", layer.name);
+    object.put("algorithm", layer.algorithm);
+    object.put("settings", Fractal.toJSON(layer.fractal));
+    object.put("graphics", GraphicsSetting.toJSON(layer.getGraphicsSettings()));
+
+    return object;
+  }
+
+  public static void fromJSON()
+  {
+
   }
 
   /**

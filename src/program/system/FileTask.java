@@ -5,6 +5,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import program.Program;
 import program.algorithm.Algorithm;
 import program.ui.elements.AlgorithmSetting;
 import program.ui.elements.GraphicsSetting;
@@ -38,6 +39,11 @@ public class FileTask {
     //extremely bad practice but not my beer :-)
     final int layerSize = 1000;
 
+    public void addConfig(JSONObject config)
+    {
+        this.config = config;
+    }
+
     /**
      * Constructor to read from a config file
      * @param path
@@ -52,7 +58,7 @@ public class FileTask {
      * @param layers
      */
     public FileTask(String path, List<ImageLayer> layers) {
-        this.path = path;
+    /*    this.path = path;
         this.config = new JSONObject();
 
         JSONArray confLayers = new JSONArray();
@@ -107,13 +113,15 @@ public class FileTask {
             confLayers.add(layer);
             config.put("layers", confLayers);
         }
+        */
     }
 
     /**
      * Invokes the writing procedure
      * @return success of writing or not
      */
-    boolean writeToFile() {
+    public boolean writeToFile() {
+        Program.debug("Writing to " + path);
         assert path != null;    //make sure we have a path
         assert config != null;  //and a config file to write
 
@@ -122,6 +130,7 @@ public class FileTask {
             file.flush();
             return true;
         } catch (IOException e) {
+            Program.debug("Could not save file...");
             return false;
         }
     }
