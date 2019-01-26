@@ -1,10 +1,12 @@
 package program.ui.elements;
 
+import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import program.Program;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
+import program.algorithm.Algorithm;
 
 
 // Custom list CellFactory
@@ -99,7 +101,32 @@ public class LayerListCell extends ListCell<ImageLayer>
     MenuItem redrawMI = new MenuItem("Redraw");
     redrawMI.setOnAction(event -> layer.redraw());
 
-    c.getItems().addAll(saveMI, deleteMI, new SeparatorMenuItem(), toggleVisibilityMI, redrawMI);
+    // Context menu with sub-menus to change the algorithm type of a layer
+    Menu changeAlgorithmM = new Menu("Set Algorithm");
+
+    // Populate the menu with all algorithms (no debug algorithms if Program.DEBUG == true)
+    ObservableList<Algorithm> algs = Program.ui.getAlgorithms();
+
+    for (int i = 0; i < algs.size(); i++)
+    {
+      if (!algs.get(i).debug || Program.DEBUG)
+      {
+        Algorithm alg = algs.get(i);
+
+        MenuItem m = new MenuItem(alg.toString());
+        m.setOnAction(event -> {
+          layer.changeAlgorithmType(alg);
+          if (Program.AUTO_REDRAW)
+          {
+            layer.redraw();
+          }
+        });
+
+        changeAlgorithmM.getItems().add(m);
+      }
+    }
+
+    c.getItems().addAll(saveMI, deleteMI, new SeparatorMenuItem(), toggleVisibilityMI, redrawMI, new SeparatorMenuItem(), changeAlgorithmM);
 
     // Enable context menu, but only on non-empty cells
     this.emptyProperty().addListener((obs, wasEmpty, isEmpty) -> {

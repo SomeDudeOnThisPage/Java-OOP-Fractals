@@ -7,7 +7,10 @@ import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.stage.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /*
     TODO: Some way to store program settings / options
@@ -35,17 +38,46 @@ import java.util.HashMap;
  */
 public class Program extends Application
 {
+  /**
+   * Determines whether debug-messages are being output to the console. Default 'false'
+   */
   public static boolean DEBUG = false;
 
+  /**
+   * Determines whether layers are automatically redrawn on a setting change. Default 'true'
+   */
+  public static boolean AUTO_REDRAW = true;
+
+  /**
+   * If this is set to anything but an empty string before calling launch(), this files algorithms will be loaded on startup. Default: ''
+   * Path is canonical from the jars directory
+   */
+  public static String STARTUP_LOAD_FILE = ""; // TODO
+
+  /**
+   * Default and minimum window width
+   */
   private static final int WIDTH = 800;
+
+  /**
+   * Default and minimum window height
+   */
   private static final int HEIGHT = 600;
+
+  /**
+   * Window title
+   */
   private static final String TITLE = "Lemme sniff ur b00t€-hole";
 
+  /**
+   * Path to program resources in source packages. Used for fxml and css
+   */
   public static final String RESOURCE_PATH = "/program/resources/";
 
+  /**
+   * The programs current controller instance. There should only ever be one of these
+   */
   public static MainController ui;
-
-  public static HashMap<String, Boolean> settings;
 
   /**
    * Used to show debug messages in the console when the debug flag is set
@@ -59,6 +91,11 @@ public class Program extends Application
     }
   }
 
+  /**
+   * The start method initializes the Stage and Scene object and loads the necessary fxml content
+   * @param frame The stage that is to be used
+   * @throws Exception Fatal exception, if this fires we messed up
+   */
   @Override
   public void start(Stage frame) throws Exception
   {
@@ -77,6 +114,9 @@ public class Program extends Application
     frame.show();
   }
 
+  /**
+   * The stop method, used to close any unclosed file handlers and display the "Are you sure"-Dialog
+   */
   @Override
   public void stop()
   {
@@ -84,17 +124,36 @@ public class Program extends Application
     // Attempt to stop any currently running tasks
   }
 
+  /**
+   * Maim method checking for commandline arguments and launching the program
+   * @param args Commandline arguments
+   */
   public static void main(String[] args)
   {
     try
     {
-      for(String str : args)
+      List<String> arguments = Arrays.asList(args);
+
+      // Check for debug flag
+      if (arguments.contains("-debug"))
       {
-        if (str.equals("-debug"))
-          DEBUG = true;
+        Program.DEBUG = Boolean.valueOf(arguments.get(arguments.indexOf("-debug") + 1));
+      }
+
+      // Check for auto redraw flag
+      if (arguments.contains("-auto_redraw"))
+      {
+        Program.AUTO_REDRAW = Boolean.valueOf(arguments.get(arguments.indexOf("-auto_redraw") + 1));
+      }
+
+      if (arguments.contains("-load"))
+      {
+        Program.STARTUP_LOAD_FILE = arguments.get(arguments.indexOf("-load") + 1);
       }
     }
     catch (Exception ignored) {}
+
+    Program.debug("Loading file " + STARTUP_LOAD_FILE + " on startup.");
 
     launch(args);
   }

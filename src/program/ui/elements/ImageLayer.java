@@ -119,6 +119,7 @@ public class ImageLayer extends Canvas
     // Cancel any ongoing renderService
     renderService.cancel();
 
+    // Set opacity
     this.setOpacity(this.graphicsSettings.getColors()[0].getOpacity());
 
     // Get the GraphicsContext
@@ -142,6 +143,16 @@ public class ImageLayer extends Canvas
 
     // Start the thread
     renderService.restart();
+  }
+
+  public void changeAlgorithmType(Algorithm a)
+  {
+    this.algorithm = a;
+    this.fractal = algorithm.newFractal();
+
+    this.graphicsSettings = new GraphicsSetting(GraphicsSetting.Type.SOLID);
+
+    this.renderService = new GraphicsService(this.algorithm, this.fractal.getSettings(), this.graphicsSettings);
   }
 
   public ImageLayer(String name, int x, int y, Algorithm algorithm)
