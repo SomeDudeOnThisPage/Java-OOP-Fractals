@@ -24,7 +24,8 @@ public abstract class Fractal
     return settings;
   }
 
-  public void updateSetting(String key, Number value) {
+  public void updateSetting(String key, Number value)
+  {
     AlgorithmSetting currentSetting = settings.get(key);
     currentSetting.setValue(value);
   }

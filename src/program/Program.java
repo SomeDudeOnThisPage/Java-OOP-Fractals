@@ -28,13 +28,16 @@ import java.util.List;
  *  Faculty 2 - Informatics and Engineering<br>
  *  Module: Advanced Object Oriented Programming in Java<br>
  *  Semester 3<br>
- * </p>
  * <p>
- *  The main goal of this project is the concurrent visualization of space filling curves
- * </p>
+ *   The main goal of this project is the concurrent visualization of space filling curves
+ * <p>
+ *   Command line arguments: <br>
+ *   -debug boolean - If debug messages should be written in the console as the program runs<br>
+ *   -auto_redraw boolean - If a layer should be redrawn instantly if any values are changed<br>
+ *   -load string - A .json file that is to be loaded when the program starts. (Path from 'saves' folder)<br>
  * @author Robin Buhlmann
  * @author Leonard Pudwitz
- * @version 0.1
+ * @version 0.8
  */
 public class Program extends Application
 {

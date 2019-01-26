@@ -21,7 +21,7 @@ import java.util.HashMap;
  *   starting / stopping the rendering service executing the current Fractals render method.
  * </p>
  * @author Robin Buhlmann
- * @version 0.1
+ * @version 0.999
  * <br>
  * @see Canvas
  * @see Fractal
@@ -61,7 +61,7 @@ public class ImageLayer extends Canvas
 
   /**
    * Returns the current settings of the fractal object as a HashMap
-   * @return settings The settings of the current fractal held by the layer
+   * @return settings Settings of the current fractal held by the layer
    */
   public HashMap<String, AlgorithmSetting> getSettings()
   {
@@ -70,7 +70,7 @@ public class ImageLayer extends Canvas
 
   /**
    * Returns the current color settings of the layer
-   * @return graphicsSettings The settings of the current fractal held by the layer as an UI object
+   * @return graphicsSettings Settings of the current fractal held by the layer as an UI object
    */
   public GraphicsSetting getGraphicsSettings()
   {
@@ -87,7 +87,7 @@ public class ImageLayer extends Canvas
 
   /**
    * Sets the name
-   * @param name
+   * @param name Display name
    */
   public void setName(String name)
   {
@@ -95,16 +95,16 @@ public class ImageLayer extends Canvas
   }
 
   /**
-   * Algorithm getter
-   * @return algorithm The currently selected algorithm
+   * Algorithm getter method
+   * @return algorithm Currently selected algorithm
    */
   public Algorithm getAlgorithm() {
     return algorithm;
   }
 
   /**
-   * Fractal getter
-   * @return fractal The currently instantiated Fractal class
+   * Fractal getter method
+   * @return fractal Currently instantiated Fractal class
    */
   public Fractal getFractal() {
     return fractal;
@@ -145,6 +145,10 @@ public class ImageLayer extends Canvas
     renderService.restart();
   }
 
+  /**
+   * Changes the type of algorithm the layer is using
+   * @param a Algorithm type
+   */
   public void changeAlgorithmType(Algorithm a)
   {
     this.algorithm = a;
@@ -155,6 +159,13 @@ public class ImageLayer extends Canvas
     this.renderService = new GraphicsService(this.algorithm, this.fractal.getSettings(), this.graphicsSettings);
   }
 
+  /**
+   * ImageLayer constructor creating a layer with all settings set to default
+   * @param name Display name of the layer
+   * @param x x size of the Canvas
+   * @param y y size of the Canvas
+   * @param algorithm The algorithm object the layer is encasing
+   */
   public ImageLayer(String name, int x, int y, Algorithm algorithm)
   {
     super(x,y);
@@ -167,6 +178,33 @@ public class ImageLayer extends Canvas
     this.graphicsSettings = new GraphicsSetting(GraphicsSetting.Type.SOLID);
 
     // Generate initial settings for this layer
+    this.name = name;
+    this.visible = true;
+
+    // Create the rendering service
+    this.renderService = new GraphicsService(this.algorithm, this.fractal.getSettings(), this.graphicsSettings);
+  }
+
+  /**
+   * ImageLayer constructor with algorithm and graphics settings
+   * @param name Display name of the layer
+   * @param x x size of the Canvas
+   * @param y y size of the Canvas
+   * @param algorithm The algorithm object the layer is encasing
+   * @param settings HashMap containing all needed algorithmSettings
+   * @param graphics GraphicsSetting containing the graphical settings that are to be used
+   */
+  public ImageLayer(String name, int x, int y, Algorithm algorithm, HashMap<String, AlgorithmSetting> settings, GraphicsSetting graphics)
+  {
+    super(x,y);
+
+    this.algorithm = algorithm;
+    this.fractal = algorithm.newFractal();
+
+    // Set the settings of the fractal object
+    settings.forEach((String key, AlgorithmSetting setting) -> fractal.updateSetting(key, setting.getValue()));
+    this.graphicsSettings = graphics;
+
     this.name = name;
     this.visible = true;
 
