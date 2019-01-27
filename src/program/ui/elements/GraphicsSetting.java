@@ -11,6 +11,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import program.Program;
 
+import java.util.Iterator;
+
 public class GraphicsSetting extends BorderPane {
   public enum Type
   {
@@ -39,40 +41,83 @@ public class GraphicsSetting extends BorderPane {
   private Color[] colors;
   private double strokeWidth;
 
-  private BorderPane strokeSetting;
+  BorderPane strokeSetting;
   private Slider strokeSlider;
   private TextField strokeTextField;
 
   private ChoiceBox<Type> choiceBox;
   private VBox vBox;
 
+  ColorPicker cp1, cp2;
+
+  /**
+   * Returns the current color mode
+   * @return Color mode
+   */
   public Type getMode()
   {
     return current;
   }
 
+  /**
+   * Returns an array with both current colors
+   * @return A color array
+   */
   public Color[] getColors()
   {
     return colors;
   }
 
+  /**
+   * Sets both colors
+   * @param c1 Color1
+   * @param c2 Color2
+   */
   public void setColors(Color c1, Color c2)
   {
     colors[0] = c1;
     colors[1] = c2;
+
+    if (cp1 != null && cp2 != null)
+    {
+      cp1.setValue(c1);
+      cp2.setValue(c2);
+    }
   }
 
+  /**
+   * Resets both colors
+   */
   private void reset()
   {
     colors[0] = Color.BLACK;
     colors[1] = Color.BLACK;
   }
 
+  /**
+   * Sets a new stroke width
+   * @param width The stroke width
+   */
+  public void setStrokeWidth(double width)
+  {
+    strokeWidth = width;
+    strokeSlider.setValue(width);
+    strokeTextField.setText(String.valueOf(width));
+  }
+
+  /**
+   * Returns the current stroke width
+   * @return
+   */
   public double getStrokeWidth()
   {
     return strokeWidth;
   }
 
+  /**
+   * (Re)sets the color mode of a GraphicsSetting
+   * @param type The color mode to be used
+   */
   private void setColorSettingMode(Type type)
   {
     reset();
@@ -89,7 +134,7 @@ public class GraphicsSetting extends BorderPane {
     Label l1 = new Label();
     l1.setText("Color: ");
 
-    ColorPicker cp1 = new ColorPicker();
+    cp1 = new ColorPicker();
     cp1.setValue(Color.BLACK);
 
     cp1.setOnAction(event -> {
@@ -111,7 +156,7 @@ public class GraphicsSetting extends BorderPane {
 
       Label l2 = new Label();
 
-      ColorPicker cp2 = new ColorPicker();
+      cp2 = new ColorPicker();
       cp2.setValue(Color.BLACK);
 
       cp2.setOnAction(event -> {
@@ -137,6 +182,11 @@ public class GraphicsSetting extends BorderPane {
     }
   }
 
+  /**
+   * Serializes a GraphicsSetting to a JSON string object
+   * @param settings GraphicsSettings object to be serialized
+   * @return A JSON string
+   */
   public static JSONObject toJSON(GraphicsSetting settings)
   {
     JSONObject object = new JSONObject();
@@ -158,11 +208,36 @@ public class GraphicsSetting extends BorderPane {
     return object;
   }
 
-  public static void fromJSON()
+  /**
+   * Generates a GraphicsSetting from a given JSON string
+   * @param config The JSON string
+   * @return A GraphicsSetting customized according to the JSON string
+   */
+  public static GraphicsSetting fromJSON(JSONObject config)
   {
+    GraphicsSetting graphics = new GraphicsSetting(Type.valueOf((String)config.get("mode")));
 
+    // Get JSONArray containing colors and attach an iterator
+    JSONArray colors = (JSONArray) config.get("colors");
+    Iterator<String> iterator = colors.iterator();
+
+    // Set colors and stroke width
+    Color c1 = Color.web(iterator.next());
+    Color c2 = Color.web(iterator.next());
+
+    Program.debug(c1);
+
+    graphics.setColors(c1, c2);
+    graphics.setStrokeWidth((Double) config.get("stroke"));
+    Program.debug(graphics.getStrokeWidth());
+
+    return graphics;
   }
 
+  /**
+   * Generates a GraphicsSetting
+   * @param type The color type that is to be used
+   */
   public GraphicsSetting(Type type)
   {
     // Setup color array, we have at max. 2 colors
@@ -212,7 +287,7 @@ public class GraphicsSetting extends BorderPane {
     });
 
     // Setup the ChoiceBox for choosing the color mode
-    choiceBox = new ChoiceBox<Type>();
+    choiceBox = new ChoiceBox<>();
     choiceBox.setPrefWidth(Double.MAX_VALUE); // Cheeky workaround to use instead of fitting in a ScrollPane
 
     // Populate the choiceBox
@@ -220,8 +295,9 @@ public class GraphicsSetting extends BorderPane {
     types.addAll(Type.values());
     choiceBox.setItems(types);
 
-    // Select 'SOLID' by default
-    choiceBox.getSelectionModel().select(0);
+    // Select the type
+    choiceBox.getSelectionModel().select(type);
+
 
     // Add a listener to the choiceBox
     choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {

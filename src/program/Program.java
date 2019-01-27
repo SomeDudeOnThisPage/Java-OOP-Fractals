@@ -13,15 +13,6 @@ import javafx.stage.*;
 
 import java.util.*;
 
-/*
-    TODO: Some way to store program settings / options
-    -> ini4j
-    TODO: File loading / saving (saving either a single algorithm-setup or an entire list of algorithms and their setups)
-    -> json
-    TODO: Color modes
-    -> Leo denk dir ma was aus wie man das nice machen könnte j00nge
- */
-
 /**
  * Java OOP Project - Space Filling Curves<br>
  * <p>
@@ -36,6 +27,7 @@ import java.util.*;
  *   -debug boolean - If debug messages should be written in the console as the program runs<br>
  *   -auto_redraw boolean - If a layer should be redrawn instantly if any values are changed<br>
  *   -load string - A .json file that is to be loaded when the program starts. (Path from 'saves' folder)<br>
+ *   -suppress_warnings boolean - If some warning dialogs should be suppressed<br>
  * @author Robin Buhlmann
  * @author Leonard Pudwitz
  * @version 0.8

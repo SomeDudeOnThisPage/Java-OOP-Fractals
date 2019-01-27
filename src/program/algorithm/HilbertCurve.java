@@ -31,9 +31,9 @@ class HilbertCurve extends Fractal {
 
         //initialize all values from the settings menu
         double scaleFactor = (double) settings.get("scaleFactor").getValue();
-        double x = (int) settings.get("startX").getValue();
-        double y = (int) settings.get("startY").getValue();
-        int iterations = (int) settings.get("iterations").getValue();
+        double x = settings.get("startX").getValue().intValue();
+        double y = settings.get("startY").getValue().intValue();
+        int iterations = settings.get("iterations").getValue().intValue();
         double rotation = (double) settings.get("rotation").getValue();
         //declare a turning angle for the turtle
         final int ANGLE = 90;

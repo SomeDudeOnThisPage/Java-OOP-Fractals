@@ -2,11 +2,15 @@ package program.ui.elements;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
+import org.json.simple.JSONObject;
 import program.Program;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import program.algorithm.Algorithm;
+import program.system.FileTask;
+
+import java.util.Optional;
 
 
 // Custom list CellFactory
@@ -18,7 +22,9 @@ public class LayerListCell extends ListCell<ImageLayer>
   @FXML private CheckBox visibleCheckBox;
   @FXML private TextField textField;
 
-  private FXMLLoader fxmlloader;
+  @FXML public ProgressIndicator progressIndicator;
+
+  FXMLLoader fxmlloader;
   private ImageLayer layer;
 
   @Override
@@ -27,6 +33,9 @@ public class LayerListCell extends ListCell<ImageLayer>
     super.updateItem(layer, empty);
     this.layer = layer;
 
+    // Update the layers cell reference so it can manipulate the progress indicator
+    //layer.cell = this;
+
     if (empty)
     {
       setText(null);
@@ -34,6 +43,15 @@ public class LayerListCell extends ListCell<ImageLayer>
     }
     else
     {
+      if (layer.renderService.isRunning())
+      {
+        root.setRight(progressIndicator);
+      }
+      else
+      {
+        root.setRight(null);
+      }
+
       textField.setText(layer.name);
       visibleCheckBox.setSelected(layer.visible);
       setGraphic(root);
@@ -49,7 +67,7 @@ public class LayerListCell extends ListCell<ImageLayer>
     layer.visible = visibleCheckBox.isSelected();
 
     // Update the canvas to actually show the changes
-    Program.ui.updateCanvas();
+    Program.ui.canvas().update();
   }
 
   public void onTextFieldAction()
@@ -78,12 +96,39 @@ public class LayerListCell extends ListCell<ImageLayer>
     // Add listener to the TextField
     textField.textProperty().addListener((observable, oldValue, newValue) -> layer.setName(newValue));
 
+    // Prepare Progress Indicator
+    //progressIndicator.setVisible(true);
+
     // Setup context menu for each cell
     ContextMenu c = new ContextMenu();
 
     // Context menu entry for saving a layer
-    MenuItem saveMI = new MenuItem("Save As...");
-    saveMI.setOnAction(event -> Program.debug("TODO: Enable layer saving in context menu"));
+    MenuItem saveMI = new MenuItem("Save As");
+    saveMI.setOnAction(event -> {
+      // Create a dialog asking for the name of the file to be saved
+      TextInputDialog dialog = new TextInputDialog();
+      dialog.setTitle("Save layer");
+      dialog.setHeaderText(null);
+      dialog.setContentText("Choose a file name:");
+
+      JSONObject config = new JSONObject();
+
+      Optional<String> result = dialog.showAndWait();
+      result.ifPresent(s -> {
+        if (result.get().equals(""))
+        {
+          Program.ui.setStatus("Could not save layer - No filename specified.");
+          return;
+        }
+
+        // As this method is invoked by clicking a context menu of a layer, we always have a layer - no need to check
+
+        FileTask t = new FileTask(Program.SAVE_DIRECTORY + result.get() + ".json");
+        config.put("0", ImageLayer.toJSON(Program.ui.getLayers().get(this.getIndex())));
+        t.addConfig(config);
+        t.writeToFile();
+      });
+    });
 
     // Context menu entry for deleting a layer
     MenuItem deleteMI = new MenuItem("Delete");
@@ -94,7 +139,7 @@ public class LayerListCell extends ListCell<ImageLayer>
     toggleVisibilityMI.setOnAction(event -> {
       layer.visible = !layer.visible;
       visibleCheckBox.setSelected(layer.visible);
-      Program.ui.updateCanvas();
+      Program.ui.canvas().update();
     });
 
     // Context menu entry to redraw manually
@@ -107,12 +152,10 @@ public class LayerListCell extends ListCell<ImageLayer>
     // Populate the menu with all algorithms (no debug algorithms if Program.DEBUG == true)
     ObservableList<Algorithm> algs = Program.ui.getAlgorithms();
 
-    for (int i = 0; i < algs.size(); i++)
+    for (Algorithm alg : algs)
     {
-      if (!algs.get(i).debug || Program.DEBUG)
+      if (!alg.debug || Program.DEBUG)
       {
-        Algorithm alg = algs.get(i);
-
         MenuItem m = new MenuItem(alg.toString());
         m.setOnAction(event -> {
           layer.changeAlgorithmType(alg);
@@ -130,9 +173,12 @@ public class LayerListCell extends ListCell<ImageLayer>
 
     // Enable context menu, but only on non-empty cells
     this.emptyProperty().addListener((obs, wasEmpty, isEmpty) -> {
-      if (isEmpty) {
+      if (isEmpty)
+      {
         this.setContextMenu(null);
-      } else {
+      }
+      else
+      {
         this.setContextMenu(c);
       }
     });

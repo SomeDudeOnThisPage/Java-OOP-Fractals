@@ -1,6 +1,8 @@
 package program.system;
 
 import org.json.simple.JSONObject;
+import program.Program;
+import program.algorithm.Algorithm;
 import program.ui.elements.AlgorithmSetting;
 
 import java.util.HashMap;
@@ -37,6 +39,23 @@ public abstract class Fractal
     fractal.getSettings().forEach((String key, AlgorithmSetting value) -> object.put(key, value.getValue()));
 
     return object;
+  }
+
+  public static Fractal fromJSON(JSONObject config)
+  {
+    Fractal fractal = Algorithm.valueOf(((String) config.get("algorithm"))).newFractal();
+
+    JSONObject csettings = (JSONObject) config.get("settings");
+
+    for (Object o : csettings.keySet())
+    {
+      String key = (String) o;
+      Number value = (Number) csettings.get(key);
+
+      fractal.updateSetting(key, value);
+    }
+
+    return fractal;
   }
 
   /**

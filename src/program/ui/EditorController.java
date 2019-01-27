@@ -56,6 +56,11 @@ public class EditorController implements Initializable
     }
   }
 
+  public void refreshList()
+  {
+    layerList.refresh();
+  }
+
   /**
    * Updates the components managed by the EditorController instance
    */
@@ -100,11 +105,8 @@ public class EditorController implements Initializable
 
     // Populate the choiceBox
     ObservableList<Algorithm> algs = Program.ui.getAlgorithms();
-    Algorithm alg;
-
-    for (int i = 0; i < algs.size(); i++)
+    for (Algorithm alg : algs)
     {
-      alg = algs.get(i);
       if (!alg.debug || Program.DEBUG)
       {
         choiceBox.getItems().add(alg);

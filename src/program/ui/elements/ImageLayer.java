@@ -4,6 +4,7 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ListCell;
 import javafx.scene.image.WritableImage;
 import org.json.simple.JSONObject;
 import program.Program;
@@ -49,7 +50,7 @@ public class ImageLayer extends Canvas
   /**
    * The GraphicsService object of the layer
    */
-  private GraphicsService renderService;
+  public GraphicsService renderService;
 
   /**
    * The ColorSetting of this layer being displayed in the Editors 'Color'-Tab when the layer is selected
@@ -119,10 +120,10 @@ public class ImageLayer extends Canvas
   public void redraw()
   {
     long start = System.currentTimeMillis();
-    Program.debug(start);
 
     // Cancel any ongoing renderService
     renderService.cancel();
+    Program.ui.editor().refreshList();
 
     // Set opacity
     this.setOpacity(this.graphicsSettings.getColors()[0].getOpacity());
@@ -136,6 +137,8 @@ public class ImageLayer extends Canvas
     // Add an event handler to the task that gets the tasks' value when succeeded and draws it on the canvas
     // Doing this BEFORE starting the thread to avoid having the task finish before the event handler is instanced
     renderService.addEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED, e -> {
+        Program.ui.getLayers().indexOf(this);
+
         // Get the return value from the task
         BufferedImage bi = renderService.getValue();
 
@@ -144,7 +147,9 @@ public class ImageLayer extends Canvas
 
         g.clearRect(0, 0, this.getWidth(), this.getHeight());
         g.drawImage(image, 0, 0);
-        
+
+        Program.ui.editor().refreshList();
+
         Program.ui.setStatus("Finished drawing image layer '" + name + "' in " + ((System.currentTimeMillis() - start) / 1000.0) + " seconds!");
       });
 
@@ -175,7 +180,7 @@ public class ImageLayer extends Canvas
 
     // Create the values of the object
     object.put("name", layer.name);
-    object.put("algorithm", layer.algorithm);
+    object.put("algorithm", layer.algorithm.name());
     object.put("settings", Fractal.toJSON(layer.fractal));
     object.put("graphics", GraphicsSetting.toJSON(layer.getGraphicsSettings()));
 
@@ -185,9 +190,13 @@ public class ImageLayer extends Canvas
   /**
    * Creates an ImageLayer from a JSON object
    */
-  public static ImageLayer fromJSON()
+  public static ImageLayer fromJSON(JSONObject config)
   {
-    return null;
+    Algorithm a = Algorithm.valueOf((String) config.get("algorithm"));
+    Fractal f = Fractal.fromJSON(config);
+    GraphicsSetting g = GraphicsSetting.fromJSON((JSONObject) config.get("graphics"));
+
+    return new ImageLayer((String) config.get("name"), /* 0 */ 1000, /* 0 */ 1000, a, f, g);
   }
 
   /**
@@ -203,6 +212,8 @@ public class ImageLayer extends Canvas
 
     // Generate Algorithm object
     this.algorithm = algorithm;
+    Program.debug(algorithm.name());
+    Program.debug(algorithm);
     this.fractal = algorithm.newFractal();
 
     // Add a default ColorSetting object
@@ -222,18 +233,16 @@ public class ImageLayer extends Canvas
    * @param x x size of the Canvas
    * @param y y size of the Canvas
    * @param algorithm The algorithm object the layer is encasing
-   * @param settings HashMap containing all needed algorithmSettings
+   * @param fractal Fractal containing the algorithm settings
    * @param graphics GraphicsSetting containing the graphical settings that are to be used
    */
-  public ImageLayer(String name, int x, int y, Algorithm algorithm, HashMap<String, AlgorithmSetting> settings, GraphicsSetting graphics)
+  public ImageLayer(String name, int x, int y, Algorithm algorithm, Fractal fractal, GraphicsSetting graphics)
   {
     super(x,y);
 
     this.algorithm = algorithm;
-    this.fractal = algorithm.newFractal();
+    this.fractal = fractal;
 
-    // Set the settings of the fractal object
-    settings.forEach((String key, AlgorithmSetting setting) -> fractal.updateSetting(key, setting.getValue()));
     this.graphicsSettings = graphics;
 
     this.name = name;

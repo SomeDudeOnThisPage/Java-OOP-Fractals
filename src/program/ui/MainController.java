@@ -1,10 +1,9 @@
 package program.ui;
 
-import javafx.application.Platform;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
+import javafx.stage.FileChooser;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import program.Program;
 import program.algorithm.Algorithm;
 import javafx.collections.*;
@@ -13,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import program.system.FileTask;
 import program.ui.elements.ImageLayer;
 
+import java.io.File;
 import java.util.Optional;
 
 /**
@@ -69,14 +69,24 @@ public class MainController {
     statusLabel.setText(text);
   }
 
+  public EditorController editor()
+  {
+    return editorController;
+  }
+
+  public CanvasController canvas()
+  {
+    return canvasController;
+  }
+
   /**
    * Adds a layer to the list, draws it initially and sets the selected layer to the new one
    */
   public void addLayer(ImageLayer layer)
   {
     // Initially draw the curve
-    layer.redraw();
     selected = layer;
+    layer.redraw();
     layers.add(layer);
   }
 
@@ -103,7 +113,7 @@ public class MainController {
     // Try/Catch in case the list is empty
     try
     {
-      Program.debug("Selected ImageLayer: Name='" + layer.name + "' " + layer);
+      Program.debug("Selected ImageLayer: Name='" + layer.name + "' | " + layer + " | Algorithm='" + layer.getAlgorithm().name() + "'");
     }
     catch (Exception e)
     {
@@ -138,14 +148,6 @@ public class MainController {
     return layers;
   }
 
-  /**
-   * Executes the update method on the CanvasController object
-   */
-  public void updateCanvas()
-  {
-    canvasController.update();
-  }
-
   //
   // BEGIN menu handlers
   //
@@ -155,7 +157,24 @@ public class MainController {
    */
   public void menu_onImport()
   {
-    Program.debug("TODO: Import dialog");
+    // Create file chooser dialog
+    FileChooser dialog = new FileChooser();
+    dialog.setTitle("Open File");
+    dialog.setInitialDirectory(new File("saves"));
+
+    dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter(".json", "*.json"));
+    dialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("All Files", "*.*"));
+
+    File f = dialog.showOpenDialog(null);
+    if (f != null)
+    {
+      FileTask t = new FileTask(f.getPath());
+      t.readFromFile();
+
+      JSONObject config = t.getConfig();
+      JSONObject l = (JSONObject) config.get("0");
+      Program.ui.addLayer(ImageLayer.fromJSON(l));
+    }
   }
 
   /**
@@ -165,14 +184,36 @@ public class MainController {
   {
     // Create a dialog asking for the name of the file to be saved
     TextInputDialog dialog = new TextInputDialog();
-    dialog.setTitle("Save As");
+    dialog.setTitle("Save layers");
     dialog.setHeaderText(null);
     dialog.setContentText("Choose a file name:");
 
     Optional<String> result = dialog.showAndWait();
     result.ifPresent(s -> {
+      if (result.get().equals(""))
+      {
+        Program.ui.setStatus("Could not save layers - No filename specified.");
+        return;
+      }
+
+      if (layers.size() < 1)
+      {
+        Program.ui.setStatus("Could not save layers - No layers present.");
+        return;
+      }
+
       FileTask t = new FileTask(Program.SAVE_DIRECTORY + result.get() + ".json");
-      t.addConfig(ImageLayer.toJSON(selected));
+
+      JSONObject config = new JSONObject();
+      int num = 0;
+
+      for (ImageLayer layer : layers)
+      {
+        // save as "index" = "layer"
+        config.put(String.valueOf(num), ImageLayer.toJSON(layer));
+        num++;
+      }
+      t.addConfig(config);
       t.writeToFile();
     });
   }
@@ -191,7 +232,15 @@ public class MainController {
    */
   public void menu_onHelp()
   {
-    Program.debug("TODO: Help dialog");
+    String help = "There is no help, we will all succumb to the flesh eating monsters outside.";
+
+    // Show an alert dialog
+    Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+    dialog.setTitle("Help");
+    dialog.setHeaderText(null);
+    dialog.setContentText(help);
+
+    dialog.show();
   }
 
   /**
@@ -199,7 +248,17 @@ public class MainController {
    */
   public void menu_onAbout()
   {
-    Program.debug("TODO: About Dialog");
+    String about = "Frankfurt University of Applied Sciences\n" +
+                   "Faculty 2 - Computer Science and Engineering\n" +
+                   "Java OOP - Concurrent visualization of Space Filling Curves";
+
+    // Show an alert dialog
+    Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+    dialog.setTitle("About");
+    dialog.setHeaderText(null);
+    dialog.setContentText(about);
+
+    dialog.show();
   }
 
   //

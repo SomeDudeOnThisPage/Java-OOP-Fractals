@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -42,6 +43,11 @@ public class FileTask {
     public void addConfig(JSONObject config)
     {
         this.config = config;
+    }
+
+    public JSONObject getConfig()
+    {
+        return config;
     }
 
     /**
@@ -128,10 +134,10 @@ public class FileTask {
         try (FileWriter file = new FileWriter(path)) {
             file.write(config.toJSONString());
             file.flush();
-            Program.ui.setStatus("Saved as saves/" + path + ".json!");
+            Program.ui.setStatus("Saved as " + path);
             return true;
         } catch (IOException e) {
-            Program.ui.setStatus("Could not save as saves/" + path + ".json!");
+            Program.ui.setStatus("Could not save as" + path);
             return false;
         }
     }
@@ -140,7 +146,7 @@ public class FileTask {
      * Invokes the reading procedure
      * @return success of reading or not
      */
-    boolean readFromFile() {
+    public boolean readFromFile() {
         assert path != null;
 
         JSONParser parser = new JSONParser();
@@ -152,10 +158,10 @@ public class FileTask {
             stream.read(raw);
             stream.close();
 
-            this.config = (JSONObject) parser.parse(new String(raw, "UTF-8"));
-
+            this.config = (JSONObject) parser.parse(new String(raw, StandardCharsets.UTF_8));
             return true;
         } catch (IOException | ParseException e) {
+            Program.debug(e);
             return false;
         }
     }

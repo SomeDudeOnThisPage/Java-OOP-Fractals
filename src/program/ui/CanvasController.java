@@ -39,7 +39,7 @@ public class CanvasController implements Initializable
   private AnchorPane canvasAnchor;
 
   private int size = 800;
-  private int minsize = 500;
+  int minsize = 500;
 
   private double zoomFactor = 1;
   /**
@@ -83,7 +83,7 @@ public class CanvasController implements Initializable
 
   /**
    * todozoomdesc
-   * @param event
+   * @param event The event
    */
   public void onScroll(ScrollEvent event)
   {
