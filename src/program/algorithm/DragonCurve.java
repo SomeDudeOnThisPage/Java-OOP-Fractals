@@ -24,14 +24,25 @@ import java.util.List;
  */
 public class DragonCurve extends Fractal {
 
+    /**
+     * Main method for drawing the curve
+     * @param image The image object to be drawn on
+     * @param settings A list of specified settings
+     * @param mode The coloring mode
+     * @param colors An array of 1 or 2 colors
+     * @param strokeWidth The stroke width for the drawing
+     *
+     * @see GraphicsSetting.Type
+     */
     public static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors, double strokeWidth) {
 
-        //retrieve settings
-        double scaleFactor = (double) settings.get("scaleFactor").getValue();
-        int iterations = (int) settings.get("iterations").getValue();
-        int x = (int) settings.get("startX").getValue();
-        int y = (int) settings.get("startY").getValue();
-        double rotation = (double) settings.get("rotation").getValue();
+        //initialize all values from the settings menu
+        double scaleFactor = settings.get("scaleFactor").getValue().doubleValue();
+        double x = settings.get("startX").getValue().intValue();
+        double y = settings.get("startY").getValue().intValue();
+        int iterations = settings.get("iterations").getValue().intValue();
+        double rotation = settings.get("rotation").getValue().doubleValue();
+
         //declare a turning angle for the turtle
         final int ANGLE = 90;
 

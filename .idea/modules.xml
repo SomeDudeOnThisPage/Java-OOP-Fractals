@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Java OOP - Space Filling Curves.iml" filepath="$PROJECT_DIR$/Java OOP - Space Filling Curves.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Java-OOP-Fractals.iml" filepath="$PROJECT_DIR$/.idea/Java-OOP-Fractals.iml" />
     </modules>
   </component>
 </project>
