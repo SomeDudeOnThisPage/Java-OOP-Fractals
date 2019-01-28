@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.collections.*?>
 <?import javafx.collections.FXCollections?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane minWidth="-Infinity" prefHeight="723.0" prefWidth="250.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="program.ui.EditorController">
+<BorderPane minWidth="-Infinity" prefHeight="723.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="program.ui.EditorController">
   <center>
     <SplitPane dividerPositions="0.49930651872399445" focusTraversable="true" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
       <items>
@@ -28,6 +37,9 @@
                       <BorderPane.margin>
                         <Insets bottom="6.0" right="6.0" top="6.0" />
                       </BorderPane.margin>
+                                 <tooltip>
+                                    <Tooltip text="The algorithm that will be used if a new layer is created" />
+                                 </tooltip>
                     </ChoiceBox>
                   </center>
                   <left>
@@ -41,20 +53,50 @@
                 <HBox>
                   <children>
                     <Region HBox.hgrow="ALWAYS" />
-                    <Button ellipsisString="F" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="F">
+                    <Button ellipsisString="" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" styleClass="editorButton" stylesheets="@../stylesheet.css">
                       <HBox.margin>
-                        <Insets bottom="6.0" left="3.0" right="3.0" fx:id="x1" />
+                        <Insets bottom="6.0" left="3.0" fx:id="x1" />
                       </HBox.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="17.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icon/import64.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <tooltip>
+                                    <Tooltip text="Import Layer(s)" />
+                                 </tooltip>
                     </Button>
-                    <Button fx:id="addLayerButton" ellipsisString="+" mnemonicParsing="false" onAction="#onAddLayerButton" prefHeight="24.0" prefWidth="24.0" text="+" HBox.margin="$x1">
+                    <Button fx:id="addLayerButton" ellipsisString="+" mnemonicParsing="false" onAction="#onAddLayerButton" prefHeight="24.0" prefWidth="24.0" styleClass="editorButton" stylesheets="@../stylesheet.css" HBox.margin="$x1">
                       <font>
                         <Font size="11.0" />
                       </font>
+                                 <tooltip>
+                                    <Tooltip text="New Layer" />
+                                 </tooltip>
+                                 <graphic>
+                                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icon/plus64.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
                     </Button>
-                    <Button ellipsisString="-" mnemonicParsing="false" onAction="#onRemLayerButton" prefHeight="24.0" prefWidth="24.0" text="-">
+                    <Button ellipsisString="-" mnemonicParsing="false" onAction="#onRemLayerButton" prefHeight="24.0" prefWidth="24.0" styleClass="editorButton" stylesheets="@../stylesheet.css">
                       <HBox.margin>
                         <Insets bottom="6.0" left="3.0" right="6.0" />
                       </HBox.margin>
+                                 <tooltip>
+                                    <Tooltip text="Delete Selected Layer" />
+                                 </tooltip>
+                                 <graphic>
+                                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icon/minus64.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
                     </Button>
                   </children>
                 </HBox>

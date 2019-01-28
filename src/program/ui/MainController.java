@@ -2,7 +2,6 @@ package program.ui;
 
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import program.Program;
 import program.algorithm.Algorithm;
@@ -13,7 +12,9 @@ import program.system.FileTask;
 import program.ui.elements.ImageLayer;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 /**
  * The controller for the main scene of the program
@@ -28,7 +29,8 @@ import java.util.Optional;
  * @see EditorController
  * @see CanvasController
  */
-public class MainController {
+public class MainController implements Initializable
+{
   /**
    * The Editor that is a child of this instance
    */
@@ -152,6 +154,19 @@ public class MainController {
   // BEGIN menu handlers
   //
 
+  private void loadJSON(File f)
+  {
+    FileTask t = new FileTask(f.getAbsolutePath());
+    t.readFromFile();
+
+    JSONObject config = t.getConfig();
+
+    for (Object key : config.keySet()) {
+      JSONObject l = (JSONObject) config.get(key);
+      Program.ui.addLayer(ImageLayer.fromJSON(l));
+    }
+  }
+
   /**
    * Handles the 'Import'-MenuItem in the 'File'-Tab
    */
@@ -168,12 +183,7 @@ public class MainController {
     File f = dialog.showOpenDialog(null);
     if (f != null)
     {
-      FileTask t = new FileTask(f.getPath());
-      t.readFromFile();
-
-      JSONObject config = t.getConfig();
-      JSONObject l = (JSONObject) config.get("0");
-      Program.ui.addLayer(ImageLayer.fromJSON(l));
+      loadJSON(f);
     }
   }
 
@@ -264,6 +274,16 @@ public class MainController {
   //
   // END menu handlers
   //
+
+  @Override
+  public void initialize(URL url, ResourceBundle resourceBundle) {
+    if (Program.STARTUP_LOAD_FILE != null && !Program.STARTUP_LOAD_FILE.equals(""))
+    {
+      File f = new File(Program.SAVE_DIRECTORY + Program.STARTUP_LOAD_FILE);
+      Program.debug(f.getAbsolutePath());
+      loadJSON(f);
+    }
+  }
 
   /**
    * Creates the ObservableArrayList instance holding the ImageLayers

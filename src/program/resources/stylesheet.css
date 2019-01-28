@@ -14,3 +14,7 @@
     -fx-faint-focus-color: transparent;
     -fx-background-color: LightSlateGray;
 }
+.editorButton
+{
+    -fx-padding: 0;
+}
