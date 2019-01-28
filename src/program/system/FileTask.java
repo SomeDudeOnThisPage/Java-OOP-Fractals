@@ -7,7 +7,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import program.Program;
 import program.algorithm.Algorithm;
-import program.ui.elements.AlgorithmSetting;
 import program.ui.elements.GraphicsSetting;
 import program.ui.elements.ImageLayer;
 
@@ -19,7 +18,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A class for parsing config files<br>
@@ -137,7 +135,7 @@ public class FileTask {
             Program.ui.setStatus("Saved as " + path);
             return true;
         } catch (IOException e) {
-            Program.ui.setStatus("Could not save as" + path);
+            Program.ui.setStatus("Could not save as " + path);
             return false;
         }
     }
