@@ -27,3 +27,4 @@ saves/*
 
 #idea folder
 .idea/*
+*.iml
