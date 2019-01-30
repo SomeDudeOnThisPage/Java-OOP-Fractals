@@ -73,7 +73,7 @@ public class Program extends Application
   /**
    * Window title
    */
-  private static final String TITLE = "Lemme sniff ur b00t€-hole";
+  private static final String TITLE = "Space Filling Curve Generator";
 
   /**
    * Path to program resources in source packages. Used for fxml and css

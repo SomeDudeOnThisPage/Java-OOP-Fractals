@@ -1,6 +1,7 @@
 package program.ui.elements;
 
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import program.Program;
@@ -27,9 +28,24 @@ public class AlgorithmSetting<T extends Number> extends BorderPane
   }
 
   /**
+   * The type of this setting
+   */
+  private Type type;
+
+  /**
    * The current actual value held by the setting.
    */
   private T value;
+
+  /**
+   * Either a slider or a spinner
+   */
+  private Node inputNode;
+
+  /**
+   * Only used when type == SLIDER
+   */
+  private TextField inputField;
 
   /**
    * Returns the current value of the setting. Needs to be cast to the corresponding data-type upon retrieval.
@@ -42,6 +58,39 @@ public class AlgorithmSetting<T extends Number> extends BorderPane
 
   public void setValue(T val) {
     value = val;
+
+    // Set the spinners value
+    if (type == Type.SPINNER && inputNode != null)
+    {
+      // Differentiate between Integer and double spinners, as they have different ValueFactories
+      if (val instanceof Double)
+      {
+        ((Spinner) inputNode).getValueFactory().setValue(val);
+      }
+      else
+      {
+        // json.simple stores int as long by default, so do not forget to cast!
+        // We do not have to worry about overflow here as these values are <= int.MAX_VALUE by design!
+        ((Spinner) inputNode).getValueFactory().setValue(val.intValue());
+      }
+
+    }
+    else if (type == Type.SLIDER)
+    {
+      // Set the sliders value to val
+      // Differentiate between Double and Integer sliders
+      if (val instanceof Double)
+      {
+        ((Slider) inputNode).setValue((Double) val);
+      }
+      else if (val instanceof Integer)
+      {
+        ((Slider) inputNode).setValue((Integer) val);
+      }
+
+      // Don't forget to set the text field if we have a slider
+      inputField.setText(String.valueOf(val));
+    }
   }
 
   /**
@@ -55,6 +104,7 @@ public class AlgorithmSetting<T extends Number> extends BorderPane
   public AlgorithmSetting(String name, T value, T max, T min, Type type)
   {
     this.value = value;
+    this.type = type;
 
     this.setPadding(new Insets(5,5,5,5));
     this.setTop(new Label(name));
@@ -75,8 +125,15 @@ public class AlgorithmSetting<T extends Number> extends BorderPane
         svf.valueProperty().addListener((observable, oldValue, newValue) -> {
           // Not a great way to cast to <T>, but sufficient because we know that newValue is definitely an integer
           this.value = (T) newValue;
-          Program.ui.getSelectedLayer().redraw();
+
+          // Only redraw if we have a currently selected layer, as while loading layers we might not!!
+          if (Program.ui.getSelectedLayer() != null)
+          {
+            Program.ui.getSelectedLayer().redraw();
+          }
         });
+
+        inputNode = s;
 
         this.setCenter(s);
       }
@@ -93,8 +150,14 @@ public class AlgorithmSetting<T extends Number> extends BorderPane
         svf.valueProperty().addListener((observable, oldValue, newValue) -> {
           // Not a great way to cast to <T>, but sufficient because we know that newValue is definitely a double
           this.value = (T) newValue;
-          Program.ui.getSelectedLayer().redraw();
+
+          if (Program.ui.getSelectedLayer() != null)
+          {
+            Program.ui.getSelectedLayer().redraw();
+          }
         });
+
+        inputNode = s;
 
         this.setCenter(s);
       }
@@ -161,9 +224,11 @@ public class AlgorithmSetting<T extends Number> extends BorderPane
         });
       }
 
+      inputNode = s;
+      inputField = t;
+
       this.setCenter(s);
       this.setRight(t);
     }
-
   }
 }

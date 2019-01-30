@@ -30,6 +30,7 @@ public abstract class Fractal
   public void updateSetting(String key, Number value)
   {
     AlgorithmSetting currentSetting = settings.get(key);
+    Program.debug("Updating setting: " + key + " " + currentSetting + " with value = " + value);
     currentSetting.setValue(value);
   }
 
@@ -45,12 +46,14 @@ public abstract class Fractal
   {
     Fractal fractal = Algorithm.valueOf(((String) config.get("algorithm"))).newFractal();
 
-    JSONObject csettings = (JSONObject) config.get("settings");
+    JSONObject settingsConfig = (JSONObject) config.get("settings");
 
-    for (Object o : csettings.keySet())
+    for (Object o : settingsConfig.keySet())
     {
       String key = (String) o;
-      Number value = (Number) csettings.get(key);
+      Number value = (Number) settingsConfig.get(key);
+
+      Program.debug(o + " " + value);
 
       fractal.updateSetting(key, value);
     }
