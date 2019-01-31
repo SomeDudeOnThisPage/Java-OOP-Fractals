@@ -266,6 +266,11 @@ public class MainController implements Initializable
   // END menu handlers
   //
 
+  /**
+   * Initializes the controllers nodes
+   * @param url ignored
+   * @param resourceBundle ignored
+   */
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
     if (Program.STARTUP_LOAD_FILE != null && !Program.STARTUP_LOAD_FILE.equals(""))

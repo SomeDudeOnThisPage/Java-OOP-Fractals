@@ -11,6 +11,7 @@ import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.stage.*;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -162,6 +163,11 @@ public class Program extends Application
   {
     try
     {
+      // Create 'saves' folder if not present
+      File dir = new File("saves");
+      dir.mkdir();
+
+
       List<String> arguments = Arrays.asList(args);
 
       // Check for debug flag

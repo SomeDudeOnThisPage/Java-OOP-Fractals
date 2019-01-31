@@ -9,24 +9,55 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import program.algorithm.Algorithm;
 import program.system.FileTask;
-
 import java.util.Optional;
 
 
-// Custom list CellFactory
+/**
+ * A custom ListCell for the LayerListView
+ * <p>
+ *   A cell for a list containing an ImageLayer
+ * </p>
+ * @author Robin Buhlmann
+ * @version 0.5
+ */
 public class LayerListCell extends ListCell<ImageLayer>
 {
 
+  /**
+   * The root pane of the cell
+   */
   @FXML private BorderPane root;
 
+  /**
+   * CheckBox for toggling visibility
+   */
   @FXML private CheckBox visibleCheckBox;
+
+  /**
+   * TextField to change the name of the contained layer
+   */
   @FXML private TextField textField;
 
+  /**
+   * A progress indicator indicates progress. The more you know...
+   */
   @FXML public ProgressIndicator progressIndicator;
 
+  /**
+   * FXMLLoader used to load the cells FXML
+   */
   FXMLLoader fxmlloader;
+
+  /**
+   * The contained and managed ImageLayer
+   */
   private ImageLayer layer;
 
+  /**
+   * Updates the cell itself, this is used to update the contained nodes
+   * @param layer The layer to be used, can change
+   * @param empty Wether the cell is empty or not
+   */
   @Override
   public void updateItem(ImageLayer layer, boolean empty)
   {
@@ -58,6 +89,9 @@ public class LayerListCell extends ListCell<ImageLayer>
     }
   }
 
+  /**
+   * Fires when the check box is presses, toggles visibility
+   */
   public void onVisibleCheckBox()
   {
     // Select the layer
@@ -70,16 +104,25 @@ public class LayerListCell extends ListCell<ImageLayer>
     Program.ui.canvas().update();
   }
 
+  /**
+   * Select the cell when the contained TextField was selected
+   */
   public void onTextFieldAction()
   {
     getListView().getSelectionModel().select(this.getIndex());
   }
 
+  /**
+   * Select the cell when the contained TextField was clicked
+   */
   public void onTextFieldClick()
   {
     getListView().getSelectionModel().select(this.getIndex());
   }
 
+  /**
+   * Constructs a new LayerListCell and sets a context menu on all non-empty cells
+   */
   public LayerListCell()
   {
     try
@@ -99,7 +142,10 @@ public class LayerListCell extends ListCell<ImageLayer>
     // Prepare Progress Indicator
     //progressIndicator.setVisible(true);
 
+    //
     // Setup context menu for each cell
+    //
+
     ContextMenu c = new ContextMenu();
 
     // Context menu entry for saving a layer

@@ -45,24 +45,11 @@
                            </image>
                         </ImageView>
                      </graphic></MenuItem>
-                  <Menu mnemonicParsing="false" text="Export">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="  .png" />
-                        <MenuItem mnemonicParsing="false" text="  .jpg" />
-                    </items>
+            <MenuItem mnemonicParsing="false" onAction="#menu_onSaveAs" text="Export">
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../icon/export_full32.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Menu>
-            <MenuItem mnemonicParsing="false" onAction="#menu_onSaveAs" text="Save As">
-                     <graphic>
-                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../icon/save64.png" />
                            </image>
                         </ImageView>
                      </graphic></MenuItem>

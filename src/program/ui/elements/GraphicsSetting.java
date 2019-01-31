@@ -13,7 +13,18 @@ import program.Program;
 
 import java.util.Iterator;
 
+/**
+ * A panel of settings controlling an ImageLayers algorithms visual parameters
+ * <p>
+ *   A panel with elements to control the stroke width, color and colormode of an image.
+ * </p>
+ * @author Robin Buhlmann
+ * @version 0.5
+ */
 public class GraphicsSetting extends BorderPane {
+  /**
+   * Enum holding the different color modes and their displayed names
+   */
   public enum Type
   {
     SOLID
@@ -36,18 +47,49 @@ public class GraphicsSetting extends BorderPane {
     public abstract String toString();
   }
 
+  /**
+   * Current color mode
+   */
   private Type current;
 
+  /**
+   * The currently used colors. Type.SOLID only used colors[0], the others use both
+   */
   private Color[] colors;
+
+  /**
+   * The stroke width
+   */
   private double strokeWidth;
 
+  /**
+   * Panel holding the stroke setting ui elements
+   */
   BorderPane strokeSetting;
+
+  /**
+   * Slider that controls the thickness
+   */
   private Slider strokeSlider;
+
+  /**
+   * Text field to manually enter the thickness
+   */
   private TextField strokeTextField;
 
+  /**
+   * Choice box for selecting the color mode
+   */
   private ChoiceBox<Type> choiceBox;
+
+  /**
+   * A vertical box.
+   */
   private VBox vBox;
 
+  /**
+   * Both used color pickers
+   */
   ColorPicker cp1, cp2;
 
   /**

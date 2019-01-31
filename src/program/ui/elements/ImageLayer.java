@@ -4,7 +4,6 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ListCell;
 import javafx.scene.image.WritableImage;
 import org.json.simple.JSONObject;
 import program.Program;
@@ -172,7 +171,9 @@ public class ImageLayer extends Canvas
   }
 
   /**
-   * Returns a JSON object for the layer
+   * Serializes an ImageLayer into a JSON string
+   * @param layer Layer to be serialized
+   * @return JSON string config
    */
   public static JSONObject toJSON(ImageLayer layer)
   {
@@ -180,6 +181,8 @@ public class ImageLayer extends Canvas
 
     // Create the values of the object
     object.put("name", layer.name);
+    object.put("visibility", layer.visible);
+
     object.put("algorithm", layer.algorithm.name());
     object.put("settings", Fractal.toJSON(layer.fractal));
     object.put("graphics", GraphicsSetting.toJSON(layer.getGraphicsSettings()));
@@ -189,6 +192,8 @@ public class ImageLayer extends Canvas
 
   /**
    * Creates an ImageLayer from a JSON object
+   * @param config JSON string
+   * @return New ImageLayer
    */
   public static ImageLayer fromJSON(JSONObject config)
   {
@@ -196,7 +201,7 @@ public class ImageLayer extends Canvas
     Fractal f = Fractal.fromJSON(config);
     GraphicsSetting g = GraphicsSetting.fromJSON((JSONObject) config.get("graphics"));
 
-    return new ImageLayer((String) config.get("name"), /* 0 */ 1000, /* 0 */ 1000, a, f, g);
+    return new ImageLayer((String) config.get("name"), /* 0 */ 1000, /* 0 */ 1000, (boolean) config.get("visibility"), a, f, g);
   }
 
   /**
@@ -236,7 +241,7 @@ public class ImageLayer extends Canvas
    * @param fractal Fractal containing the algorithm settings
    * @param graphics GraphicsSetting containing the graphical settings that are to be used
    */
-  public ImageLayer(String name, int x, int y, Algorithm algorithm, Fractal fractal, GraphicsSetting graphics)
+  public ImageLayer(String name, int x, int y, boolean visible, Algorithm algorithm, Fractal fractal, GraphicsSetting graphics)
   {
     super(x,y);
 
@@ -246,7 +251,7 @@ public class ImageLayer extends Canvas
     this.graphicsSettings = graphics;
 
     this.name = name;
-    this.visible = true;
+    this.visible = visible;
 
     // Create the rendering service
     this.renderService = new GraphicsService(this.algorithm, this.fractal.getSettings(), this.graphicsSettings);

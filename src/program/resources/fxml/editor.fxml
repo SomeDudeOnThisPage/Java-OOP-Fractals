@@ -53,7 +53,7 @@
                 <HBox>
                   <children>
                     <Region HBox.hgrow="ALWAYS" />
-                    <Button ellipsisString="" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" styleClass="editorButton" stylesheets="@../stylesheet.css">
+                    <Button ellipsisString="" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#onImportButton" prefHeight="24.0" prefWidth="24.0" styleClass="editorButton" stylesheets="@../stylesheet.css">
                       <HBox.margin>
                         <Insets bottom="6.0" left="3.0" fx:id="x1" />
                       </HBox.margin>
@@ -143,11 +143,6 @@
                     </ScrollPane>
                   </children>
                 </AnchorPane>
-              </content>
-            </Tab>
-            <Tab text="Canvas">
-              <content>
-                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
           </tabs>

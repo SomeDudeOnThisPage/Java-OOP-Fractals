@@ -18,13 +18,40 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+/**
+ * The controller controlling the nodes of the editor.fxml file
+ * <p>
+ *   Manages three buttons and the actual displayed list of layers
+ * </p>
+ * @author Robin Buhlmann
+ * @version 0.5
+ */
 public class EditorController implements Initializable
 {
+  /**
+   * The actual in the program displayed list
+   */
   @FXML private ListView<ImageLayer> layerList;
+
+  /**
+   * The choice box the user selects algorithms from
+   */
   @FXML private ChoiceBox<Algorithm> choiceBox;
+
+  /**
+   * A vertical box. Come on, you know what a VBox is!
+   * This box is the one the AlgorithmSettings are added onto
+   */
   @FXML private VBox vBox;
+
+  /**
+   * The Panel the GraphicsSettings are drawn onto
+   */
   @FXML private BorderPane colorSettingsPane;
 
+  /**
+   * Used to count up default layer names
+   */
   private static int a = 0;
 
   /**
@@ -56,6 +83,15 @@ public class EditorController implements Initializable
     }
   }
 
+  /**
+   * Called when the importLayerButton ('Folder'-Button) is pressed
+   */
+  public void onImportButton()
+  {
+    // Just reuse the method from the main controller
+    Program.ui.menu_onImport();
+  }
+
   public void refreshList()
   {
     layerList.refresh();
@@ -83,6 +119,11 @@ public class EditorController implements Initializable
     colorSettingsPane.setCenter(Program.ui.getSelectedLayer().getGraphicsSettings());
   }
 
+  /**
+   * Initializes the controller and its contained nodes
+   * @param url ignored
+   * @param resourceBundle ignored
+   */
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle)
   {
@@ -100,7 +141,6 @@ public class EditorController implements Initializable
       {
         // This exception is handled in the MainControllers' handler for the list of ImageLayers
       }
-
     });
 
     // Populate the choiceBox
