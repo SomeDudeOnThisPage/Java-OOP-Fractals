@@ -28,3 +28,4 @@ saves/*
 #idea folder
 .idea/*
 *.iml
+*.xml
