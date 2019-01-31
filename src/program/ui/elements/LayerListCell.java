@@ -123,10 +123,11 @@ public class LayerListCell extends ListCell<ImageLayer>
 
         // As this method is invoked by clicking a context menu of a layer, we always have a layer - no need to check
 
-        FileTask t = new FileTask(Program.SAVE_DIRECTORY + result.get() + ".json");
-        config.put("0", ImageLayer.toJSON(Program.ui.getLayers().get(this.getIndex())));
-        t.addConfig(config);
-        t.writeToFile();
+        FileTask t = new FileTask(Program.SAVE_DIRECTORY + result.get() + ".json", Program.ui.getLayers().get(this.getIndex()));
+
+        Thread th = new Thread(t);
+        th.setDaemon(true);
+        th.start();
       });
     });
 

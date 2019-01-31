@@ -1,13 +1,25 @@
-.root
+/*.root
 {
-/*    -fx-focus-color: LightSlateGray;
-    -fx-faint-focus-color: transparent;
-    -fx-accent: LightSlateGray; */
+    -fx-focus-color: #fd9644;
+    /*-fx-faint-focus-color: transparent;
+    -fx-accent: LightSlateGray;
 }
 .cell:selected
 {
-    -fx-background-color: LightSlateGray;
+    -fx-background-color: #fd9644;
 }
+
+#layer-list-cell-text-field
+{
+    -fx-border-color: transparent;
+}
+
+.cell:selected > #layer-list-cell-text-field
+{
+    -fx-background-color: #fd9644;
+
+}
+*/
 #canvasBackground
 {
     -fx-focus-color: transparent;
@@ -17,4 +29,78 @@
 .editorButton
 {
     -fx-padding: 0;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Metro Scroll-Bar skin                                                       *
+ * https://farrukhobaid.wordpress.com/2013/01/10/metro-scrollbar/              *
+ * Modified                                                                    *
+ *                                                                             *
+ ******************************************************************************/
+.scroll-bar{
+    -fx-background-color: white;
+}
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track {
+    -fx-background-color: white;
+    -fx-border-color:transparent;
+    -fx-background-radius: 0em;
+}
+.scroll-bar:vertical .track-background,
+.scroll-bar:horizontal .track-background {
+    -fx-background-color: white;
+    -fx-background-insets:  0;
+    -fx-background-radius: 0em;
+}
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: rgb(205,205,205);
+    -fx-background-insets: 2 0 2 0;
+    -fx-background-radius: 0em;
+}
+.scroll-bar:vertical .thumb {
+    -fx-background-color: rgb(205,205,205);
+    -fx-background-insets: 0 2 0 2;
+    -fx-background-radius: 0em;
+}
+.scroll-bar:horizontal .thumb:hover,
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: rgb(215,215,215);
+}
+.scroll-bar:horizontal .thumb:pressed,
+.scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: rgb(96,96,96);
+}
+.scroll-bar:vertical .increment-button, .scroll-bar:vertical .decrement-button {
+    -fx-background-color:transparent;
+    -fx-background-radius: 0em;
+    -fx-padding: 5 5 5 5;
+}
+.scroll-bar:horizontal .increment-button, .scroll-bar:horizontal .decrement-button {
+     -fx-background-color:transparent;
+     -fx-background-radius: 0em;
+     -fx-padding: 5 5 5 5;
+}
+.scroll-bar:horizontal .increment-arrow {
+    -fx-shape: "M4,17v-2.889l4.124-3.86l4.125,3.86V17l-4.125-3.375L4,17z";
+    -fx-padding: 0.25em;
+    -fx-rotate: 90;
+}
+.scroll-bar:vertical .increment-arrow {
+    -fx-shape: "M4,17v-2.889l4.124-3.86l4.125,3.86V17l-4.125-3.375L4,17z";
+    -fx-padding: 0.25em;
+    -fx-rotate: 180;
+}
+.scroll-bar:horizontal .decrement-arrow {
+    -fx-shape: "M4,17v-2.889l4.124-3.86l4.125,3.86V17l-4.125-3.375L4,17z";
+    -fx-padding: 0.25em;
+    -fx-rotate: -90;
+}
+.scroll-bar:vertical .decrement-arrow {
+    -fx-shape: "M4,17v-2.889l4.124-3.86l4.125,3.86V17l-4.125-3.375L4,17z";
+    -fx-padding: 0.25em;
+}
+.scroll-bar:vertical:focused,
+.scroll-bar:horizontal:focused {
+    -fx-background-color: -fx-box-border,-fx-box-border,white;
 }

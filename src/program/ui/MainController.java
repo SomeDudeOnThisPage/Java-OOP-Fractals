@@ -154,17 +154,16 @@ public class MainController implements Initializable
   // BEGIN menu handlers
   //
 
+  /**
+   * Creates a task to load a config from memory
+   * @param f The file to be read
+   */
   private void loadJSON(File f)
   {
     FileTask t = new FileTask(f.getAbsolutePath());
-    t.readFromFile();
-
-    JSONObject config = t.getConfig();
-
-    for (Object key : config.keySet()) {
-      JSONObject l = (JSONObject) config.get(key);
-      Program.ui.addLayer(ImageLayer.fromJSON(l));
-    }
+    Thread th = new Thread(t);
+    th.setDaemon(true);
+    th.start();
   }
 
   /**
@@ -212,19 +211,11 @@ public class MainController implements Initializable
         return;
       }
 
-      FileTask t = new FileTask(Program.SAVE_DIRECTORY + result.get() + ".json");
+      FileTask t = new FileTask(Program.SAVE_DIRECTORY + result.get() + ".json", Program.ui.getLayers());
 
-      JSONObject config = new JSONObject();
-      int num = 0;
-
-      for (ImageLayer layer : layers)
-      {
-        // save as "index" = "layer"
-        config.put(String.valueOf(num), ImageLayer.toJSON(layer));
-        num++;
-      }
-      t.addConfig(config);
-      t.writeToFile();
+      Thread th = new Thread(t);
+      th.setDaemon(true);
+      th.start();
     });
   }
 

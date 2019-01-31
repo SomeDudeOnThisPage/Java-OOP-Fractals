@@ -1,13 +1,11 @@
 package program.system;
 
-import javafx.scene.paint.Color;
-import org.json.simple.JSONArray;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import program.Program;
-import program.algorithm.Algorithm;
-import program.ui.elements.GraphicsSetting;
 import program.ui.elements.ImageLayer;
 
 import java.io.File;
@@ -15,8 +13,6 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -31,11 +27,14 @@ import java.util.List;
  * <br>
  */
 
-public class FileTask {
+public class FileTask extends Task<Boolean>
+{
     JSONObject config;
     String path;
+    List<ImageLayer> layers;
+    int mode;
 
-    //extremely bad practice but not my beer :-)
+    // 'extremely bad practice but not my beer :-)' - Ron Leonard Pudwitz, a.d. 2019
     final int layerSize = 1000;
 
     public void addConfig(JSONObject config)
@@ -54,77 +53,45 @@ public class FileTask {
      */
     public FileTask(String path) {
         this.path = path;
+        this.mode = 0;
+        Program.debug("MODE=" + mode);
     }
 
     /**
-     * Constructor to write a config to a file
+     * Constructor to serialize layers and write a config to a file
      * @param path
      * @param layers
      */
-    public FileTask(String path, List<ImageLayer> layers) {
-    /*    this.path = path;
-        this.config = new JSONObject();
+    public FileTask(String path, List<ImageLayer> layers)
+    {
+        this.mode = 1;
+        this.path = path;
+        this.layers = layers;
+    }
 
-        JSONArray confLayers = new JSONArray();
+    /**
+     * Constructor to save one image layer to a file
+     * @param path
+     * @param layer
+     */
+    public FileTask(String path, ImageLayer layer)
+    {
+        this.mode = 2;
+        this.path = path;
 
-        //iterate over all layers
-        for (ImageLayer l : layers) {
-            //initialize the single layer that gets added to the list
-            JSONObject layer = new JSONObject();
+        JSONObject c = new JSONObject();
 
-            //self explanatory
-            layer.put("name", l.name);
+        // We only have one layer, serializing it in a thread is unnecessary
+        c.put("0", ImageLayer.toJSON(layer));
 
-            //add the type of algorithm
-            layer.put("algorithm", l.getAlgorithm().name());
-
-            //construct a json object for the color setting class
-            JSONObject graphicsSettings = new JSONObject();
-
-            //stuff the color mode inside
-            graphicsSettings.put("type", l.getGraphicsSettings().getMode().name());
-
-            JSONArray colors = new JSONArray();
-
-            for (Color c : l.getGraphicsSettings().getColors()) {
-                colors.add(c.toString());
-            }
-
-            //and add the color list to the colorSettings too
-            graphicsSettings.put("colors", colors);
-
-            //add the constructed layer element to the config object
-            confLayers.add(layer);
-
-            //add the graphicsettings to the layer object
-            layer.put("graphicsettings", graphicsSettings);
-
-
-
-            //last but not least also make a new object for the algorithm settings
-            JSONObject algorithmSettings = new JSONObject();
-
-            //who doesn't love iterating over hash maps right
-            for (Map.Entry<String, AlgorithmSetting> s: l.getSettings().entrySet()) {
-                algorithmSettings.put(s.getKey(), s.getValue().toString());
-            }
-
-            //and append it to the layer object again
-            layer.put("algorithmsettings", algorithmSettings);
-
-
-            //ok VERY LAST but still important is to add the layer object to the root json object that will get written
-            confLayers.add(layer);
-            config.put("layers", confLayers);
-        }
-        */
+        this.addConfig(c);
     }
 
     /**
      * Invokes the writing procedure
      * @return success of writing or not
      */
-    public boolean writeToFile() {
+    boolean writeToFile() {
         Program.debug("Writing to " + path);
         assert path != null;    //make sure we have a path
         assert config != null;  //and a config file to write
@@ -132,10 +99,11 @@ public class FileTask {
         try (FileWriter file = new FileWriter(path)) {
             file.write(config.toJSONString());
             file.flush();
-            Program.ui.setStatus("Saved as " + path);
+            Platform.runLater(() -> Program.ui.setStatus("Saved as " + path));
+
             return true;
         } catch (IOException e) {
-            Program.ui.setStatus("Could not save as " + path);
+            Platform.runLater(() -> Program.ui.setStatus("Could nto save as " + path));
             return false;
         }
     }
@@ -144,7 +112,7 @@ public class FileTask {
      * Invokes the reading procedure
      * @return success of reading or not
      */
-    public boolean readFromFile() {
+    boolean readFromFile() {
         assert path != null;
 
         JSONParser parser = new JSONParser();
@@ -164,58 +132,49 @@ public class FileTask {
         }
     }
 
-    List<ImageLayer> getLayers() {
+    @Override
+    protected Boolean call() throws Exception
+    {
+        // Loading JSON
+        if (mode == 0)
+        {
+            readFromFile();
+            JSONObject config = getConfig();
 
-        JSONArray layers = (JSONArray) config.get("layers");
-        List<ImageLayer> result = new ArrayList<>();
+            for (Object key : config.keySet())
+            {
+                JSONObject l = (JSONObject) config.get(key);
+                // Make sure to run import task with Platform.runLater, as it calls methods from the JavaFX Application thread and interacts with the scene graph
+                Platform.runLater(() -> Program.ui.addLayer(ImageLayer.fromJSON(l)));
+            }
+            return true;
+        }
+        // Saving all layers to JSON
+        else if (mode == 1)
+        {
+            JSONObject config = new JSONObject();
+            int num = 0;
 
-        for (Object layer : layers) {
-            JSONObject currentLayer = (JSONObject) layer;
-
-            //misc
-            String name = (String) currentLayer.get("name");
-            Algorithm alg = Algorithm.valueOf((String) currentLayer.get(("algorithm")));
-
-            //construct the image layer
-            ImageLayer tempLayer = new ImageLayer(name, layerSize, layerSize, alg);
-
-
-            //graphics settings
-            JSONObject graphicsSettings = (JSONObject) currentLayer.get("graphicsettings");
-
-            GraphicsSetting.Type type = GraphicsSetting.Type.valueOf((String) graphicsSettings.get("type"));
-
-            Color[] colors = {Color.BLACK, Color.BLACK};
-
-            JSONArray configColors = (JSONArray) graphicsSettings.get("colors");
-            Iterator<String> iterator = configColors.iterator();
-
-            for (int i = 0; i < 2; i++) {
-                colors[i] = Color.valueOf(iterator.next());
+            for (ImageLayer layer : layers)
+            {
+                // save as "index" = "layer"
+                config.put(String.valueOf(num), ImageLayer.toJSON(layer));
+                num++;
             }
 
-            GraphicsSetting graphicsSetting = new GraphicsSetting(type);
-            graphicsSetting.setColors(colors[0], colors[1]);
+            this.addConfig(config);
+            this.writeToFile();
 
-            tempLayer.setGraphicsSettings(graphicsSetting);
-
-
-            //algorithm settings
-            Fractal f = tempLayer.getFractal();
-
-            JSONObject algorithmSettingsJSON = (JSONObject) currentLayer.get("algorithmsettings");
-
-            for (Object o : algorithmSettingsJSON.keySet()) {
-                String key = (String) o;
-                Number value = (Number) algorithmSettingsJSON.get(key);
-
-                f.updateSetting(key, value);
-            }
-
-            result.add(tempLayer);
+            return true;
+        }
+        // Saving one layer to JSON
+        else if (mode == 2)
+        {
+            // Simply write to file as we added the config in the constructor
+            this.writeToFile();
+            return true;
         }
 
-        return result;
+        return false;
     }
-
 }
