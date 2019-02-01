@@ -90,6 +90,10 @@ public enum Algorithm
    * The method executing the render() method of the corresponding algorithm
    * @param image The BufferedImage object to be edited
    * @param settings The HashMap containing the AlgorithmSettings objects
+   * @param mode The Drawing Mode {Solid, Alternating, Gradient}
+   * @param colors An array of up to two colors, depending on the mode
+   * @param strokeWidth The line width of the curve
+   * @return
    */
   public abstract long render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors, double strokeWidth);
 }

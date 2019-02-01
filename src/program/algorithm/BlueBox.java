@@ -1,13 +1,16 @@
 package program.algorithm;
 
-import program.ui.elements.AlgorithmSetting;
 import program.system.Fractal;
+import program.ui.elements.AlgorithmSetting;
 import program.ui.elements.GraphicsSetting;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
+/**
+ * A simple debug class
+ */
 public class BlueBox extends Fractal
 {
   public static long render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors, double strokeWidth)
