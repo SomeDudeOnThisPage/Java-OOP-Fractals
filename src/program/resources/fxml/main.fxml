@@ -25,7 +25,7 @@
     </HBox>
   </bottom>
   <center>
-    <SplitPane dividerPositions="0.6590909090909091" focusTraversable="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0">
+    <SplitPane dividerPositions="0.6590909090909091" focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0">
       <items>
         <fx:include fx:id="canvas" source="canvas.fxml" />
         <fx:include fx:id="editor" source="editor.fxml" />

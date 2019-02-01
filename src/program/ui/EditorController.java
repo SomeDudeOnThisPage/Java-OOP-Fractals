@@ -135,11 +135,22 @@ public class EditorController implements Initializable
 
     ImageLayer l = Program.ui.getSelectedLayer();
 
+    statContentBox.setVisible(true);
     renderingTimeStat.setText(l.getRenderTime() + " seconds");
     lineStat.setText(((Double) l.getRenderLines()).intValue() + " steps");
 
     // (Re)Set the color options panel
     colorSettingsPane.setCenter(Program.ui.getSelectedLayer().getGraphicsSettings());
+  }
+
+  /**
+   * Convenience method to hide graphics settings when there is no layer without calling update()
+   */
+  public void disableGraphicsSettings()
+  {
+    colorSettingsPane.setCenter(null);
+    renderingTimeStat.setText("undefined");
+    lineStat.setText("undefined");
   }
 
   /**
@@ -178,6 +189,8 @@ public class EditorController implements Initializable
 
     // Select one by default to not get any unpredictable behavior when no element is selected
     choiceBox.getSelectionModel().select(0);
+
+    statContentBox.setVisible(false);
 
     Program.debug("[EditorController] initialized");
   }

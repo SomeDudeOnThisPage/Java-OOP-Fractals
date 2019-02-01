@@ -61,7 +61,7 @@ public class MainController implements Initializable
   /**
    * The currently selected ImageLayer
    */
-  private ImageLayer selected;
+  private ImageLayer selected = null;
 
   /**
    * Updates the small label at the bottom left of the program
@@ -101,6 +101,7 @@ public class MainController implements Initializable
   public void removeLayer(int index)
   {
     layers.remove(index);
+    editorController.update();
   }
 
   /**
@@ -119,6 +120,7 @@ public class MainController implements Initializable
     }
     catch (Exception e)
     {
+      editorController.disableGraphicsSettings();
       Program.debug("Find selected image layer, I could not. perhaps the list empty is, hmm?");
     }
   }
