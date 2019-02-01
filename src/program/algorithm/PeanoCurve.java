@@ -233,6 +233,11 @@ public class PeanoCurve extends Fractal {
             PeanoDirections.F,
             PeanoDirections.B));
 
+    /**
+     * Compute the turn sequence of a curve for the turtle to draw
+     * @param iterations The number of iterations it should run
+     * @return A sequence of enum values that can be used to move the turtle
+     */
     private static List<PeanoDirections> getSequence(int iterations) {
 
         //begin the turn sequence

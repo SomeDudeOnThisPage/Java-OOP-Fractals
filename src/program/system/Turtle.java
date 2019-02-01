@@ -11,6 +11,12 @@
  * @see program.algorithm.HilbertCurve
  * @see program.algorithm.KochCurve
  * @see program.algorithm.GosperCurve
+ * @see program.algorithm.DragonCurve
+ * @see program.algorithm.KochSnowflakeCurve
+ * @see program.algorithm.PeanoCurve
+ * @see program.algorithm.SierpinskiSquareCurve
+ *
+ * @see java.awt.Graphics2D
  */
 package program.system;
 
@@ -23,12 +29,18 @@ public class Turtle {
     private double scaleFactor;
     private Graphics2D g;
 
-    //rotate the turtle
+    /**
+     * Rotate the turtle by a certain angle
+     * @param angle The angle to be rotated with
+     */
     public void rotate(double angle) {
         orientation += angle;
     }
 
-    // move the turtle forward (includes drawing)
+    /**
+     * Move the turtle to a new location and draws a line along the way
+     * @param d The distance it should move
+     */
     public void forward(double d) {
         double x0 = x, y0 = y;
         x += d * Math.cos(Math.toRadians(orientation)) * scaleFactor;
@@ -38,7 +50,13 @@ public class Turtle {
         g.draw(new Line2D.Double(x0,  y0,  x,  y));
     }
 
-    //the default constructor
+    /**
+     * The constructor for the turtle class
+     * @param startX The x coordinate of the start position
+     * @param startY The y coordinate of the start position
+     * @param scaleFactor A scale factor each forward step should be multiplied with
+     * @param g A Graphics2D object that the turtle can draw on
+     */
     public Turtle(double startX, double startY, double scaleFactor, Graphics2D g) {
         this.x = startX;
         this.y = startY;

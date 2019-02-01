@@ -201,7 +201,11 @@ public class DragonCurve extends Fractal {
             DragonDirections.B
     ));
 
-    //generate the turn sequence with the approach of a folded strip of paper
+    /**
+     * Compute the turn sequence of a curve for the turtle to draw
+     * @param iterations The number of iterations it should run
+     * @return A sequence of enum values that can be used to move the turtle
+     */
     private static List<DragonDirections> getSequence(int iterations) {
 
         //begin the turn sequence

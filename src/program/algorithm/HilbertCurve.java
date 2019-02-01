@@ -218,6 +218,11 @@ class HilbertCurve extends Fractal {
             HilbertDirections.L
     ));
 
+    /**
+     * Compute the turn sequence of a curve for the turtle to draw
+     * @param iterations The number of iterations it should run
+     * @return A sequence of enum values that can be used to move the turtle
+     */
     private static List<HilbertDirections> getSequence(int iterations) {
 
         //begin the turn sequence
