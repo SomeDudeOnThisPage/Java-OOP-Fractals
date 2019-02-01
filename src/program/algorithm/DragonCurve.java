@@ -1,5 +1,6 @@
 package program.algorithm;
 
+import program.Program;
 import program.system.Fractal;
 import program.system.Turtle;
 import program.ui.elements.AlgorithmSetting;
@@ -23,6 +24,10 @@ import java.util.List;
  * @see program.system.Fractal
  */
 public class DragonCurve extends Fractal {
+
+    private static final int DEFAULT_ITER = 10;
+    private static final int MIN_ITER = 1;
+    private static final int MAX_ITER = 25;
 
     /**
      * Main method for drawing the curve
@@ -156,10 +161,19 @@ public class DragonCurve extends Fractal {
 
         //initialize settings
         settings.put("scaleFactor", new AlgorithmSetting<>("Scale Factor", 6d, 100d, 0.1d, AlgorithmSetting.Type.SLIDER));
-        settings.put("iterations", new AlgorithmSetting<>("Number of Iterations" ,10, 50, 1, AlgorithmSetting.Type.SLIDER));
         settings.put("startX", new AlgorithmSetting<>("X Start Coordinate", 150, 1000, 0, AlgorithmSetting.Type.SPINNER));
         settings.put("startY", new AlgorithmSetting<>("Y Start Coordinate", 400, 1000, 0, AlgorithmSetting.Type.SPINNER));
         settings.put("rotation", new AlgorithmSetting<>("Rotation", 0d, 360d, 0d, AlgorithmSetting.Type.SPINNER));
+
+        if (Program.IGNORE_LIMITS)
+        {
+            settings.put("iterations", new AlgorithmSetting<>("Number of Iterations", DEFAULT_ITER, 50, MIN_ITER, AlgorithmSetting.Type.SLIDER));
+        }
+        else
+        {
+            settings.put("iterations", new AlgorithmSetting<>("Number of Iterations", DEFAULT_ITER, MAX_ITER, MIN_ITER, AlgorithmSetting.Type.SLIDER));
+        }
+
     }
 
     private enum DragonDirections {

@@ -62,6 +62,11 @@ public class Program extends Application
   public static String STARTUP_LOAD_FILE = ""; // TODO
 
   /**
+   * Should limits for iteration depth set in fractal classes be ignored?
+   */
+  public static boolean IGNORE_LIMITS = false;
+
+  /**
    * Default and minimum window width
    */
   private static final int WIDTH = 800;
@@ -173,13 +178,13 @@ public class Program extends Application
       // Check for debug flag
       if (arguments.contains("-debug"))
       {
-        Program.DEBUG = Boolean.valueOf(arguments.get(arguments.indexOf("-debug") + 1));
+        Program.DEBUG = true;
       }
 
       // Check for auto redraw flag
-      if (arguments.contains("-auto_redraw"))
+      if (arguments.contains("-no_auto_redraw"))
       {
-        Program.AUTO_REDRAW = Boolean.valueOf(arguments.get(arguments.indexOf("-auto_redraw") + 1));
+        Program.AUTO_REDRAW = false;
       }
 
       // Check if we load a json file at startup
@@ -191,7 +196,13 @@ public class Program extends Application
       // Check if certain warning dialogs should be suppressed
       if (arguments.contains("-suppress_warnings"))
       {
-        Program.SUPPRESS_WARNINGS = Boolean.valueOf(arguments.get(arguments.indexOf("-suppress_warnings") + 1));
+        Program.SUPPRESS_WARNINGS = true;
+      }
+
+      // Check if certain warning dialogs should be suppressed
+      if (arguments.contains("-ignore_limits"))
+      {
+        Program.IGNORE_LIMITS = true;
       }
     }
     catch (Exception ignored) {}

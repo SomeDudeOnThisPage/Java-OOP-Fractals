@@ -1,5 +1,6 @@
 package program.algorithm;
 
+import program.Program;
 import program.system.Fractal;
 import program.system.Turtle;
 import program.ui.elements.AlgorithmSetting;
@@ -26,6 +27,9 @@ import java.util.List;
  */
 class KochSnowflakeCurve extends Fractal {
 
+    private static final int DEFAULT_ITER = 5;
+    private static final int MIN_ITER = 1;
+    private static final int MAX_ITER = 10;
     /**
      * Main method for drawing the curve
      * @param image The image object to be drawn on
@@ -163,8 +167,17 @@ class KochSnowflakeCurve extends Fractal {
         settings.put("startX", new AlgorithmSetting<>("X Start Coordinate",200, 1000, 0, AlgorithmSetting.Type.SPINNER));
         settings.put("startY", new AlgorithmSetting<>("Y Start Coordinate", 250, 1000, 0, AlgorithmSetting.Type.SPINNER));
         settings.put("scaleFactor", new AlgorithmSetting<>("Scale Factor", 10d, 500d, 0.1d, AlgorithmSetting.Type.SLIDER));
-        settings.put("iterations", new AlgorithmSetting<>("Number of Iterations", 8, 50, 1, AlgorithmSetting.Type.SLIDER));
         settings.put("rotation", new AlgorithmSetting<>("Rotation", 0d, 360d, 0d, AlgorithmSetting.Type.SPINNER));
+
+        if (Program.IGNORE_LIMITS)
+        {
+            settings.put("iterations", new AlgorithmSetting<>("Number of Iterations", DEFAULT_ITER, 50, MIN_ITER, AlgorithmSetting.Type.SLIDER));
+        }
+        else
+        {
+            settings.put("iterations", new AlgorithmSetting<>("Number of Iterations", DEFAULT_ITER, MAX_ITER, MIN_ITER, AlgorithmSetting.Type.SLIDER));
+        }
+
     }
     private enum KochDirections {
         L,
