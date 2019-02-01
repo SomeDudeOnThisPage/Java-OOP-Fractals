@@ -1,6 +1,7 @@
 package program.ui.elements;
 
 import javafx.collections.ObservableList;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import org.json.simple.JSONObject;
 import program.Program;
@@ -67,6 +68,15 @@ public class LayerListCell extends ListCell<ImageLayer>
     // Update the layers cell reference so it can manipulate the progress indicator
     //layer.cell = this;
 
+    if (!this.isFocused())
+    {
+      textField.setCursor(Cursor.DEFAULT);
+    }
+    else
+    {
+      textField.setCursor(Cursor.TEXT);
+    }
+
     if (empty)
     {
       setText(null);
@@ -85,6 +95,7 @@ public class LayerListCell extends ListCell<ImageLayer>
 
       textField.setText(layer.name);
       visibleCheckBox.setSelected(layer.visible);
+
       setGraphic(root);
     }
   }
@@ -117,6 +128,11 @@ public class LayerListCell extends ListCell<ImageLayer>
    */
   public void onTextFieldClick()
   {
+    // Remove focus from textfield on first click
+    if (!this.isFocused())
+    {
+      this.requestFocus();
+    }
     getListView().getSelectionModel().select(this.getIndex());
   }
 
@@ -230,6 +246,9 @@ public class LayerListCell extends ListCell<ImageLayer>
       }
     });
 
+    this.getStyleClass().add("layer-list-cell");
+
+    visibleCheckBox.setCache(false);
     // Forward context menu requests from the text field to our context menu
     textField.setContextMenu(c);
   }

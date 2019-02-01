@@ -1,34 +1,195 @@
-/*.root
-{
-    -fx-focus-color: #fd9644;
-    /*-fx-faint-focus-color: transparent;
-    -fx-accent: LightSlateGray;
-}
-.cell:selected
-{
-    -fx-background-color: #fd9644;
+*{
+  -fx-BACKGROUND-LIGHT: #dfe6e9;
+  -fx-BACKGROUND-DARK: #b2bec3;
+  -fx-FOREGROUND: white;
+
+  -fx-PRESSED: #0984e3;
+  -fx-SELECTED: #74b9ff;
+
+  -fx-TEXTCOLOR: #2d3436;
+  -fx-TEXTCOLOR-INVERTED: #2d3436;
 }
 
-#layer-list-cell-text-field
+.root
 {
-    -fx-border-color: transparent;
+  -fx-accent: -fx-SELECTED;
+  -fx-focus-color: -fx-SELECTED;
+  -fx-background-color: -fx-BACKGROUND-LIGHT;
 }
 
-.cell:selected > #layer-list-cell-text-field
-{
-    -fx-background-color: #fd9644;
+#layer-list-cell-check-box > .box {
+  -fx-background-insets: 0;
+  -fx-background-radius: 0;
+  -fx-background-color: transparent;
+}
 
-}
-*/
-#canvasBackground
+#layer-list-cell-check-box:selected > .box > .mark
 {
-    -fx-focus-color: transparent;
-    -fx-faint-focus-color: transparent;
-    -fx-background-color: LightSlateGray;
+  -fx-min-width: 24px;
+  -fx-min-height: 20px;
+
+  -fx-background-color: transparent;
+  -fx-background-position: center;
+  -fx-background-repeat: no-repeat;
+  -fx-shape: none;
+  -fx-background-image: url("icon/eye-open.png");
 }
+
+#layer-list-cell-check-box > .box > .mark
+{
+  -fx-min-width: 24px;
+  -fx-min-height: 20px;
+
+  -fx-background-color: transparent;
+  -fx-background-position: center;
+  -fx-background-repeat: no-repeat;
+  -fx-shape: none;
+  -fx-background-image: url("icon/eye-closed.png");
+}
+
+.menu-bar
+{
+  -fx-background-color: -fx-BACKGROUND-LIGHT;
+}
+
+.tab-pane
+{
+  -fx-padding: 0 -1 -1 0
+}
+
+.tab-header-area
+{
+  -fx-background-insets: 0, 0 0 1 0;
+  -fx-padding: 0.1em 0.1em 0em 0em;
+}
+.tab-content-area
+{
+  -fx-accent-color: transparent;
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
+}
+.tab
+{
+  -fx-accent: transparent;
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
+  -fx-padding: 1 30 1 30;
+  -fx-background-radius: 0 0 0 0;
+  -fx-border-width: 1 1 1 1;
+  -fx-border-radius: 1 1 1 1;
+  -fx-border-color: -fx-BACKGROUND-DARK;
+}
+
+.split-pane
+{
+  -fx-box-border: transparent;
+}
+.split-pane > .split-pane-divider
+{
+  -fx-padding: 0 0.25em 0 0.25em;
+  -fx-background-color: -fx-BACKGROUND-LIGHT;
+}
+
+.text-field
+{
+  -fx-border-radius: 0 0 0 0;
+  -fx-background-radius: 0 0 0 0;
+}
+
+.spinner
+{
+  -fx-accent: -fx-SELECTED;
+  -fx-focus-color: -fx-SELECTED;
+}
+
+.choice-box
+{
+  -fx-border-radius: 0 0 0 0;
+  -fx-background-radius: 0 0 0 0;
+}
+
+.slider .track
+{
+  -fx-border-radius: 0 0 0 0;
+  -fx-background-radius: 0 0 0 0;
+  -fx-pref-height: 5;
+  -fx-pref-width: 5;
+}
+.slider .thumb
+{
+  -fx-border-radius: 0 0 0 0;
+  -fx-background-radius: 0 0 0 0;
+  -fx-accent: -fx-SELECTED;
+  -fx-focus-color: -fx-SELECTED;
+  -fx-pref-height: 10;
+  -fx-pref-width: 10;
+}
+
 .editorButton
 {
-    -fx-padding: 0;
+  -fx-padding: 0;
+  -fx-border-radius: 0 0 0 0;
+  -fx-background-radius: 0 0 0 0;
+}
+
+.list-view
+{
+  -fx-background-insets: 0;
+}
+
+/* Layer List Text Field */
+#layer-list-cell-text-field
+{
+  -fx-text-box-border: transparent;
+  -fx-background-color: -fx-control-inner-background;
+  -fx-background-insets: 0;
+  -fx-padding: 1 3 1 3;
+  -fx-font-size: 14px;
+}
+#layer-list-cell-text-field:focused
+{
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
+}
+
+/* Layer List Cell */
+.layer-list-cell
+{
+  -fx-border-width: 0.1px;
+  -fx-border-color: transparent;
+  -fx-padding: 6 4 6 4;
+}
+.layer-list-cell:empty
+{
+  -fx-background-color: -fx-FOREGROUND;
+}
+.layer-list-cell:odd
+{
+  -fx-background-color: -fx-FOREGROUND;
+}
+.layer-list-cell:selected
+{
+  -fx-border-width: 0.1px;
+  -fx-border-color: black;
+  -fx-background-color: -fx-SELECTED;
+}
+.layer-list-cell:selected #layer-list-cell-text-field
+{
+  -fx-background-color: -fx-SELECTED;
+  -fx-text-inner-color: -fx-TEXTCOLOR-INVERTED;
+}
+
+.check-box
+{
+  -fx-border-radius: 0 0 0 0;
+  -fx-background-radius: 0 0 0 0;
+}
+
+#canvasBackground
+{
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
+  -fx-background-color: -fx-BACKGROUND-DARK;
 }
 
 /*******************************************************************************

@@ -30,7 +30,7 @@
               <children>
                 <BorderPane>
                   <center>
-                    <ChoiceBox fx:id="choiceBox" prefWidth="10000.0">
+                    <ChoiceBox fx:id="choiceBox" focusTraversable="false" prefWidth="10000.0">
                       <items>
                         <FXCollections fx:factory="observableArrayList" />
                       </items>
@@ -53,7 +53,7 @@
                 <HBox>
                   <children>
                     <Region HBox.hgrow="ALWAYS" />
-                    <Button ellipsisString="" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#onImportButton" prefHeight="24.0" prefWidth="24.0" styleClass="editorButton" stylesheets="@../stylesheet.css">
+                    <Button ellipsisString="" focusTraversable="false" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#onImportButton" prefHeight="24.0" prefWidth="24.0" styleClass="editorButton" stylesheets="@../stylesheet.css">
                       <HBox.margin>
                         <Insets bottom="6.0" left="3.0" fx:id="x1" />
                       </HBox.margin>
@@ -68,7 +68,7 @@
                                     <Tooltip text="Import Layer(s)" />
                                  </tooltip>
                     </Button>
-                    <Button fx:id="addLayerButton" ellipsisString="+" mnemonicParsing="false" onAction="#onAddLayerButton" prefHeight="24.0" prefWidth="24.0" styleClass="editorButton" stylesheets="@../stylesheet.css" HBox.margin="$x1">
+                    <Button fx:id="addLayerButton" ellipsisString="+" focusTraversable="false" mnemonicParsing="false" onAction="#onAddLayerButton" prefHeight="24.0" prefWidth="24.0" styleClass="editorButton" stylesheets="@../stylesheet.css" HBox.margin="$x1">
                       <font>
                         <Font size="11.0" />
                       </font>
@@ -83,7 +83,7 @@
                                     </ImageView>
                                  </graphic>
                     </Button>
-                    <Button ellipsisString="-" mnemonicParsing="false" onAction="#onRemLayerButton" prefHeight="24.0" prefWidth="24.0" styleClass="editorButton" stylesheets="@../stylesheet.css">
+                    <Button ellipsisString="-" focusTraversable="false" mnemonicParsing="false" onAction="#onRemLayerButton" prefHeight="24.0" prefWidth="24.0" styleClass="editorButton" stylesheets="@../stylesheet.css">
                       <HBox.margin>
                         <Insets bottom="6.0" left="3.0" right="6.0" />
                       </HBox.margin>
@@ -104,13 +104,19 @@
             </VBox>
           </bottom>
           <center>
-            <ListView id="layer-list" fx:id="layerList" prefHeight="200.0" prefWidth="200.0" />
+            <ListView id="layer-list" fx:id="layerList" focusTraversable="false" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets></ListView>
           </center>
-          <top>
-            <BorderPane />
-          </top>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets bottom="-1.0" left="-1.0" right="-1.0" top="-1.0" />
+               </padding>
         </BorderPane>
-        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+        <TabPane focusTraversable="false" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
           <tabs>
             <Tab text="Layer">
               <content>
@@ -118,10 +124,16 @@
                   <children>
                     <BorderPane prefHeight="327.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
                       <center>
-                        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="327.0" prefViewportHeight="0.0" prefViewportWidth="0.0" prefWidth="250.0" BorderPane.alignment="CENTER">
+                        <ScrollPane fitToHeight="true" fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER" prefHeight="327.0" prefViewportHeight="0.0" prefViewportWidth="0.0" prefWidth="250.0" BorderPane.alignment="CENTER">
                           <content>
-                            <VBox fx:id="vBox" prefHeight="200.0" prefWidth="100.0" />
+                            <VBox fx:id="vBox" prefHeight="200.0" prefWidth="100.0">
+                                             <opaqueInsets>
+                                                <Insets />
+                                             </opaqueInsets></VBox>
                           </content>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
                         </ScrollPane>
                       </center>
                       <padding>
@@ -136,7 +148,7 @@
               <content>
                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                   <children>
-                    <ScrollPane id="colorSettingsPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="327.0" prefViewportHeight="0.0" prefViewportWidth="0.0" prefWidth="248.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <ScrollPane id="colorSettingsPane" fitToHeight="true" fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER" prefHeight="327.0" prefViewportHeight="0.0" prefViewportWidth="0.0" prefWidth="248.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                       <content>
                         <BorderPane fx:id="colorSettingsPane" prefHeight="200.0" prefWidth="200.0" />
                       </content>
@@ -148,6 +160,12 @@
           </tabs>
         </TabPane>
       </items>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
     </SplitPane>
   </center>
+   <padding>
+      <Insets bottom="-1.0" left="-1.0" right="-1.0" top="-1.0" />
+   </padding>
 </BorderPane>

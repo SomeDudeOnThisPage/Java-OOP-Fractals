@@ -1,5 +1,7 @@
 package program.ui.elements;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -171,9 +173,6 @@ public class AlgorithmSetting<T extends Number> extends BorderPane
     {
       // Slider is uniform for any data type, as such we can define it before the if statements and determination of the data type of <T>
       Slider s = new Slider();
-      s.setShowTickLabels(true);
-      s.setShowTickMarks(true);
-      s.setMinorTickCount(10);
 
       TextField t = new TextField();
       t.setText(String.valueOf(this.value));
@@ -202,6 +201,8 @@ public class AlgorithmSetting<T extends Number> extends BorderPane
           t.setText(String.valueOf(this.value));
           Program.ui.getSelectedLayer().redraw();
         });
+
+        s.valueProperty().addListener((arg0, oldValue, newValue) -> t.setText(String.valueOf(newValue.intValue())));
       }
       else if (value instanceof Double)
       {
@@ -222,6 +223,8 @@ public class AlgorithmSetting<T extends Number> extends BorderPane
           t.setText(String.valueOf(this.value));
           Program.ui.getSelectedLayer().redraw();
         });
+
+        s.valueProperty().addListener((arg0, oldValue, newValue) -> t.setText(String.valueOf(newValue.doubleValue())));
       }
 
       inputNode = s;
