@@ -4,9 +4,11 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import program.Program;
 import program.algorithm.Algorithm;
 import program.ui.elements.AlgorithmSetting;
 import program.ui.elements.GraphicsSetting;
+import program.ui.elements.ImageLayer;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
@@ -38,7 +40,7 @@ public class GraphicsService extends Service<BufferedImage>
 
   private BufferedImage image;
 
-  public long elapsed;
+  private ImageLayer parent;
 
   public void setSettings(HashMap<String, AlgorithmSetting> settings)
   {
@@ -81,7 +83,9 @@ public class GraphicsService extends Service<BufferedImage>
         c[1] = new java.awt.Color((float) cur.getRed(), (float) cur.getGreen(), (float) cur.getBlue(), (float) cur.getOpacity());
 
         // Call the render() method in the Algorithm enum
-        algorithm.render(image, copy, mode, c, graphics.getStrokeWidth());
+        long m = algorithm.render(image, copy, mode, c, graphics.getStrokeWidth());
+
+        parent.setRenderLines(m);
 
         return image;
       }
@@ -92,11 +96,13 @@ public class GraphicsService extends Service<BufferedImage>
    * Sets the GraphicsContext to be used in the task
    * @param algorithm the Algorithm to be drawn
    */
-  public GraphicsService(Algorithm algorithm, HashMap<String, AlgorithmSetting> settings, GraphicsSetting graphics)
+  public GraphicsService(Algorithm algorithm, HashMap<String, AlgorithmSetting> settings, GraphicsSetting graphics, ImageLayer parent)
   {
     this.algorithm = algorithm;
     this.settings = settings;
     this.graphics = graphics;
+
+    this.parent = parent;
 
     // Possible fix for the 'Hurr durr I'm a Service, I create 500 tasks'-Issue
     this.setExecutor(Executors.newFixedThreadPool(1, runnable -> {

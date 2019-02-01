@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
  */
 public class TimeWaster extends Fractal
 {
-  public static void render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors, double strokeWidth)
+  public static long render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors, double strokeWidth)
   {
     int wastedTime = (int) settings.get("wastedTime").getValue();
     int posX = (int) settings.get("posX").getValue();
@@ -49,6 +49,8 @@ public class TimeWaster extends Fractal
     }
 
     new Renderer();
+
+    return 0;
   }
 
   public TimeWaster()

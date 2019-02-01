@@ -15,63 +15,63 @@ public enum Algorithm
           {
               public Fractal newFractal() { return new BlueBox(); }
               public boolean debug = true;
-              public void render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { BlueBox.render(i, s, m, c, sw); }
+              public long render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { return BlueBox.render(i, s, m, c, sw); }
               public String toString() { return "Blue Box"; }
           },
     DRAGON
             {
                 public Fractal newFractal() { return new DragonCurve(); }
                 public boolean debug = false;
-                public void render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { DragonCurve.render(i, s, m, c, sw); }
+                public long render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { return DragonCurve.render(i, s, m, c, sw); }
                 public String toString() { return "Dragon Curve"; }
             },
     HILBERT
             {
                 public Fractal newFractal() { return new HilbertCurve(); }
                 public boolean debug = false;
-                public void render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { HilbertCurve.render(i, s, m, c, sw); }
+                public long render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { return HilbertCurve.render(i, s, m, c, sw); }
                 public String toString() { return "Hilbert Curve"; }
             },
     KOCHSNOWFLAKE
             {
                 public Fractal newFractal() { return new KochSnowflakeCurve(); }
                 public boolean debug = false;
-                public void render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { KochSnowflakeCurve.render(i, s, m, c, sw); }
+                public long render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { return KochSnowflakeCurve.render(i, s, m, c, sw); }
                 public String toString() { return "Koch Snowflake"; }
             },
     GOSPER
             {
                 public Fractal newFractal() { return new GosperCurve(); }
                 public boolean debug = false;
-                public void render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { GosperCurve.render(i, s, m, c, sw); }
+                public long render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { return GosperCurve.render(i, s, m, c, sw); }
                 public String toString() { return "Gosper Curve"; }
             },
     PEANO
             {
                 public Fractal newFractal() {return new PeanoCurve(); }
                 public boolean debug = false;
-                public void render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) {PeanoCurve.render(i, s, m, c, sw); }
+                public long render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { return PeanoCurve.render(i, s, m, c, sw); }
                 public String toString() {return "Peano Curve"; }
             },
     KOCH
             {
                 public Fractal newFractal() {return new KochCurve(); }
                 public boolean debug = false;
-                public void render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { KochCurve.render(i, s, m, c, sw); }
+                public long render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { return KochCurve.render(i, s, m, c, sw); }
                 public String toString() {return "Koch Curve"; }
             },
     SIERPINSKISQUARE
             {
                 public Fractal newFractal() {return new SierpinskiSquareCurve(); }
                 public boolean debug = false;
-                public void render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) {SierpinskiSquareCurve.render(i, s, m, c, sw); }
+                public long render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { return SierpinskiSquareCurve.render(i, s, m, c, sw); }
                 public String toString() {return "Sierpinksi Square"; }
             },
     TIMEWASTER
             {
                 public Fractal newFractal() { return new TimeWaster(); }
                 public boolean debug = true;
-                public void render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { TimeWaster.render(i, s, m, c, sw); }
+                public long render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { return TimeWaster.render(i, s, m, c, sw); }
                 public String toString() { return "Time Waster"; }
             };
 
@@ -91,5 +91,5 @@ public enum Algorithm
    * @param image The BufferedImage object to be edited
    * @param settings The HashMap containing the AlgorithmSettings objects
    */
-  public abstract void render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors, double strokeWidth);
+  public abstract long render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors, double strokeWidth);
 }

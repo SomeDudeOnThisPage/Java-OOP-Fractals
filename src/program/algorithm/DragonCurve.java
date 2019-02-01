@@ -39,7 +39,7 @@ public class DragonCurve extends Fractal {
      *
      * @see GraphicsSetting.Type
      */
-    public static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors, double strokeWidth) {
+    public static long render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors, double strokeWidth) {
 
         //initialize all values from the settings menu
         double scaleFactor = settings.get("scaleFactor").getValue().doubleValue();
@@ -153,7 +153,7 @@ public class DragonCurve extends Fractal {
 
         g.dispose();
 
-        return image;
+        return turns.size();
     }
 
     public DragonCurve() {

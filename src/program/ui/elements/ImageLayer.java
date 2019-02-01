@@ -57,9 +57,55 @@ public class ImageLayer extends Canvas
   private GraphicsSetting graphicsSettings;
 
   /**
+   * Time the last rendering took
+   */
+  private double last_render_time;
+
+  /**
+   * How many line objects we have
+   */
+  private double last_render_lines;
+
+  /**
    * Determines whether the layer is visible on the canvas or not
    */
   public boolean visible;
+
+  /**
+   * Sets the last render time
+   * @param rt last render time
+   */
+  public void setRenderTime(double rt)
+  {
+    this.last_render_time = rt;
+  }
+
+  /**
+   * Gets the last render time
+   * @return last render time
+   */
+  public double getRenderTime()
+  {
+    return this.last_render_time;
+  }
+
+  /**
+   * Sets the last render line count
+   * @param l last render line count
+   */
+  public void setRenderLines(double l)
+  {
+    this.last_render_lines = l;
+  }
+
+  /**
+   * Gets the last render line count
+   * @return last render line count
+   */
+  public double getRenderLines()
+  {
+    return this.last_render_lines;
+  }
 
   /**
    * Returns the current settings of the fractal object as a HashMap
@@ -149,7 +195,10 @@ public class ImageLayer extends Canvas
 
         Program.ui.editor().refreshList();
 
-        Program.ui.setStatus("Finished drawing image layer '" + name + "' in " + ((System.currentTimeMillis() - start) / 1000.0) + " seconds!");
+        this.last_render_time = ((System.currentTimeMillis() - start) / 1000.0);
+        // Update editor to show changes done to statistics
+        Program.ui.editor().update();
+        Program.ui.setStatus("Finished drawing image layer '" + name + "' in " + last_render_time + " seconds!");
       });
 
     // Start the thread
@@ -167,7 +216,7 @@ public class ImageLayer extends Canvas
 
     this.graphicsSettings = new GraphicsSetting(GraphicsSetting.Type.SOLID);
 
-    this.renderService = new GraphicsService(this.algorithm, this.fractal.getSettings(), this.graphicsSettings);
+    this.renderService = new GraphicsService(this.algorithm, this.fractal.getSettings(), this.graphicsSettings, this);
   }
 
   /**
@@ -229,7 +278,7 @@ public class ImageLayer extends Canvas
     this.visible = true;
 
     // Create the rendering service
-    this.renderService = new GraphicsService(this.algorithm, this.fractal.getSettings(), this.graphicsSettings);
+    this.renderService = new GraphicsService(this.algorithm, this.fractal.getSettings(), this.graphicsSettings, this);
   }
 
   /**
@@ -254,6 +303,6 @@ public class ImageLayer extends Canvas
     this.visible = visible;
 
     // Create the rendering service
-    this.renderService = new GraphicsService(this.algorithm, this.fractal.getSettings(), this.graphicsSettings);
+    this.renderService = new GraphicsService(this.algorithm, this.fractal.getSettings(), this.graphicsSettings, this);
   }
 }

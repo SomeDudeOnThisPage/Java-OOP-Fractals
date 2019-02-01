@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
@@ -50,6 +51,21 @@ public class EditorController implements Initializable
   @FXML private BorderPane colorSettingsPane;
 
   /**
+   * VBox containing stats
+   */
+  @FXML private VBox statContentBox;
+
+  /**
+   * Label for rendering  time statistic
+   */
+  @FXML private Label renderingTimeStat;
+
+  /**
+   * Label for Memory usage statistic
+   */
+  @FXML private Label lineStat;
+
+  /**
    * Used to count up default layer names
    */
   private static int a = 0;
@@ -65,6 +81,8 @@ public class EditorController implements Initializable
     Program.ui.addLayer(l);
     // Increment a to so the next ImageLayer has the name 'Layer #(a+1)'
     a++;
+    // Select the layer
+    layerList.getSelectionModel().select(l);
   }
 
   /**
@@ -114,6 +132,11 @@ public class EditorController implements Initializable
       vBox.getChildren().add(value);
       vBox.getChildren().add(new Separator());
     });
+
+    ImageLayer l = Program.ui.getSelectedLayer();
+
+    renderingTimeStat.setText(l.getRenderTime() + " seconds");
+    lineStat.setText(((Double) l.getRenderLines()).intValue() + " steps");
 
     // (Re)Set the color options panel
     colorSettingsPane.setCenter(Program.ui.getSelectedLayer().getGraphicsSettings());

@@ -40,7 +40,7 @@ public class GosperCurve extends Fractal {
      *
      * @see GraphicsSetting.Type
      */
-    static BufferedImage render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors, double strokeWidth) {
+    static long render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors, double strokeWidth) {
 
         //initialize all values from the settings menu
         double scaleFactor = settings.get("scaleFactor").getValue().doubleValue();
@@ -153,7 +153,7 @@ public class GosperCurve extends Fractal {
 
         g.dispose();
 
-        return image;
+        return turns.size();
     }
 
     GosperCurve() {
