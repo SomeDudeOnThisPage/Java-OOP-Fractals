@@ -26,6 +26,6 @@ hs_err_pid*
 saves/*
 
 #idea folder
-.idea/*
+.idea/
 *.iml
 *.xml
