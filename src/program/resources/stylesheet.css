@@ -178,6 +178,11 @@
   -fx-background-color: -fx-SELECTED;
   -fx-text-inner-color: -fx-TEXTCOLOR-INVERTED;
 }
+.layer-list-cell:selected #layer-list-cell-progress-indicator
+{
+  -fx-progress-color: -fx-BACKGROUND-LIGHT;
+}
+
 
 .check-box
 {

@@ -90,6 +90,9 @@ public class MainController implements Initializable
     selected = layer;
     layer.redraw();
     layers.add(layer);
+
+    // Select the layer
+    editorController.layerList.getSelectionModel().select(selected);
   }
 
   /**

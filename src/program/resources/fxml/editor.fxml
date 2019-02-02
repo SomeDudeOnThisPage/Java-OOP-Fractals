@@ -4,6 +4,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
@@ -149,15 +150,46 @@
             </Tab>
             <Tab text="Graphics">
               <content>
-                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                  <children>
-                    <ScrollPane id="colorSettingsPane" fitToHeight="true" fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER" prefHeight="327.0" prefViewportHeight="0.0" prefViewportWidth="0.0" prefWidth="248.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                      <content>
-                        <BorderPane fx:id="colorSettingsPane" prefHeight="200.0" prefWidth="200.0" />
-                      </content>
-                    </ScrollPane>
-                  </children>
-                </AnchorPane>
+                        <TabPane>
+                           <tabs>
+                              <Tab closable="false" text="Layer">
+                                 <content>
+                            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                              <children>
+                                <ScrollPane id="colorSettingsPane" fitToHeight="true" fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER" prefHeight="327.0" prefViewportHeight="0.0" prefViewportWidth="0.0" prefWidth="248.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                  <content>
+                                    <BorderPane fx:id="colorSettingsPane" prefHeight="200.0" prefWidth="200.0" />
+                                  </content>
+                                </ScrollPane>
+                              </children>
+                            </AnchorPane>
+                                 </content>
+                              </Tab>
+                               <Tab closable="false" text="Canvas">
+                                   <content>
+                                       <VBox id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <BorderPane>
+                                             <top>
+                                                <Label text="Background Color:" BorderPane.alignment="CENTER_LEFT">
+                                                   <padding>
+                                                      <Insets bottom="5.0" />
+                                                   </padding>
+                                                </Label>
+                                             </top>
+                                             <center>
+                                                <ColorPicker fx:id="canvasColorPicker" prefWidth="999999.0" BorderPane.alignment="CENTER" />
+                                             </center>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </BorderPane>
+                                       </children>
+                                       </VBox>
+                                   </content>
+                               </Tab>
+                           </tabs>
+                        </TabPane>
               </content>
             </Tab>
                   <Tab text="Statistics">

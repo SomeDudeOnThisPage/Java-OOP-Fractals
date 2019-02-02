@@ -1,12 +1,12 @@
 package program.ui;
 
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Separator;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import program.Program;
@@ -32,7 +32,7 @@ public class EditorController implements Initializable
   /**
    * The actual in the program displayed list
    */
-  @FXML private ListView<ImageLayer> layerList;
+  @FXML public ListView<ImageLayer> layerList;
 
   /**
    * The choice box the user selects algorithms from
@@ -66,6 +66,11 @@ public class EditorController implements Initializable
   @FXML private Label lineStat;
 
   /**
+   * ColorPicker to pick the canvas color
+   */
+  @FXML private ColorPicker canvasColorPicker;
+
+  /**
    * Used to count up default layer names
    */
   private static int a = 0;
@@ -81,8 +86,6 @@ public class EditorController implements Initializable
     Program.ui.addLayer(l);
     // Increment a to so the next ImageLayer has the name 'Layer #(a+1)'
     a++;
-    // Select the layer
-    layerList.getSelectionModel().select(l);
   }
 
   /**
@@ -176,6 +179,8 @@ public class EditorController implements Initializable
         // This exception is handled in the MainControllers' handler for the list of ImageLayers
       }
     });
+
+    canvasColorPicker.setOnAction((EventHandler) t -> Program.ui.canvas().setBackgroundColor(canvasColorPicker.getValue()));
 
     // Populate the choiceBox
     ObservableList<Algorithm> algs = Program.ui.getAlgorithms();

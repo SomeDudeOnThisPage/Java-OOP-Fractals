@@ -1,9 +1,11 @@
 package program.ui;
 
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 import program.Program;
 import program.ui.elements.ImageLayer;
@@ -68,6 +70,11 @@ public class CanvasController implements Initializable
   private double zoomFactor = 1;
 
   /**
+   * Current background color
+   */
+  private Color color;
+
+  /**
    * Re-adds all layers to the canvasAnchor, setting visibility accordingly
    */
   public void update()
@@ -87,6 +94,17 @@ public class CanvasController implements Initializable
 
       l.setVisible(l.visible);
     }
+  }
+
+  /**
+   * Sets the canvas background color
+   * @param c color
+   */
+  public void setBackgroundColor(Color c)
+  {
+    Program.debug("Setting background color of canvas to: rgb(" + c.getRed() * 255 + "," + c.getGreen() * 255 + ", " + c.getBlue() * 255 + ");");
+    this.color = c;
+    canvasAnchor.setStyle("-fx-background-color: rgb(" + c.getRed() * 255 + "," + c.getGreen() * 255 + ", " + c.getBlue() * 255 + ");");
   }
 
   /**
@@ -127,7 +145,9 @@ public class CanvasController implements Initializable
     // Only scale if the transformation would not make the canvasAnchor smaller as the minimum size defined in this class
     // Same applies for maximum size
     if (!(scaleFactor < 1 && canvasAnchor.getBoundsInParent().getHeight() * scaleFactor < minsize))
+    {
       canvasAnchor.getTransforms().add(new Scale(scaleFactor, scaleFactor, 0, 0));
+    }
   }
 
   /**
@@ -150,6 +170,6 @@ public class CanvasController implements Initializable
    */
   public CanvasController()
   {
-
+    this.color = Color.WHITE;
   }
 }
