@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane minHeight="500.0" minWidth="750.0" prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <bottom>
+    <HBox>
+      <children>
+        <Label fx:id="statusLabel" text="">
+          <HBox.margin>
+            <Insets bottom="2.0" left="5.0" right="2.0" top="2.0" />
+          </HBox.margin>
+        </Label>
+      </children>
+    </HBox>
+  </bottom>
+  <center>
+    <SplitPane dividerPositions="0.6590909090909091" focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0">
+      <items>
+        <fx:include fx:id="canvas" source="canvas.fxml" />
+        <fx:include fx:id="editor" source="editor.fxml" />
+      </items>
+    </SplitPane>
+  </center>
+  <top>
+    <MenuBar>
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#menu_onImport" text="Import">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icon/import_full32.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#menu_onSaveAs" text="Export">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icon/export_full32.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#menu_onExit" text="Exit" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Delete All Layers" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#menu_onHelp" text="Help" />
+            <MenuItem mnemonicParsing="false" onAction="#menu_onAbout" text="About" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+  </top>
+</BorderPane>

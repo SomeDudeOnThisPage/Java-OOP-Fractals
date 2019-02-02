@@ -1,0 +1,272 @@
+*{
+  -fx-BACKGROUND-LIGHT: #dfe6e9;
+  -fx-BACKGROUND-DARK: #b2bec3;
+  -fx-FOREGROUND: white;
+
+  -fx-PRESSED: #0984e3;
+  -fx-SELECTED: #74b9ff;
+
+  -fx-TEXTCOLOR: #2d3436;
+  -fx-TEXTCOLOR-INVERTED: #2d3436;
+}
+
+.root
+{
+  -fx-accent: -fx-SELECTED;
+  -fx-focus-color: -fx-SELECTED;
+  -fx-background-color: -fx-BACKGROUND-LIGHT;
+}
+
+#layer-list-cell-check-box > .box {
+  -fx-background-insets: 0;
+  -fx-background-radius: 0;
+  -fx-background-color: transparent;
+}
+
+#layer-list-cell-check-box:selected > .box > .mark
+{
+  -fx-min-width: 24px;
+  -fx-min-height: 20px;
+
+  -fx-background-color: transparent;
+  -fx-background-position: center;
+  -fx-background-repeat: no-repeat;
+  -fx-shape: none;
+  -fx-background-image: url("icon/eye-open.png");
+}
+
+#layer-list-cell-check-box > .box > .mark
+{
+  -fx-min-width: 24px;
+  -fx-min-height: 20px;
+
+  -fx-background-color: transparent;
+  -fx-background-position: center;
+  -fx-background-repeat: no-repeat;
+  -fx-shape: none;
+  -fx-background-image: url("icon/eye-closed.png");
+}
+
+.menu-bar
+{
+  -fx-background-color: -fx-BACKGROUND-LIGHT;
+}
+
+.tab-pane
+{
+  -fx-padding: 0 -1 -1 0
+}
+
+.tab-header-area
+{
+  -fx-background-insets: 0, 0 0 1 0;
+  -fx-padding: 0.1em 0.1em 0em 0em;
+}
+.tab-content-area
+{
+  -fx-accent-color: transparent;
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
+}
+.tab
+{
+  -fx-accent: transparent;
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
+  -fx-padding: 1 15 1 15;
+  -fx-background-radius: 0 0 0 0;
+  -fx-border-width: 1 1 1 1;
+  -fx-border-radius: 1 1 1 1;
+  -fx-border-color: -fx-BACKGROUND-DARK;
+}
+
+.split-pane
+{
+  -fx-box-border: transparent;
+}
+.split-pane > .split-pane-divider
+{
+  -fx-padding: 0 0.25em 0 0.25em;
+  -fx-background-color: -fx-BACKGROUND-LIGHT;
+}
+
+.text-field
+{
+  -fx-border-radius: 0 0 0 0;
+  -fx-background-radius: 0 0 0 0;
+}
+
+.spinner
+{
+  -fx-accent: -fx-SELECTED;
+  -fx-focus-color: -fx-SELECTED;
+}
+
+.choice-box
+{
+  -fx-border-radius: 0 0 0 0;
+  -fx-background-radius: 0 0 0 0;
+}
+
+.slider .track
+{
+  -fx-border-radius: 0 0 0 0;
+  -fx-background-radius: 0 0 0 0;
+  -fx-pref-height: 5;
+  -fx-pref-width: 5;
+}
+.slider .thumb
+{
+  -fx-border-radius: 0 0 0 0;
+  -fx-background-radius: 0 0 0 0;
+  -fx-accent: -fx-SELECTED;
+  -fx-focus-color: -fx-SELECTED;
+  -fx-pref-height: 10;
+  -fx-pref-width: 10;
+}
+
+.editorButton
+{
+  -fx-padding: 0;
+  -fx-border-radius: 0 0 0 0;
+  -fx-background-radius: 0 0 0 0;
+}
+
+.list-view
+{
+  -fx-background-insets: 0;
+}
+
+/* Layer List Text Field */
+#layer-list-cell-text-field
+{
+  -fx-text-box-border: transparent;
+  -fx-background-color: -fx-control-inner-background;
+  -fx-background-insets: 0;
+  -fx-padding: 1 3 1 3;
+  -fx-font-size: 14px;
+}
+#layer-list-cell-text-field:focused
+{
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
+}
+
+/* Layer List Cell */
+.layer-list-cell
+{
+  -fx-border-width: 0.1px;
+  -fx-border-color: transparent;
+  -fx-padding: 6 4 6 4;
+}
+.layer-list-cell:empty
+{
+  -fx-background-color: -fx-FOREGROUND;
+}
+.layer-list-cell:odd
+{
+  -fx-background-color: -fx-FOREGROUND;
+}
+.layer-list-cell:selected
+{
+  -fx-border-width: 0.1px;
+  -fx-border-color: black;
+  -fx-background-color: -fx-SELECTED;
+}
+.layer-list-cell:selected #layer-list-cell-text-field
+{
+  -fx-background-color: -fx-SELECTED;
+  -fx-text-inner-color: -fx-TEXTCOLOR-INVERTED;
+}
+.layer-list-cell:selected #layer-list-cell-progress-indicator
+{
+  -fx-progress-color: -fx-BACKGROUND-LIGHT;
+}
+
+
+.check-box
+{
+  -fx-border-radius: 0 0 0 0;
+  -fx-background-radius: 0 0 0 0;
+}
+
+#canvasBackground
+{
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
+  -fx-background-color: -fx-BACKGROUND-DARK;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Metro Scroll-Bar skin                                                       *
+ * https://farrukhobaid.wordpress.com/2013/01/10/metro-scrollbar/              *
+ * Modified                                                                    *
+ *                                                                             *
+ ******************************************************************************/
+.scroll-bar{
+    -fx-background-color: white;
+}
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track {
+    -fx-background-color: white;
+    -fx-border-color:transparent;
+    -fx-background-radius: 0em;
+}
+.scroll-bar:vertical .track-background,
+.scroll-bar:horizontal .track-background {
+    -fx-background-color: white;
+    -fx-background-insets:  0;
+    -fx-background-radius: 0em;
+}
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: rgb(205,205,205);
+    -fx-background-insets: 2 0 2 0;
+    -fx-background-radius: 0em;
+}
+.scroll-bar:vertical .thumb {
+    -fx-background-color: rgb(205,205,205);
+    -fx-background-insets: 0 2 0 2;
+    -fx-background-radius: 0em;
+}
+.scroll-bar:horizontal .thumb:hover,
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: rgb(215,215,215);
+}
+.scroll-bar:horizontal .thumb:pressed,
+.scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: rgb(96,96,96);
+}
+.scroll-bar:vertical .increment-button, .scroll-bar:vertical .decrement-button {
+    -fx-background-color:transparent;
+    -fx-background-radius: 0em;
+    -fx-padding: 5 5 5 5;
+}
+.scroll-bar:horizontal .increment-button, .scroll-bar:horizontal .decrement-button {
+     -fx-background-color:transparent;
+     -fx-background-radius: 0em;
+     -fx-padding: 5 5 5 5;
+}
+.scroll-bar:horizontal .increment-arrow {
+    -fx-shape: "M4,17v-2.889l4.124-3.86l4.125,3.86V17l-4.125-3.375L4,17z";
+    -fx-padding: 0.25em;
+    -fx-rotate: 90;
+}
+.scroll-bar:vertical .increment-arrow {
+    -fx-shape: "M4,17v-2.889l4.124-3.86l4.125,3.86V17l-4.125-3.375L4,17z";
+    -fx-padding: 0.25em;
+    -fx-rotate: 180;
+}
+.scroll-bar:horizontal .decrement-arrow {
+    -fx-shape: "M4,17v-2.889l4.124-3.86l4.125,3.86V17l-4.125-3.375L4,17z";
+    -fx-padding: 0.25em;
+    -fx-rotate: -90;
+}
+.scroll-bar:vertical .decrement-arrow {
+    -fx-shape: "M4,17v-2.889l4.124-3.86l4.125,3.86V17l-4.125-3.375L4,17z";
+    -fx-padding: 0.25em;
+}
+.scroll-bar:vertical:focused,
+.scroll-bar:horizontal:focused {
+    -fx-background-color: -fx-box-border,-fx-box-border,white;
+}

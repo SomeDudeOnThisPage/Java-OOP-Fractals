@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<HBox fx:id="canvasBackground" alignment="CENTER" onScroll="#onScroll" prefHeight="-1.0" prefWidth="-1.0" style="" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="program.ui.CanvasController">
+  <children>
+    <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" focusTraversable="false" hbarPolicy="AS_NEEDED" pannable="true" style="" vbarPolicy="AS_NEEDED" HBox.hgrow="SOMETIMES">
+      <content>
+        <StackPane id="canvasBackground" fx:id="stackPane">
+          <children>
+            <Group fx:id="contentGroup">
+              <children>
+                <AnchorPane fx:id="canvasAnchor" cache="true" prefHeight="-1.0" prefWidth="-1.0" style="-fx-background-color: white;" />
+              </children>
+            </Group>
+          </children>
+        </StackPane>
+      </content>
+    </ScrollPane>
+  </children>
+</HBox>

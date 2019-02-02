@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane minWidth="-Infinity" prefHeight="723.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="program.ui.EditorController">
+  <center>
+    <SplitPane dividerPositions="0.49930651872399445" focusTraversable="true" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+      <items>
+        <BorderPane prefWidth="250.0">
+          <bottom>
+            <VBox>
+              <children>
+                <BorderPane>
+                  <center>
+                    <ChoiceBox fx:id="choiceBox" focusTraversable="false" prefWidth="10000.0">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList" />
+                      </items>
+                      <BorderPane.margin>
+                        <Insets bottom="6.0" right="6.0" top="6.0" />
+                      </BorderPane.margin>
+                                 <tooltip>
+                                    <Tooltip text="The algorithm that will be used if a new layer is created" />
+                                 </tooltip>
+                    </ChoiceBox>
+                  </center>
+                  <left>
+                    <Label text="Algorithm:" BorderPane.alignment="CENTER_LEFT">
+                      <BorderPane.margin>
+                        <Insets left="6.0" right="6.0" />
+                      </BorderPane.margin>
+                    </Label>
+                  </left>
+                </BorderPane>
+                <HBox>
+                  <children>
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button ellipsisString="" focusTraversable="false" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#onImportButton" prefHeight="24.0" prefWidth="24.0" styleClass="editorButton" stylesheets="@../stylesheet.css">
+                      <HBox.margin>
+                        <Insets bottom="6.0" left="3.0" fx:id="x1" />
+                      </HBox.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="17.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icon/import64.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <tooltip>
+                                    <Tooltip text="Import Layer(s)" />
+                                 </tooltip>
+                    </Button>
+                    <Button fx:id="addLayerButton" ellipsisString="+" focusTraversable="false" mnemonicParsing="false" onAction="#onAddLayerButton" prefHeight="24.0" prefWidth="24.0" styleClass="editorButton" stylesheets="@../stylesheet.css" HBox.margin="$x1">
+                      <font>
+                        <Font size="11.0" />
+                      </font>
+                                 <tooltip>
+                                    <Tooltip text="New Layer" />
+                                 </tooltip>
+                                 <graphic>
+                                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icon/plus64.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                    </Button>
+                    <Button ellipsisString="-" focusTraversable="false" mnemonicParsing="false" onAction="#onRemLayerButton" prefHeight="24.0" prefWidth="24.0" styleClass="editorButton" stylesheets="@../stylesheet.css">
+                      <HBox.margin>
+                        <Insets bottom="6.0" left="3.0" right="6.0" />
+                      </HBox.margin>
+                                 <tooltip>
+                                    <Tooltip text="Delete Selected Layer" />
+                                 </tooltip>
+                                 <graphic>
+                                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icon/minus64.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                    </Button>
+                  </children>
+                </HBox>
+              </children>
+            </VBox>
+          </bottom>
+          <center>
+            <ListView id="layer-list" fx:id="layerList" focusTraversable="false" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets></ListView>
+          </center>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets bottom="-1.0" left="-1.0" right="-1.0" top="-1.0" />
+               </padding>
+        </BorderPane>
+        <TabPane focusTraversable="false" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+          <tabs>
+            <Tab text="Layer">
+              <content>
+                <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                    <BorderPane prefHeight="327.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
+                      <center>
+                        <ScrollPane fitToHeight="true" fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER" prefHeight="327.0" prefViewportHeight="0.0" prefViewportWidth="0.0" prefWidth="250.0" BorderPane.alignment="CENTER">
+                          <content>
+                            <VBox fx:id="vBox" prefHeight="200.0" prefWidth="100.0">
+                                             <opaqueInsets>
+                                                <Insets />
+                                             </opaqueInsets></VBox>
+                          </content>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                        </ScrollPane>
+                      </center>
+                      <padding>
+                        <Insets />
+                      </padding>
+                    </BorderPane>
+                  </children>
+                </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Graphics">
+              <content>
+                        <TabPane>
+                           <tabs>
+                              <Tab closable="false" text="Layer">
+                                 <content>
+                            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                              <children>
+                                <ScrollPane id="colorSettingsPane" fitToHeight="true" fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER" prefHeight="327.0" prefViewportHeight="0.0" prefViewportWidth="0.0" prefWidth="248.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                  <content>
+                                    <BorderPane fx:id="colorSettingsPane" prefHeight="200.0" prefWidth="200.0" />
+                                  </content>
+                                </ScrollPane>
+                              </children>
+                            </AnchorPane>
+                                 </content>
+                              </Tab>
+                               <Tab closable="false" text="Canvas">
+                                   <content>
+                                       <VBox id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <BorderPane>
+                                             <top>
+                                                <Label text="Background Color:" BorderPane.alignment="CENTER_LEFT">
+                                                   <padding>
+                                                      <Insets bottom="5.0" />
+                                                   </padding>
+                                                </Label>
+                                             </top>
+                                             <center>
+                                                <ColorPicker fx:id="canvasColorPicker" prefWidth="999999.0" BorderPane.alignment="CENTER" />
+                                             </center>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </BorderPane>
+                                       </children>
+                                       </VBox>
+                                   </content>
+                               </Tab>
+                           </tabs>
+                        </TabPane>
+              </content>
+            </Tab>
+                  <Tab text="Statistics">
+                    <content>
+                      <AnchorPane>
+                           <children>
+                              <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="25.0" layoutY="65.0" prefHeight="330.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <content>
+                                    <VBox fx:id="statContentBox" prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <GridPane>
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="32.0" minWidth="32.0" prefWidth="32.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="124.0" minWidth="10.0" prefWidth="124.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label text="Rendering Time:" GridPane.columnIndex="1">
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label text="Sequence Length:" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="renderingTimeStat" text="undefined" GridPane.columnIndex="2">
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="lineStat" text="undefined" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <ImageView pickOnBounds="true" preserveRatio="true" scaleX="0.6" scaleY="0.6">
+                                                   <image>
+                                                      <Image url="@../icon/time32.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <ImageView pickOnBounds="true" preserveRatio="true" scaleX="0.6" scaleY="0.6" GridPane.rowIndex="1">
+                                                   <image>
+                                                      <Image url="@../icon/lines32.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </GridPane>
+                                       </children>
+                                    </VBox>
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+          </tabs>
+        </TabPane>
+      </items>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+    </SplitPane>
+  </center>
+   <padding>
+      <Insets bottom="-1.0" left="-1.0" right="-1.0" top="-1.0" />
+   </padding>
+</BorderPane>

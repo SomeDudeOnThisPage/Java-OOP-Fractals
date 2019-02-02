@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:id="root" blendMode="SRC_OVER" focusTraversable="true" minWidth="-1.0" pickOnBounds="false" prefHeight="30.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <center>
+    <TextField id="layer-list-cell-text-field" fx:id="textField" alignment="CENTER_LEFT" blendMode="SRC_OVER" depthTest="INHERIT" editable="true" onAction="#onTextFieldAction" onMouseClicked="#onTextFieldClick" prefWidth="-1.0" promptText="Layer Name" style="" text="Layer" BorderPane.alignment="CENTER_RIGHT">
+      <BorderPane.margin>
+        <Insets left="10.0" right="10.0" />
+      </BorderPane.margin>
+    </TextField>
+  </center>
+  <left>
+    <CheckBox id="layer-list-cell-check-box" fx:id="visibleCheckBox" alignment="CENTER_LEFT" disable="false" graphicTextGap="0.0" mnemonicParsing="false" onAction="#onVisibleCheckBox" text="" BorderPane.alignment="CENTER">
+      <BorderPane.margin>
+        <Insets left="6.0" />
+      </BorderPane.margin>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+    </CheckBox>
+  </left>
+  <right>
+    <ProgressIndicator id="layer-list-cell-progress-indicator" fx:id="progressIndicator" disable="false" prefHeight="20.0" prefWidth="20.0" progress="-1.0" visible="true" />
+  </right>
+   <padding>
+      <Insets right="5.0" />
+   </padding>
+</BorderPane>
