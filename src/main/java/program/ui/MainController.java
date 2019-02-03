@@ -1,7 +1,10 @@
 package program.ui;
 
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.json.simple.JSONObject;
 import program.Program;
 import program.algorithm.Algorithm;
@@ -86,21 +89,23 @@ public class MainController implements Initializable
    */
   public void addLayer(ImageLayer layer)
   {
-    try
-    {
-      // Initially draw the curve
-      selected = layer;
-      layer.redraw();
-      layers.add(layer);
+    // Check max-layers
+    // Should have done this in deserializing and in onAddLayerButton but it does not really matter anymore
+    if (Program.ui.getLayers().size() < Program.LAYERS_MAX) {
+      try {
+        // Initially draw the curve
+        selected = layer;
+        layer.redraw();
+        layers.add(layer);
 
-      // Select the layer
-      editorController.layerList.getSelectionModel().select(selected);
+        // Select the layer
+        editorController.layerList.getSelectionModel().select(selected);
+      } catch (Exception ignored) {}
     }
-    catch(Exception ignored)
+    else
     {
-
+      Program.ui.setStatus("You have reached the maximum amount of layers!");
     }
-
   }
 
   /**
@@ -111,7 +116,16 @@ public class MainController implements Initializable
    */
   public void removeLayer(int index)
   {
-    layers.remove(index);
+    ImageLayer layer = layers.get(index);
+    try
+    {
+      setSelectedLayer(layers.get(0));
+    }
+    catch(Exception ignored) { /* We do not have any more layers */ }
+
+    layer.renderService.cancel();
+    layers.remove(layer);
+
     editorController.update();
   }
 
@@ -221,7 +235,7 @@ public class MainController implements Initializable
   }
 
   /**
-   * Handles the 'Save As'-MenuItem in the 'File'-Tab
+   * Handles the 'Export'-MenuItem in the 'File'-Tab
    */
   public void menu_onSaveAs()
   {
@@ -253,6 +267,14 @@ public class MainController implements Initializable
     });
   }
 
+  public void onDeleteAll()
+  {
+    setSelectedLayer(null);
+    layers.clear();
+
+    editorController.update();
+  }
+
   /**
    * Handles the 'Exit'-MenuItem in the 'File'-Tab
    */
@@ -267,13 +289,18 @@ public class MainController implements Initializable
    */
   public void menu_onHelp()
   {
-    String help = "There is no help, we will all succumb to the flesh eating monsters outside.";
-
     // Show an alert dialog
     Alert dialog = new Alert(Alert.AlertType.INFORMATION);
     dialog.setTitle("Help");
     dialog.setHeaderText(null);
-    dialog.setContentText(help);
+
+    try
+    {
+      Parent root = FXMLLoader.load(getClass().getResource("/fxml/help.fxml"));
+      Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+      stage.setScene(new Scene(root));
+    }
+    catch(Exception ignored) {}
 
     dialog.show();
   }
@@ -283,15 +310,18 @@ public class MainController implements Initializable
    */
   public void menu_onAbout()
   {
-    String about = "Frankfurt University of Applied Sciences\n" +
-                   "Faculty 2 - Computer Science and Engineering\n" +
-                   "Java OOP - Concurrent visualization of Space Filling Curves";
-
     // Show an alert dialog
     Alert dialog = new Alert(Alert.AlertType.INFORMATION);
     dialog.setTitle("About");
     dialog.setHeaderText(null);
-    dialog.setContentText(about);
+
+    try
+    {
+      Parent root = FXMLLoader.load(getClass().getResource("/fxml/about.fxml"));
+      Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+      stage.setScene(new Scene(root));
+    }
+    catch(Exception ignored) {}
 
     dialog.show();
   }

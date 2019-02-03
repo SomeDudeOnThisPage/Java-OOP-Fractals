@@ -14,63 +14,63 @@ public enum Algorithm
   BLUEBOX
           {
               public Fractal newFractal() { return new BlueBox(); }
-              public boolean debug = true;
+              public boolean isDebug() { return true; }
               public long render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { return BlueBox.render(i, s, m, c, sw); }
               public String toString() { return "Blue Box"; }
           },
     DRAGON
             {
                 public Fractal newFractal() { return new DragonCurve(); }
-                public boolean debug = false;
+                public boolean isDebug() { return false; }
                 public long render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { return DragonCurve.render(i, s, m, c, sw); }
                 public String toString() { return "Dragon Curve"; }
             },
     HILBERT
             {
                 public Fractal newFractal() { return new HilbertCurve(); }
-                public boolean debug = false;
+                public boolean isDebug() { return false; }
                 public long render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { return HilbertCurve.render(i, s, m, c, sw); }
                 public String toString() { return "Hilbert Curve"; }
             },
     KOCHSNOWFLAKE
             {
                 public Fractal newFractal() { return new KochSnowflakeCurve(); }
-                public boolean debug = false;
+                public boolean isDebug() { return false; }
                 public long render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { return KochSnowflakeCurve.render(i, s, m, c, sw); }
                 public String toString() { return "Koch Snowflake"; }
             },
     GOSPER
             {
                 public Fractal newFractal() { return new GosperCurve(); }
-                public boolean debug = false;
+                public boolean isDebug() { return false; }
                 public long render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { return GosperCurve.render(i, s, m, c, sw); }
                 public String toString() { return "Gosper Curve"; }
             },
     PEANO
             {
                 public Fractal newFractal() {return new PeanoCurve(); }
-                public boolean debug = false;
+                public boolean isDebug() { return false; }
                 public long render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { return PeanoCurve.render(i, s, m, c, sw); }
                 public String toString() {return "Peano Curve"; }
             },
     KOCH
             {
                 public Fractal newFractal() {return new KochCurve(); }
-                public boolean debug = false;
+                public boolean isDebug() { return false; }
                 public long render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { return KochCurve.render(i, s, m, c, sw); }
                 public String toString() {return "Koch Curve"; }
             },
     SIERPINSKISQUARE
             {
                 public Fractal newFractal() {return new SierpinskiSquareCurve(); }
-                public boolean debug = false;
+                public boolean isDebug() { return false; }
                 public long render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { return SierpinskiSquareCurve.render(i, s, m, c, sw); }
                 public String toString() {return "Sierpinksi Square"; }
             },
     TIMEWASTER
             {
                 public Fractal newFractal() { return new TimeWaster(); }
-                public boolean debug = true;
+                public boolean isDebug() { return true; }
                 public long render(BufferedImage i, HashMap s, GraphicsSetting.Type m, Color[] c, double sw) { return TimeWaster.render(i, s, m, c, sw); }
                 public String toString() { return "Time Waster"; }
             };
@@ -78,7 +78,7 @@ public enum Algorithm
   /**
    * Determines whether the algorithm is available only in debug mode
    */
-  public boolean debug;
+  public abstract boolean isDebug();
 
   /**
    * This method should return a new Fractal object for each algorithm

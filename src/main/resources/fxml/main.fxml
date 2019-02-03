@@ -59,7 +59,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
           <items>
-            <MenuItem mnemonicParsing="false" text="Delete All Layers" />
+            <MenuItem mnemonicParsing="false" onAction="#onDeleteAll" text="Delete All Layers" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">

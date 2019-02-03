@@ -73,6 +73,11 @@ public class Program extends Application
   public static boolean IGNORE_LIMITS = false;
 
   /**
+   * Maximum # layers
+   */
+  public static int LAYERS_MAX = 100;
+
+  /**
    * Default and minimum window width
    */
   private static final int WIDTH = 800;
@@ -85,7 +90,7 @@ public class Program extends Application
   /**
    * Window title
    */
-  private static final String TITLE = "Space Filling Curve Generator";
+  private static final String TITLE = "SFCVisualizer";
 
   /**
    * The programs current controller instance. There should only ever be one of these
@@ -104,7 +109,15 @@ public class Program extends Application
     }
   }
 
+  /**
+   * Used for exiting purposes
+   */
   private static Program self;
+
+  /**
+   * Used for dialog inheritance
+   */
+  private static Stage stage;
 
   public static void exit()
   {
@@ -120,7 +133,6 @@ public class Program extends Application
 
       // Add a custom icon.
       Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-      //stage.getIcons().add(new Image(Program.self.getClass().getResource(RESOURCE_PATH + "thinking_about_exiting.png").toString()));
 
       Optional<ButtonType> result = dialog.showAndWait();
       if (result.isPresent() && result.get() == ButtonType.OK) { Platform.exit(); }
@@ -172,6 +184,8 @@ public class Program extends Application
     alert.setTitle("Error!");
     alert.setHeaderText("Something bad has happened.");
     alert.setContentText(t);
+
+    alert.initOwner(Program.stage);
 
     StringWriter sw = new StringWriter();
     PrintWriter pw = new PrintWriter(sw);
@@ -227,10 +241,16 @@ public class Program extends Application
         Program.AUTO_REDRAW = false;
       }
 
-      // Check if we load a json file at startup
+      // Check if we load a json file at startup ( no worries if it does not exist, we just get a small nonfatal caught and ignored error )
       if (arguments.contains("-load"))
       {
         Program.STARTUP_LOAD_FILE = arguments.get(arguments.indexOf("-load") + 1);
+      }
+
+      // Check if we load a json file at startup
+      if (arguments.contains("-lmax"))
+      {
+        Program.STARTUP_LOAD_FILE = arguments.get((int) arguments.indexOf("-lmax") + 1);
       }
 
       // Check if certain warning dialogs should be suppressed

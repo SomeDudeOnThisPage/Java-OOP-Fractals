@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane prefHeight="345.0" prefWidth="331.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="1. Creating a new layer:" />
+      <BorderPane layoutX="25.0" layoutY="31.0" prefHeight="90.0" prefWidth="306.0">
+         <center>
+            <VBox prefHeight="191.0" prefWidth="294.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Select your desired algorithm from the dropdown" />
+                  <Label text="button on the right." />
+                  <Label text="Click the '+'-Button." />
+                  <Label text="The settings will display and are editable." />
+                  <Label text="To delete the layer, press the '-'-Button" />
+               </children>
+            </VBox>
+         </center>
+         <left>
+            <VBox prefHeight="200.0" prefWidth="12.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="1." />
+                  <Label />
+                  <Label text="2." />
+                  <Label text="3." />
+                  <Label text="4." />
+               </children>
+            </VBox>
+         </left>
+      </BorderPane>
+      <BorderPane layoutX="25.0" layoutY="138.0" prefHeight="90.0" prefWidth="306.0">
+         <center>
+            <VBox prefHeight="191.0" prefWidth="294.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="To save one layer, Right Click the layer and choose" />
+                  <Label text="'Save As' from the dropdown menu." />
+                  <Label text="To save multiple layers, goto File &gt; Export" />
+                  <Label text="Select your file-name (without .json) and press 'Ok'." />
+                  <Label text="Your file will be saved in %JARPATH%/saves." />
+               </children>
+            </VBox>
+         </center>
+         <left>
+            <VBox prefHeight="200.0" prefWidth="12.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="1." />
+                  <Label />
+                  <Label text="2." />
+                  <Label text="3." />
+                  <Label text="4." />
+               </children>
+            </VBox>
+         </left>
+      </BorderPane>
+      <Label layoutX="15.0" layoutY="121.0" text="2. Saving a layer / layer configuration" />
+      <BorderPane layoutX="25.0" layoutY="245.0" prefHeight="90.0" prefWidth="306.0">
+         <left>
+            <VBox prefHeight="200.0" prefWidth="12.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="1." />
+                  <Label />
+                  <Label text="2." />
+                  <Label text="3." />
+               </children>
+            </VBox>
+         </left>
+         <right>
+            <VBox prefHeight="191.0" prefWidth="294.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="To import layers, either goto File &gt; Import or press the" />
+                  <Label text="'Folder'-Button next to the '+'-Button." />
+                  <Label text="Navigate to your file and choose it." />
+                  <Label text="If your file is valid and has no errors, you should see" />
+                  <Label text="your layers appear shortly after." />
+               </children>
+            </VBox>
+         </right>
+      </BorderPane>
+      <Label layoutX="15.0" layoutY="228.0" text="3. Importing a layer / layer configuration" />
+   </children>
+</AnchorPane>

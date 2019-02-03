@@ -128,22 +128,26 @@ public class EditorController implements Initializable
 
     // (Re)Set the options panel
     vBox.getChildren().clear();
-    // Get the current layers' settings
-    HashMap<String, AlgorithmSetting> settings = Program.ui.getSelectedLayer().getSettings();
-    // Add the settings panes to the vBox
-    settings.forEach((String key, AlgorithmSetting value) -> {
-      vBox.getChildren().add(value);
-      vBox.getChildren().add(new Separator());
-    });
 
-    ImageLayer l = Program.ui.getSelectedLayer();
+    if (Program.ui.getSelectedLayer() != null) {
 
-    statContentBox.setVisible(true);
-    renderingTimeStat.setText(l.getRenderTime() + " seconds");
-    lineStat.setText(((Double) l.getRenderLines()).intValue() + " steps");
+      // Get the current layers' settings
+      HashMap<String, AlgorithmSetting> settings = Program.ui.getSelectedLayer().getSettings();
+      // Add the settings panes to the vBox
+      settings.forEach((String key, AlgorithmSetting value) -> {
+        vBox.getChildren().add(value);
+        vBox.getChildren().add(new Separator());
+      });
 
-    // (Re)Set the color options panel
-    colorSettingsPane.setCenter(Program.ui.getSelectedLayer().getGraphicsSettings());
+      ImageLayer l = Program.ui.getSelectedLayer();
+
+      statContentBox.setVisible(true);
+      renderingTimeStat.setText(l.getRenderTime() + " seconds");
+      lineStat.setText(((Double) l.getRenderLines()).intValue() + " steps");
+
+      // (Re)Set the color options panel
+      colorSettingsPane.setCenter(Program.ui.getSelectedLayer().getGraphicsSettings());
+    }
   }
 
   /**
@@ -186,7 +190,7 @@ public class EditorController implements Initializable
     ObservableList<Algorithm> algs = Program.ui.getAlgorithms();
     for (Algorithm alg : algs)
     {
-      if (!alg.debug || Program.DEBUG)
+      if (!alg.isDebug() || Program.DEBUG)
       {
         choiceBox.getItems().add(alg);
       }

@@ -217,7 +217,7 @@ public class LayerListCell extends ListCell<ImageLayer>
 
     for (Algorithm alg : algs)
     {
-      if (!alg.debug || Program.DEBUG)
+      if (!alg.isDebug() || Program.DEBUG)
       {
         MenuItem m = new MenuItem(alg.toString());
         m.setOnAction(event -> {
