@@ -6,13 +6,13 @@
  * @author Leonard Pudwitz
  * @version 1.0
  * <br>
- * @see program.system.Fractal
+ * @see de.frankfurt_university._1218574.SFCVisualizer.system.Fractal
  *
- * @see program.algorithm.HilbertCurve
- * @see program.algorithm.KochCurve
- * @see program.algorithm.GosperCurve
+ * @see de.frankfurt_university._1218574.SFCVisualizer.algorithm.HilbertCurve
+ * @see de.frankfurt_university._1218574.SFCVisualizer.algorithm.KochCurve
+ * @see de.frankfurt_university._1218574.SFCVisualizer.algorithm.GosperCurve
  */
-package program.system;
+package de.frankfurt_university._1218574.SFCVisualizer.system;
 
 import java.awt.*;
 import java.awt.geom.Line2D;

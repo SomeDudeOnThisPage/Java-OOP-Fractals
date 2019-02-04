@@ -1,4 +1,4 @@
-package program;
+package de.frankfurt_university._1218574.SFCVisualizer;
 
 /**
  * Ignore this starter class, this is an unwanted artifact of using maven to package a javaFX project under jdk11

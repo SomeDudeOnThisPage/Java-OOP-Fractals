@@ -1,14 +1,13 @@
-package program.ui;
+package de.frankfurt_university._1218574.SFCVisualizer.ui;
 
-import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
-import program.Program;
-import program.ui.elements.ImageLayer;
+import de.frankfurt_university._1218574.SFCVisualizer.Program;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.ImageLayer;
 import javafx.collections.ObservableList;
 import javafx.fxml.*;
 
@@ -16,7 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * The controller for the canvas scene of the program
+ * The controller for the canvas scene of the de.frankfurt_university._1218574.SFCVisualizer
  * <p>
  *   This class is used to manage updating the drawing of the layers. It also handles the zooming on the canvas
  * </p>

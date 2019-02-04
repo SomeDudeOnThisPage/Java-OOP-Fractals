@@ -1,10 +1,10 @@
-package program.algorithm;
+package de.frankfurt_university._1218574.SFCVisualizer.algorithm;
 
-import program.Program;
-import program.system.Fractal;
-import program.system.Turtle;
-import program.ui.elements.AlgorithmSetting;
-import program.ui.elements.GraphicsSetting;
+import de.frankfurt_university._1218574.SFCVisualizer.Program;
+import de.frankfurt_university._1218574.SFCVisualizer.system.Fractal;
+import de.frankfurt_university._1218574.SFCVisualizer.system.Turtle;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.AlgorithmSetting;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.GraphicsSetting;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -12,22 +12,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
 /**
- * Algorithm for drawing a Dragon Curve<br>
+ * Algorithm for drawing a Gosper Curve<br>
  * <p>
- *  A static class for drawing the Dragon Curve with the given parameters from the GUI
+ *  A static class for drawing the Gosper Curve with the given parameters from the GUI
  * </p>
  * @author Leonard Pudwitz
  * @version 1.0
  * <br>
- * @see program.system.Fractal
+ * @see de.frankfurt_university._1218574.SFCVisualizer.system.Fractal
+ *
+ * @see de.frankfurt_university._1218574.SFCVisualizer.system.Turtle
  */
-public class DragonCurve extends Fractal {
+public class GosperCurve extends Fractal {
 
-    private static final int DEFAULT_ITER = 10;
+    private static final int DEFAULT_ITER = 3;
     private static final int MIN_ITER = 1;
-    private static final int MAX_ITER = 25;
+    private static final int MAX_ITER = 8;
 
     /**
      * Main method for drawing the curve
@@ -39,7 +40,7 @@ public class DragonCurve extends Fractal {
      *
      * @see GraphicsSetting.Type
      */
-    public static long render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors, double strokeWidth) {
+    static long render(BufferedImage image, HashMap<String, AlgorithmSetting> settings, GraphicsSetting.Type mode, Color[] colors, double strokeWidth) {
 
         //initialize all values from the settings menu
         double scaleFactor = settings.get("scaleFactor").getValue().doubleValue();
@@ -49,7 +50,7 @@ public class DragonCurve extends Fractal {
         double rotation = settings.get("rotation").getValue().doubleValue();
 
         //declare a turning angle for the turtle
-        final int ANGLE = 90;
+        final int ANGLE = 60;
 
         //create the graphics2d object from the buffered image
         Graphics2D g = image.createGraphics();
@@ -66,14 +67,14 @@ public class DragonCurve extends Fractal {
         //turn the turtle by the rotation amount specified by the user
         t.rotate(rotation);
 
-        List<DragonDirections> turns = getSequence(iterations);
+        List<GosperDirections> turns = getSequence(iterations);
 
         //the drawing part, split into three different parts depending on the coloring mode
         switch (mode) {
 
             //solid color mode
             case SOLID:
-                for (DragonDirections d : turns) {
+                for (GosperDirections d : turns) {
                     switch (d) {
                         case F:
                             t.forward(1 );
@@ -95,14 +96,14 @@ public class DragonCurve extends Fractal {
 
                 //calculate how many interpolations we have to do
                 int steps = 0;
-                for (DragonDirections d: turns) {
-                    if (d == DragonDirections.F)
+                for (GosperDirections d: turns) {
+                    if (d == GosperDirections.F)
                         steps++;
                 }
 
                 int counter = 1;
                 //iterate over the direction list to draw
-                for (DragonDirections d : turns) {
+                for (GosperDirections d : turns) {
                     switch (d) {
                         case F:
                             //do a linear interpolation between the two colors
@@ -110,7 +111,6 @@ public class DragonCurve extends Fractal {
                             red = colors[0].getRed() * ((float) counter / steps) + colors[1].getRed() * (1 - ((float) counter / steps));
                             green = colors[0].getGreen() * ((float) counter / steps) + colors[1].getGreen() * (1 - ((float) counter / steps));
                             blue = colors[0].getBlue() * ((float) counter / steps) + colors[1].getBlue() * (1 - ((float) counter / steps));
-
 
                             g.setColor(new Color(red / 255, green / 255, blue / 255));
                             t.forward(1 );
@@ -131,7 +131,7 @@ public class DragonCurve extends Fractal {
             //alternating mode
             case ALTERNATING:
                 boolean flag = false;
-                for (DragonDirections d : turns) {
+                for (GosperDirections d : turns) {
                     switch (d) {
                         case F:
                             g.setColor(flag ? colors[0] : colors[1]);
@@ -156,13 +156,13 @@ public class DragonCurve extends Fractal {
         return turns.size();
     }
 
-    public DragonCurve() {
+    GosperCurve() {
         super();
 
-        //initialize settings
-        settings.put("scaleFactor", new AlgorithmSetting<>("Scale Factor", 6d, 100d, 0.1d, AlgorithmSetting.Type.SLIDER));
-        settings.put("startX", new AlgorithmSetting<>("X Start Coordinate", 150, 1000, 0, AlgorithmSetting.Type.SPINNER));
-        settings.put("startY", new AlgorithmSetting<>("Y Start Coordinate", 400, 1000, 0, AlgorithmSetting.Type.SPINNER));
+        //set bounds and default values for the menu options
+        settings.put("startX", new AlgorithmSetting<>("X Start Coordinate",350, 1000, 0, AlgorithmSetting.Type.SPINNER));
+        settings.put("startY", new AlgorithmSetting<>("Y Start Coordinate", 450, 1000, 0, AlgorithmSetting.Type.SPINNER));
+        settings.put("scaleFactor", new AlgorithmSetting<>("Scale Factor", 8d, 100d, 0.1d, AlgorithmSetting.Type.SLIDER));
         settings.put("rotation", new AlgorithmSetting<>("Rotation", 0d, 360d, 0d, AlgorithmSetting.Type.SPINNER));
 
         if (Program.IGNORE_LIMITS)
@@ -173,10 +173,10 @@ public class DragonCurve extends Fractal {
         {
             settings.put("iterations", new AlgorithmSetting<>("Number of Iterations", DEFAULT_ITER, MAX_ITER, MIN_ITER, AlgorithmSetting.Type.SLIDER));
         }
-
     }
 
-    private enum DragonDirections {
+    //the four different action cases
+    private enum GosperDirections {
         F,
         A,
         B,
@@ -185,40 +185,70 @@ public class DragonCurve extends Fractal {
     }
 
     //define the generation rules
-    private static final List<DragonDirections> caseA = new ArrayList<>(Arrays.asList(
-            DragonDirections.A,
-            DragonDirections.R,
-            DragonDirections.B,
-            DragonDirections.F,
-            DragonDirections.R
+    private static final List<GosperDirections> caseA = new ArrayList<>(Arrays.asList(
+            GosperDirections.A,
+            GosperDirections.R,
+            GosperDirections.B,
+            GosperDirections.F,
+            GosperDirections.R,
+            GosperDirections.R,
+            GosperDirections.B,
+            GosperDirections.F,
+            GosperDirections.L,
+            GosperDirections.F,
+            GosperDirections.A,
+            GosperDirections.L,
+            GosperDirections.L,
+            GosperDirections.F,
+            GosperDirections.A,
+            GosperDirections.F,
+            GosperDirections.A,
+            GosperDirections.L,
+            GosperDirections.B,
+            GosperDirections.F,
+            GosperDirections.R
     ));
 
-    private static final List<DragonDirections> caseB = new ArrayList<>(Arrays.asList(
-            DragonDirections.L,
-            DragonDirections.F,
-            DragonDirections.A,
-            DragonDirections.L,
-            DragonDirections.B
+    private static final List<GosperDirections> caseB = new ArrayList<>(Arrays.asList(
+            GosperDirections.L,
+            GosperDirections.F,
+            GosperDirections.A,
+            GosperDirections.R,
+            GosperDirections.B,
+            GosperDirections.F,
+            GosperDirections.B,
+            GosperDirections.F,
+            GosperDirections.R,
+            GosperDirections.R,
+            GosperDirections.B,
+            GosperDirections.F,
+            GosperDirections.R,
+            GosperDirections.F,
+            GosperDirections.A,
+            GosperDirections.L,
+            GosperDirections.L,
+            GosperDirections.F,
+            GosperDirections.A,
+            GosperDirections.L,
+            GosperDirections.B
     ));
 
-    //generate the turn sequence with the approach of a folded strip of paper
-    private static List<DragonDirections> getSequence(int iterations) {
-
+    private static List<GosperDirections> getSequence(int iterations) {
         //begin the turn sequence
-        List<DragonDirections> turnSequence = new ArrayList<>();
+        List<GosperDirections> turnSequence = new ArrayList<>();
         //add an initial value
-        turnSequence.add(DragonDirections.F);
-        turnSequence.add(DragonDirections.A);
+        turnSequence.add(GosperDirections.F);
+        turnSequence.add(GosperDirections.A);
 
         for (int i = 0; i < iterations; i++) {
             //copy the list so we don't modify the same object we're iterating over
-            List<DragonDirections> copy = new ArrayList<>(turnSequence);
+            List<GosperDirections> copy = new ArrayList<>(turnSequence);
 
             //initialize the new list
             turnSequence = new ArrayList<>();
 
             //append new values depending on the cases
-            for (DragonDirections d : copy) {
+            for (GosperDirections d : copy) {
                 switch(d) {
                     case A:
                         turnSequence.addAll(caseA);
@@ -234,6 +264,4 @@ public class DragonCurve extends Fractal {
 
         return turnSequence;
     }
-
-
 }

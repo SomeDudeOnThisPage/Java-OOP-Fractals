@@ -1,10 +1,10 @@
-package program.algorithm;
+package de.frankfurt_university._1218574.SFCVisualizer.algorithm;
 
-import program.Program;
-import program.system.Fractal;
-import program.system.Turtle;
-import program.ui.elements.AlgorithmSetting;
-import program.ui.elements.GraphicsSetting;
+import de.frankfurt_university._1218574.SFCVisualizer.Program;
+import de.frankfurt_university._1218574.SFCVisualizer.system.Fractal;
+import de.frankfurt_university._1218574.SFCVisualizer.system.Turtle;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.AlgorithmSetting;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.GraphicsSetting;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -21,9 +21,9 @@ import java.util.List;
  * @author Leonard Pudwitz
  * @version 1.0
  * <br>
- * @see program.system.Fractal
+ * @see de.frankfurt_university._1218574.SFCVisualizer.system.Fractal
  *
- * @see program.system.Turtle
+ * @see de.frankfurt_university._1218574.SFCVisualizer.system.Turtle
  */
 class KochSnowflakeCurve extends Fractal {
 

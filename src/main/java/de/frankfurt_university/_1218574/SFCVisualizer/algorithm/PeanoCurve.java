@@ -1,10 +1,10 @@
-package program.algorithm;
+package de.frankfurt_university._1218574.SFCVisualizer.algorithm;
 
-import program.Program;
-import program.system.Fractal;
-import program.system.Turtle;
-import program.ui.elements.AlgorithmSetting;
-import program.ui.elements.GraphicsSetting;
+import de.frankfurt_university._1218574.SFCVisualizer.Program;
+import de.frankfurt_university._1218574.SFCVisualizer.system.Fractal;
+import de.frankfurt_university._1218574.SFCVisualizer.system.Turtle;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.AlgorithmSetting;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.GraphicsSetting;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,19 +14,19 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Algorithm for drawing a Koch Island<br>
+ * Algorithm for drawing a Peano Curve<br>
  * <p>
- *  A static class for drawing the Koch Island with the given parameters from the GUI
+ *  A static class for drawing the Peano Curve with the given parameters from the GUI
  * </p>
  * @author Leonard Pudwitz
  * @version 1.0
  * <br>
- * @see program.system.Fractal
+ * @see de.frankfurt_university._1218574.SFCVisualizer.system.Fractal
  *
- * @see program.system.Turtle
+ * @see de.frankfurt_university._1218574.SFCVisualizer.system.Turtle
  */
 
-public class KochCurve extends Fractal {
+public class PeanoCurve extends Fractal {
 
     private static final int DEFAULT_ITER = 5;
     private static final int MIN_ITER = 1;
@@ -69,14 +69,14 @@ public class KochCurve extends Fractal {
         //turn the turtle by the rotation amount specified by the user
         t.rotate(rotation);
 
-        List<KochDirections> turns = getSequence(iterations);
+        List<PeanoDirections> turns = getSequence(iterations);
 
         //the drawing part, split into three different parts depending on the coloring mode
         switch (mode) {
 
             //solid color mode
             case SOLID:
-                for (KochDirections d : turns) {
+                for (PeanoDirections d : turns) {
                     switch (d) {
                         case F:
                             t.forward(1 );
@@ -98,17 +98,16 @@ public class KochCurve extends Fractal {
 
                 //calculate how many interpolations we have to do
                 int steps = 0;
-                for (KochDirections d: turns) {
-                    if (d == KochDirections.F)
+                for (PeanoDirections d: turns) {
+                    if (d == PeanoDirections.F)
                         steps++;
                 }
 
                 int counter = 1;
                 //iterate over the direction list to draw
-                for (KochDirections d : turns) {
+                for (PeanoDirections d : turns) {
                     switch (d) {
                         case F:
-
                             //do a linear interpolation between the two colors
                             float red, green, blue, alpha;
                             red = colors[0].getRed() * ((float) counter / steps) + colors[1].getRed() * (1 - ((float) counter / steps));
@@ -134,7 +133,7 @@ public class KochCurve extends Fractal {
             //alternating mode
             case ALTERNATING:
                 boolean flag = false;
-                for (KochDirections d : turns) {
+                for (PeanoDirections d : turns) {
                     switch (d) {
                         case F:
                             g.setColor(flag ? colors[0] : colors[1]);
@@ -159,7 +158,7 @@ public class KochCurve extends Fractal {
         return turns.size();
     }
 
-    KochCurve() {
+    PeanoCurve() {
         super();
 
         //set bounds and default values for the menu options
@@ -180,51 +179,82 @@ public class KochCurve extends Fractal {
     }
 
     //the different cases for the turtle
-    private enum KochDirections {
+    private enum PeanoDirections {
+        A,
+        B,
         F,
         L,
         R
     }
-
     //define the generation rules
-    private static final List<KochDirections> caseF = new ArrayList<>(Arrays.asList(
-            KochDirections.F,
-            KochDirections.L,
-            KochDirections.F,
-            KochDirections.R,
-            KochDirections.F,
-            KochDirections.R,
-            KochDirections.F,
-            KochDirections.F,
-            KochDirections.F,
-            KochDirections.L,
-            KochDirections.F,
-            KochDirections.L,
-            KochDirections.F,
-            KochDirections.R,
-            KochDirections.F
-    ));
+    private static final List<PeanoDirections> caseA = new ArrayList<>(Arrays.asList(
+            PeanoDirections.A,
+            PeanoDirections.F,
+            PeanoDirections.B,
+            PeanoDirections.F,
+            PeanoDirections.A,
+            PeanoDirections.R,
+            PeanoDirections.F,
+            PeanoDirections.R,
+            PeanoDirections.B,
+            PeanoDirections.F,
+            PeanoDirections.A,
+            PeanoDirections.F,
+            PeanoDirections.B,
+            PeanoDirections.L,
+            PeanoDirections.F,
+            PeanoDirections.L,
+            PeanoDirections.A,
+            PeanoDirections.F,
+            PeanoDirections.B,
+            PeanoDirections.F,
+            PeanoDirections.A));
 
-    private static List<KochDirections> getSequence(int iterations) {
+    private static final List<PeanoDirections> caseB = new ArrayList<>(Arrays.asList(
+            PeanoDirections.B,
+            PeanoDirections.F,
+            PeanoDirections.A,
+            PeanoDirections.F,
+            PeanoDirections.B,
+            PeanoDirections.L,
+            PeanoDirections.F,
+            PeanoDirections.L,
+            PeanoDirections.A,
+            PeanoDirections.F,
+            PeanoDirections.B,
+            PeanoDirections.F,
+            PeanoDirections.A,
+            PeanoDirections.R,
+            PeanoDirections.F,
+            PeanoDirections.R,
+            PeanoDirections.B,
+            PeanoDirections.F,
+            PeanoDirections.A,
+            PeanoDirections.F,
+            PeanoDirections.B));
+
+    private static List<PeanoDirections> getSequence(int iterations) {
 
         //begin the turn sequence
-        List<KochDirections> turnSequence = new ArrayList<>();
-
+        List<PeanoDirections> turnSequence = new ArrayList<>();
         //add an initial value
-        turnSequence.add(KochDirections.F);
+        turnSequence.add(PeanoDirections.A);
 
         for (int i = 0; i < iterations; i++) {
             //copy the list so we don't modify the same object we're iterating over
-            List<KochDirections> copy = new ArrayList<>(turnSequence);
+            List<PeanoDirections> copy = new ArrayList<>(turnSequence);
 
             //initialize the new list
             turnSequence = new ArrayList<>();
 
             //append new values depending on the cases
-            for (KochDirections d : copy) {
+            for (PeanoDirections d : copy) {
                 switch(d) {
-                    case F:
-                        turnSequence.addAll(caseF);
+                    case A:
+                        turnSequence.addAll(caseA);
+                        break;
+                    case B:
+                        turnSequence.addAll(caseB);
                         break;
                     default:
                         turnSequence.add(d);

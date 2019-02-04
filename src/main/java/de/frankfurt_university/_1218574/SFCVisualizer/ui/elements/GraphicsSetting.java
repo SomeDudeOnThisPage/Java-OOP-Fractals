@@ -1,4 +1,4 @@
-package program.ui.elements;
+package de.frankfurt_university._1218574.SFCVisualizer.ui.elements;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import program.Program;
+import de.frankfurt_university._1218574.SFCVisualizer.Program;
 
 import java.util.Iterator;
 

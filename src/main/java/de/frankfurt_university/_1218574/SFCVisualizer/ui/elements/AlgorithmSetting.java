@@ -1,12 +1,10 @@
-package program.ui.elements;
+package de.frankfurt_university._1218574.SFCVisualizer.ui.elements;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import program.Program;
+import de.frankfurt_university._1218574.SFCVisualizer.Program;
 
 /**
  * A numeric setting for an algorithm - can be of either integer or double type

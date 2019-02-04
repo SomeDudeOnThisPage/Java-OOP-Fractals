@@ -1,12 +1,12 @@
-package program.system;
+package de.frankfurt_university._1218574.SFCVisualizer.system;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import program.Program;
-import program.ui.elements.ImageLayer;
+import de.frankfurt_university._1218574.SFCVisualizer.Program;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.ImageLayer;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * A class for parsing config files<br>
  * <p>
- *  This class parses a config file at a given file path and returns its values as a variable to be used by the program
+ *  This class parses a config file at a given file path and returns its values as a variable to be used by the de.frankfurt_university._1218574.SFCVisualizer
  * </p>
  * @author Leonard Pudwitz
  * @version 1.0

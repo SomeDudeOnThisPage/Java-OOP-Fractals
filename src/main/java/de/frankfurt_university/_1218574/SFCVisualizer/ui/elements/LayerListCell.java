@@ -1,15 +1,15 @@
-package program.ui.elements;
+package de.frankfurt_university._1218574.SFCVisualizer.ui.elements;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import org.json.simple.JSONObject;
-import program.Program;
+import de.frankfurt_university._1218574.SFCVisualizer.Program;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
-import program.algorithm.Algorithm;
-import program.system.FileTask;
+import de.frankfurt_university._1218574.SFCVisualizer.algorithm.Algorithm;
+import de.frankfurt_university._1218574.SFCVisualizer.system.FileTask;
 import java.util.Optional;
 
 

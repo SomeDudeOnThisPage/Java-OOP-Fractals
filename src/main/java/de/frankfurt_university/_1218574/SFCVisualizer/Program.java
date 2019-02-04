@@ -1,4 +1,4 @@
-package program;
+package de.frankfurt_university._1218574.SFCVisualizer;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -8,7 +8,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import program.ui.MainController;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.MainController;
 import javafx.application.Application;
 
 import javafx.fxml.*;
@@ -31,9 +31,9 @@ import java.util.*;
  *   The main goal of this project is the concurrent visualization of space filling curves
  * <p>
  *   Command line arguments: <br>
- *   -debug boolean - If debug messages should be written in the console as the program runs<br>
+ *   -debug boolean - If debug messages should be written in the console as the de.frankfurt_university._1218574.SFCVisualizer runs<br>
  *   -auto_redraw boolean - If a layer should be redrawn instantly if any values are changed<br>
- *   -load string - A .json file that is to be loaded when the program starts. (Path from 'saves' folder)<br>
+ *   -load string - A .json file that is to be loaded when the de.frankfurt_university._1218574.SFCVisualizer starts. (Path from 'saves' folder)<br>
  *   -suppress_warnings boolean - If some warning dialogs should be suppressed<br>
  * @author Robin Buhlmann
  * @author Leonard Pudwitz
@@ -57,7 +57,7 @@ public class Program extends Application
   public static boolean SUPPRESS_WARNINGS = false;
 
   /**
-   * The directory the save folder is in. This will differ in between linux and windows. It is set on program start
+   * The directory the save folder is in. This will differ in between linux and windows. It is set on de.frankfurt_university._1218574.SFCVisualizer start
    */
   public static final String SAVE_DIRECTORY = "saves/"; // hardcoded for now
 
@@ -215,7 +215,7 @@ public class Program extends Application
   }
 
   /**
-   * Maim method checking for commandline arguments and launching the program
+   * Maim method checking for commandline arguments and launching the de.frankfurt_university._1218574.SFCVisualizer
    * @param args Commandline arguments
    */
   public static void main(String[] args)

@@ -24,7 +24,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane minWidth="-Infinity" prefHeight="723.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="program.ui.EditorController">
+<BorderPane minWidth="-Infinity" prefHeight="723.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.frankfurt_university._1218574.SFCVisualizer.ui.EditorController">
   <center>
     <SplitPane dividerPositions="0.49930651872399445" focusTraversable="true" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
       <items>

@@ -1,8 +1,8 @@
-package program.algorithm;
+package de.frankfurt_university._1218574.SFCVisualizer.algorithm;
 
-import program.system.Fractal;
-import program.ui.elements.AlgorithmSetting;
-import program.ui.elements.GraphicsSetting;
+import de.frankfurt_university._1218574.SFCVisualizer.system.Fractal;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.AlgorithmSetting;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.GraphicsSetting;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

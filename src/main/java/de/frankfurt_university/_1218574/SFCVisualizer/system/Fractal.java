@@ -1,9 +1,9 @@
-package program.system;
+package de.frankfurt_university._1218574.SFCVisualizer.system;
 
 import org.json.simple.JSONObject;
-import program.Program;
-import program.algorithm.Algorithm;
-import program.ui.elements.AlgorithmSetting;
+import de.frankfurt_university._1218574.SFCVisualizer.Program;
+import de.frankfurt_university._1218574.SFCVisualizer.algorithm.Algorithm;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.AlgorithmSetting;
 
 import java.util.HashMap;
 

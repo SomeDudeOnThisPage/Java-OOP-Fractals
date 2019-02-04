@@ -1,10 +1,11 @@
-package program.algorithm;
+package de.frankfurt_university._1218574.SFCVisualizer.algorithm;
 
-import program.Program;
-import program.system.Fractal;
-import program.system.Turtle;
-import program.ui.elements.AlgorithmSetting;
-import program.ui.elements.GraphicsSetting;
+
+import de.frankfurt_university._1218574.SFCVisualizer.Program;
+import de.frankfurt_university._1218574.SFCVisualizer.system.Fractal;
+import de.frankfurt_university._1218574.SFCVisualizer.system.Turtle;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.AlgorithmSetting;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.GraphicsSetting;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,21 +15,20 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Algorithm for drawing a Peano Curve<br>
+ * Algorithm for drawing a Hilbert Curve<br>
  * <p>
- *  A static class for drawing the Peano Curve with the given parameters from the GUI
+ *  A static class for drawing the Hilbert Curve with the given parameters from the GUI
  * </p>
  * @author Leonard Pudwitz
  * @version 1.0
  * <br>
- * @see program.system.Fractal
+ * @see de.frankfurt_university._1218574.SFCVisualizer.system.Fractal
  *
- * @see program.system.Turtle
+ * @see de.frankfurt_university._1218574.SFCVisualizer.system.Turtle
  */
+class HilbertCurve extends Fractal {
 
-public class PeanoCurve extends Fractal {
-
-    private static final int DEFAULT_ITER = 5;
+    private static final int DEFAULT_ITER = 3;
     private static final int MIN_ITER = 1;
     private static final int MAX_ITER = 10;
 
@@ -69,14 +69,14 @@ public class PeanoCurve extends Fractal {
         //turn the turtle by the rotation amount specified by the user
         t.rotate(rotation);
 
-        List<PeanoDirections> turns = getSequence(iterations);
+        List<HilbertDirections> turns = getSequence(iterations);
 
         //the drawing part, split into three different parts depending on the coloring mode
         switch (mode) {
 
             //solid color mode
             case SOLID:
-                for (PeanoDirections d : turns) {
+                for (HilbertDirections d : turns) {
                     switch (d) {
                         case F:
                             t.forward(1 );
@@ -98,21 +98,25 @@ public class PeanoCurve extends Fractal {
 
                 //calculate how many interpolations we have to do
                 int steps = 0;
-                for (PeanoDirections d: turns) {
-                    if (d == PeanoDirections.F)
+                for (HilbertDirections d: turns) {
+                    if (d == HilbertDirections.F)
                         steps++;
                 }
 
-                int counter = 1;
+                int counter = 0;
                 //iterate over the direction list to draw
-                for (PeanoDirections d : turns) {
+                for (HilbertDirections d : turns) {
                     switch (d) {
                         case F:
+
                             //do a linear interpolation between the two colors
                             float red, green, blue, alpha;
                             red = colors[0].getRed() * ((float) counter / steps) + colors[1].getRed() * (1 - ((float) counter / steps));
                             green = colors[0].getGreen() * ((float) counter / steps) + colors[1].getGreen() * (1 - ((float) counter / steps));
                             blue = colors[0].getBlue() * ((float) counter / steps) + colors[1].getBlue() * (1 - ((float) counter / steps));
+                            alpha = colors[0].getAlpha() * ((float) counter / steps) + colors[1].getAlpha() * (1 - ((float) counter / steps));
+
+                            //System.out.println(counter + "/" + steps + ": " + red + " " + green + " " + blue);
 
                             g.setColor(new Color(red / 255, green / 255, blue / 255));
                             t.forward(1 );
@@ -133,7 +137,7 @@ public class PeanoCurve extends Fractal {
             //alternating mode
             case ALTERNATING:
                 boolean flag = false;
-                for (PeanoDirections d : turns) {
+                for (HilbertDirections d : turns) {
                     switch (d) {
                         case F:
                             g.setColor(flag ? colors[0] : colors[1]);
@@ -152,19 +156,18 @@ public class PeanoCurve extends Fractal {
                 }
                 break;
         }
-
         g.dispose();
 
         return turns.size();
     }
 
-    PeanoCurve() {
+    HilbertCurve() {
         super();
 
         //set bounds and default values for the menu options
         settings.put("startX", new AlgorithmSetting<>("X Start Coordinate",200, 1000, 0, AlgorithmSetting.Type.SPINNER));
         settings.put("startY", new AlgorithmSetting<>("Y Start Coordinate", 200, 1000, 0, AlgorithmSetting.Type.SPINNER));
-        settings.put("scaleFactor", new AlgorithmSetting<>("Scale Factor", 4d, 100d, 0.1d, AlgorithmSetting.Type.SLIDER));
+        settings.put("scaleFactor", new AlgorithmSetting<>("Scale Factor", 50d, 100d, 0.1d, AlgorithmSetting.Type.SLIDER));
         settings.put("rotation", new AlgorithmSetting<>("Rotation", 0d, 360d, 0d, AlgorithmSetting.Type.SPINNER));
 
         if (Program.IGNORE_LIMITS)
@@ -178,77 +181,60 @@ public class PeanoCurve extends Fractal {
 
     }
 
-    //the different cases for the turtle
-    private enum PeanoDirections {
+    private enum HilbertDirections {
         A,
         B,
-        F,
         L,
-        R
+        R,
+        F
     }
+
     //define the generation rules
-    private static final List<PeanoDirections> caseA = new ArrayList<>(Arrays.asList(
-            PeanoDirections.A,
-            PeanoDirections.F,
-            PeanoDirections.B,
-            PeanoDirections.F,
-            PeanoDirections.A,
-            PeanoDirections.R,
-            PeanoDirections.F,
-            PeanoDirections.R,
-            PeanoDirections.B,
-            PeanoDirections.F,
-            PeanoDirections.A,
-            PeanoDirections.F,
-            PeanoDirections.B,
-            PeanoDirections.L,
-            PeanoDirections.F,
-            PeanoDirections.L,
-            PeanoDirections.A,
-            PeanoDirections.F,
-            PeanoDirections.B,
-            PeanoDirections.F,
-            PeanoDirections.A));
+    private static final List<HilbertDirections> caseB = new ArrayList<>(Arrays.asList(
+            HilbertDirections.R,
+            HilbertDirections.A,
+            HilbertDirections.F,
+            HilbertDirections.L,
+            HilbertDirections.B,
+            HilbertDirections.F,
+            HilbertDirections.B,
+            HilbertDirections.L,
+            HilbertDirections.F,
+            HilbertDirections.A,
+            HilbertDirections.R
+    ));
 
-    private static final List<PeanoDirections> caseB = new ArrayList<>(Arrays.asList(
-            PeanoDirections.B,
-            PeanoDirections.F,
-            PeanoDirections.A,
-            PeanoDirections.F,
-            PeanoDirections.B,
-            PeanoDirections.L,
-            PeanoDirections.F,
-            PeanoDirections.L,
-            PeanoDirections.A,
-            PeanoDirections.F,
-            PeanoDirections.B,
-            PeanoDirections.F,
-            PeanoDirections.A,
-            PeanoDirections.R,
-            PeanoDirections.F,
-            PeanoDirections.R,
-            PeanoDirections.B,
-            PeanoDirections.F,
-            PeanoDirections.A,
-            PeanoDirections.F,
-            PeanoDirections.B));
+    private static final List<HilbertDirections> caseA = new ArrayList<>(Arrays.asList(
+            HilbertDirections.L,
+            HilbertDirections.B,
+            HilbertDirections.F,
+            HilbertDirections.R,
+            HilbertDirections.A,
+            HilbertDirections.F,
+            HilbertDirections.A,
+            HilbertDirections.R,
+            HilbertDirections.F,
+            HilbertDirections.B,
+            HilbertDirections.L
+    ));
 
-    private static List<PeanoDirections> getSequence(int iterations) {
+    private static List<HilbertDirections> getSequence(int iterations) {
 
         //begin the turn sequence
-        List<PeanoDirections> turnSequence = new ArrayList<>();
+        List<HilbertDirections> turnSequence = new ArrayList<>();
+
         //add an initial value
-        turnSequence.add(PeanoDirections.A);
+        turnSequence.add(HilbertDirections.B);
 
         for (int i = 0; i < iterations; i++) {
             //copy the list so we don't modify the same object we're iterating over
-            List<PeanoDirections> copy = new ArrayList<>(turnSequence);
+            List<HilbertDirections> copy = new ArrayList<>(turnSequence);
 
             //initialize the new list
             turnSequence = new ArrayList<>();
 
             //append new values depending on the cases
-            for (PeanoDirections d : copy) {
+            for (HilbertDirections d : copy) {
                 switch(d) {
                     case A:
                         turnSequence.addAll(caseA);
@@ -263,6 +249,5 @@ public class PeanoCurve extends Fractal {
         }
 
         return turnSequence;
-
     }
 }

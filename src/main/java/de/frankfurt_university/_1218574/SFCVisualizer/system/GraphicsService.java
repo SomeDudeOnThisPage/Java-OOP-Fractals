@@ -1,14 +1,13 @@
-package program.system;
+package de.frankfurt_university._1218574.SFCVisualizer.system;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import program.Program;
-import program.algorithm.Algorithm;
-import program.ui.elements.AlgorithmSetting;
-import program.ui.elements.GraphicsSetting;
-import program.ui.elements.ImageLayer;
+import de.frankfurt_university._1218574.SFCVisualizer.algorithm.Algorithm;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.AlgorithmSetting;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.GraphicsSetting;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.ImageLayer;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;

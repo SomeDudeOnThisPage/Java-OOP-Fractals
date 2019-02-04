@@ -1,4 +1,4 @@
-package program.ui.elements;
+package de.frankfurt_university._1218574.SFCVisualizer.ui.elements;
 
 import javafx.concurrent.WorkerStateEvent;
 import javafx.embed.swing.SwingFXUtils;
@@ -6,10 +6,10 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.WritableImage;
 import org.json.simple.JSONObject;
-import program.Program;
-import program.algorithm.Algorithm;
-import program.system.Fractal;
-import program.system.GraphicsService;
+import de.frankfurt_university._1218574.SFCVisualizer.Program;
+import de.frankfurt_university._1218574.SFCVisualizer.algorithm.Algorithm;
+import de.frankfurt_university._1218574.SFCVisualizer.system.Fractal;
+import de.frankfurt_university._1218574.SFCVisualizer.system.GraphicsService;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;

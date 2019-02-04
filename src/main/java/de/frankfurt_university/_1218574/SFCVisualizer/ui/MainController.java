@@ -1,18 +1,17 @@
-package program.ui;
+package de.frankfurt_university._1218574.SFCVisualizer.ui;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.json.simple.JSONObject;
-import program.Program;
-import program.algorithm.Algorithm;
+import de.frankfurt_university._1218574.SFCVisualizer.Program;
+import de.frankfurt_university._1218574.SFCVisualizer.algorithm.Algorithm;
 import javafx.collections.*;
 import javafx.fxml.*;
 import javafx.scene.layout.BorderPane;
-import program.system.FileTask;
-import program.ui.elements.ImageLayer;
+import de.frankfurt_university._1218574.SFCVisualizer.system.FileTask;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.ImageLayer;
 
 import java.io.File;
 import java.net.URL;
@@ -20,9 +19,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
- * The controller for the main scene of the program
+ * The controller for the main scene of the de.frankfurt_university._1218574.SFCVisualizer
  * <p>
- *   This class contains most of the methods to manage the layers of the program.
+ *   This class contains most of the methods to manage the layers of the de.frankfurt_university._1218574.SFCVisualizer.
  *   It is used as a hub to communicate with the subscenes' controllers, namely the
  *   editor and the canvas scenes.
  * </p>
@@ -67,7 +66,7 @@ public class MainController implements Initializable
   private ImageLayer selected = null;
 
   /**
-   * Updates the small label at the bottom left of the program
+   * Updates the small label at the bottom left of the de.frankfurt_university._1218574.SFCVisualizer
    */
   public void setStatus(String text)
   {
@@ -280,7 +279,7 @@ public class MainController implements Initializable
    */
   public void menu_onExit()
   {
-    Program.debug("Attempted to exit program through menu bar exit button");
+    Program.debug("Attempted to exit de.frankfurt_university._1218574.SFCVisualizer through menu bar exit button");
     Program.exit();
   }
 

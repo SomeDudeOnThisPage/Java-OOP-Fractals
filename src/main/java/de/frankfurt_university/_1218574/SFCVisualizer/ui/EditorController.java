@@ -1,19 +1,17 @@
-package program.ui;
+package de.frankfurt_university._1218574.SFCVisualizer.ui;
 
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import program.Program;
-import program.algorithm.Algorithm;
-import program.ui.elements.AlgorithmSetting;
-import program.ui.elements.ImageLayer;
-import program.ui.elements.LayerListCell;
+import de.frankfurt_university._1218574.SFCVisualizer.Program;
+import de.frankfurt_university._1218574.SFCVisualizer.algorithm.Algorithm;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.AlgorithmSetting;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.ImageLayer;
+import de.frankfurt_university._1218574.SFCVisualizer.ui.elements.LayerListCell;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -30,7 +28,7 @@ import java.util.ResourceBundle;
 public class EditorController implements Initializable
 {
   /**
-   * The actual in the program displayed list
+   * The actual in the de.frankfurt_university._1218574.SFCVisualizer displayed list
    */
   @FXML public ListView<ImageLayer> layerList;
 
@@ -168,7 +166,7 @@ public class EditorController implements Initializable
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle)
   {
-    // Set the list to use the custom LayerListCell (see program.ui.elements.LayerListCell)
+    // Set the list to use the custom LayerListCell (see de.frankfurt_university._1218574.SFCVisualizer.ui.elements.LayerListCell)
     layerList.setCellFactory(layerListView -> new LayerListCell());
 
     // Set the currently selected model in the main controller and update the editor on selection of a cell
